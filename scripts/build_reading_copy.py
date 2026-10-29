@@ -9,8 +9,10 @@ from latex2mathml.converter import convert
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def render(path):
+def render(path, before=None):
     text = path.read_text(encoding='utf-8')
+    if before is not None:
+        text = text.split(before,1)[0]
     math_blocks = []
     def replace_math(match):
         math_blocks.append(convert(match.group(1).strip(), display='block'))
@@ -30,11 +32,11 @@ def render(path):
 
 
 def main():
-    sections = [('pesquisa','Pesquisa completa','docs/pesquisa.md'),('mapa','Mapa dos testes','docs/mapa_experimentos.md'),('historico','Dados originais','results/historical/report.md'),('novo','Experimento novo','results/synthetic/report.md'),('protocolo','Próximos experimentos','docs/protocolo.md'),('verificacao','Verificação','results/verification.md'),('origem','Proveniência','docs/proveniencia.md')]
+    sections = [('inicio','Visão geral','README.md'),('testes','Testes do autor','results/original_tests/report.md'),('pesquisa','Formulação detalhada','docs/pesquisa.md'),('mapa','Mapa dos testes','docs/mapa_experimentos.md'),('historico','Notas da auditoria','results/historical/report.md'),('novo','Ensaio adicional','results/synthetic/report.md'),('protocolo','Próximos experimentos','docs/protocolo.md'),('verificacao','Verificação','results/verification.md'),('origem','Proveniência','docs/proveniencia.md')]
     navigation = ''.join(f'<a href="#{id}">{label}</a>' for id,label,_ in sections)
     content = []
     for id,label,path in sections:
-        content.append(f'<section id="{id}">{render(ROOT/path)}</section>')
+        content.append(f'<section id="{id}">{render(ROOT/path, before="## Executar" if id=="inicio" else None)}</section>')
         if id == 'historico':
             content.append('<figure><img src="results/historical/historical_curves.png" alt="Curvas históricas recalculadas"><figcaption>Arrays originais: comparação descritiva, split e sementes não identificados.</figcaption></figure><figure><img src="results/historical/beta_grids.png" alt="Grades de betas históricas"><figcaption>Grades preservam a região de valores inválidos.</figcaption></figure>')
         elif id == 'novo':

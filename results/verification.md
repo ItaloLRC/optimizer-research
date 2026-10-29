@@ -29,6 +29,8 @@ Os hashes das cópias dos arquivos de origem constam em `data/source_manifest.js
 
 Os gráficos históricos e sintéticos foram gerados a partir dos arrays/logs e inspecionados visualmente. As curvas de média não foram apresentadas como intervalos de confiança. A incerteza sobre os metadados originais permanece explícita.
 
+A apresentação dos testes do autor em `original_tests/` foi recalculada diretamente dos 16 arrays originais. Ela inclui as condições do metadata, a distinção entre índices de varredura e hiperparâmetros conhecidos, as curvas de Fashion-MNIST/CIFAR-10 e os contadores acumulados e por incremento. Essa revisão de apresentação não altera os dados nem a regra implementada.
+
 ## Limitações conhecidas
 
 A implementação PyTorch é uma referência com diagnósticos que sincronizam o dispositivo. Não foi medida em GPU nem em precisão mista. A paridade numérica testada usa float64. Não há otimizações fused/foreach, gradientes esparsos ou modo diferenciável. O código prioriza rastreabilidade da hipótese.

@@ -15,6 +15,8 @@ A recorrência de m2 não acompanha o material. Os nomes beta3 e beta4 aparecem 
 
 A janela comum, a gramática pequena, o warmup, a implementação NumPy/PyTorch, os testes e o MLP sintético são adições desta revisão. Os testes novos têm logs próprios. As evidências históricas e novas não foram mescladas em uma estatística única.
 
+`results/original_tests/report.md` apresenta os experimentos realizados pelo autor, com as condições transcritas do metadata e números recalculados dos arrays. O script `summarize_author_experiments.py` gera essa apresentação e seus gráficos sem treinar novamente as redes. A fórmula `d = max(v − s·m2², v/c)` é a do AdaSym dos slides. A razão normalizada q e a função h(q) são identificadas como extensões opcionais, sem atribuí-las aos experimentos originais.
+
 ## Dados que ainda precisam ser recuperados
 
 1. Notebook/código original de regressão simbólica e objetivos usados no fitness.

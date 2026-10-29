@@ -1,6 +1,6 @@
 # AdaSym: descoberta simbólica de otimizadores com janela de consistência
 
-**Versão de pesquisa: 29 de outubro de 2026.** Projeto exploratório. O material original contém slides e arrays de resultados, sem os programas de busca e treinamento. Esta revisão preserva o histórico e propõe uma especificação nova e verificável.
+**Versão de pesquisa: 29 de outubro de 2026.** A base desta pesquisa é o AdaSym apresentado nos slides e testado pelo autor nos experimentos descritos no metadata. O texto explica primeiro essa formulação e seus resultados. A janela comum normalizada e os experimentos sintéticos aparecem depois como extensões adicionais desta revisão.
 
 ## 1. Pergunta de pesquisa
 
@@ -10,19 +10,82 @@ A hipótese do projeto é que a persistência do gradiente informa o quanto se p
 
 O objetivo verificável é melhorar a eficiência até uma loss ou acurácia predefinida, mantendo qualidade de teste e orçamento de ajuste comparáveis. Convergência em menos épocas, tempo até o alvo, custo de estado e generalização são resultados diferentes e devem aparecer separadamente.
 
-## 2. O que o material original sustenta
+## 2. AdaSym na apresentação: regra e interpretação
 
-Os slides documentam a sequência:
+### A fórmula final dos slides
 
-$$
-\frac{m_1}{\sqrt{|v-m_1|}}
-\quad\longrightarrow\quad
-\frac{m_1}{\sqrt{|v-m_1^2|}}
-\quad\longrightarrow\quad
-\frac{m_1}{\sqrt{\max(v-m_2^2,v/c)}}
-\quad\longrightarrow\quad
-\frac{m_1}{\sqrt{\max(v-\alpha m_2^2,v/c)}}.
-$$
+AdaSym mantém uma direção de atualização m1 e modifica a escala usada para normalizar o passo. A memória adicional m2 representa a persistência recente do gradiente. A ideia é dar um passo maior quando essa memória permanece forte em relação à escala v dos gradientes ao quadrado.
+
+Na notação da apresentação:
+
+$$d=\max\left(v-s\,m_2^2,\frac{v}{c}\right).$$
+
+$$\theta_{k+1}=\theta_k-\eta\frac{m_1}{\sqrt d}.$$
+
+| Símbolo | Significado e efeito |
+|---|---|
+| g | Gradiente calculado no passo atual |
+| m1 | Memória da direção do gradiente que determina para onde os pesos se movem |
+| v | Memória da magnitude dos gradientes ao quadrado, usada como escala de normalização |
+| m2 | Memória adicional da direção do gradiente, relacionada à janela de consistência |
+| s | Peso dado à correção m2²: constante na variante sem redução temporal, variável na sigmoide |
+| c | Divisor do piso v/c. Valores 4 e 8 aparecem nos testes do autor |
+| eta | Taxa de aprendizado |
+| theta | Pesos da rede neural |
+
+**m2 e v têm papéis diferentes.** O nome m2 não significa que ele seja o segundo momento do Adam. A expressão v já cumpre o papel da escala de segundo momento. A recorrência de m2, objeto das grades beta3/beta4, não está incluída nos arquivos recebidos. Sua interpretação como memória da consistência decorre da fórmula e da hipótese apresentada pelo autor, sem fixar coeficientes que não foram documentados.
+
+### A janela de consistência dentro da fórmula
+
+Quando gradientes recentes apontam de maneira persistente na mesma direção, uma memória ponderada desses gradientes tende a manter magnitude. Quando os sinais se cancelam, essa memória tende a diminuir. Na regra dos slides, m2² mede a intensidade dessa memória e s controla quanto ela participa da atualização.
+
+O mecanismo é direto: subtrair s·m2² reduz d. Como o passo divide por raiz(d), um denominador menor permite um passo maior. O `max` interrompe essa redução em v/c. Isso evita normalização por um valor negativo ou excessivamente pequeno em relação a v. Se v=0, a fórmula resumida ainda exige estabilização numérica na implementação.
+
+Exemplo para uma coordenada, mantendo v=4, m1=0,2, c=4 e s=1:
+
+| Memória m2² | v − s·m2² | Piso v/c | d escolhido | Tamanho do passo / eta |
+|---:|---:|---:|---:|---:|
+| 0 | 4 | 1 | 4 | 0,1000 |
+| 1 | 3 | 1 | 3 | 0,1155 |
+| 3 | 1 | 1 | 1 | 0,2000 |
+| 4 | 0 | 1 | 1 | 0,2000 |
+
+O exemplo isola o efeito da memória no denominador. Em um treinamento, m1, m2 e v mudam juntos. Uma consistência maior permite uma amplificação relativa maior; ela não garante que o passo absoluto aumente em toda comparação entre épocas.
+
+Para s ≥ 0 e c ≥ 1, o piso garante `v/c ≤ d ≤ v`. Sem epsilon, e para v>0, o ganho sobre o denominador raiz(v) fica entre 1 e raiz(c), considerando os mesmos momentos naquele instante. Assim, c=4 permite até 2× e c=8 até aproximadamente 2,83×. O limite descreve a parte adaptativa do passo e não prova convergência.
+
+### O papel da sigmoide
+
+Na versão AdaSym sem redução temporal, a correção pode permanecer com s=1. Na versão AdaSymSigmoid, o peso da correção diminui com a época. Escrevendo T para o ponto de transição e e para a época atual, a fórmula do slide 7 fica:
+
+$$s(e)=\sigma(T-e)=\frac{1}{1+\exp(e-T)}.$$
+
+| Época em relação a T | Peso aproximado s | Efeito |
+|---|---:|---|
+| T − 5 | 0,9933 | Correção de consistência quase integral |
+| T | 0,5 | Metade do peso da correção |
+| T + 5 | 0,0067 | Denominador próximo da escala v |
+
+O metadata contém o trecho:
+
+```python
+alpha = torch.sigmoid(torch.tensor(15 - cur_epoch))
+val = torch.clamp(v_hat - s_hat.square() * alpha, min=v_hat/8)
+```
+
+Nesse trecho, `alpha` é o peso s dos slides, `s_hat` é a memória m2, `v_hat` é a escala v e o divisor c é 8. O código indica como combinar essas quantidades, mas não inclui suas recorrências. O gráfico ilustrativo da apresentação usa T=5 e o metadata cita T=15 em uma configuração. São escolhas do ponto de transição, não definições diferentes da sigmoide.
+
+Quando s tende a zero, d tende a v e a correção de consistência desaparece. A atualização só coincide com Adam/AdamW completo se os momentos, bias correction, epsilon e weight decay também coincidirem. A equação resumida dos slides não fixa todos esses detalhes.
+
+### Como a fórmula evoluiu na pesquisa
+
+Os slides documentam as seguintes mudanças:
+
+1. **Fórmula encontrada:** `m1 / sqrt(abs(v − m1))`, mostrada no slide 4.
+2. **Quadrado da memória:** `m1 / sqrt(abs(v − m1²))`, para compatibilizar a ordem da memória com a escala v.
+3. **Piso relativo:** `m1 / sqrt(max(v − m1², v/c))`, limitando a amplificação do passo.
+4. **Memória separada:** `m1 / sqrt(max(v − m2², v/c))`, permitindo investigar coeficientes próprios para a memória usada no denominador.
+5. **Peso temporal:** `m1 / sqrt(max(v − s·m2², v/c))`, com a sigmoide controlando por quanto tempo a correção permanece forte.
 
 A primeira expressão subtrai grandezas de ordens diferentes se v representa E[g²] e m1 representa E[g]. A versão com m1² corrige a compatibilidade dimensional. O valor absoluto transforma qualquer diferença negativa em uma normalização positiva, mas sua interpretação depende da diferença entre as janelas. O piso v/c torna explícito um limite relativo do denominador. A sigmoide controla quanto da correção permanece ao longo do treinamento.
 
@@ -30,24 +93,26 @@ As matrizes existentes permitem descrever a loss registrada e localizar valores 
 
 O histórico já contém um controle relevante de escala do passo: nos arquivos de 150 posições, a média registrada é 0,135194 para AdamW, 0,120462 para AdaSym e 0,109575 para o arquivo descrito como AdamW com LR 2×. Nas últimas dez posições, AdaSym tem média menor, 0,038349 contra 0,041124 do controle 2×. Essa diferença entre velocidade inicial e loss tardia ajuda a formular a próxima comparação. O conflito de rótulo MNIST/Fashion-MNIST e a ausência do código impedem tratar esses números como um experimento controlado já estabelecido. O mapa em `docs/mapa_experimentos.md` organiza as condições relatadas, incluindo os testes de LR, sigmoide, piso e betas.
 
-## 3. Janela de consistência
+## 3. Extensão opcional: janela comum com consistência normalizada
+
+**Esta seção introduz uma proposta adicional da revisão.** As definições mu_t, u_t e q_t a seguir não constam da formulação original dos slides e não são atribuídas aos treinamentos do autor. A letra mu identifica a média do gradiente nesta extensão, enquanto s(e) continua identificando o peso temporal dos slides. A extensão usa uma janela comum para tornar a consistência normalizada interpretável e testável.
 
 Para cada coordenada i, mantemos uma média exponencial do gradiente e uma média do gradiente ao quadrado, ambas com o mesmo beta:
 
-$$s_t=\beta_w s_{t-1}+(1-\beta_w)g_t,$$
+$$\mu_t=\beta_w \mu_{t-1}+(1-\beta_w)g_t,$$
 $$u_t=\beta_w u_{t-1}+(1-\beta_w)g_t^2.$$
 
 Com estado inicial zero, usamos a mesma correção de viés nas duas:
 
-$$\widehat s_t=\frac{s_t}{1-\beta_w^t},\qquad \widehat u_t=\frac{u_t}{1-\beta_w^t}.$$
+$$\widehat \mu_t=\frac{\mu_t}{1-\beta_w^t},\qquad \widehat u_t=\frac{u_t}{1-\beta_w^t}.$$
 
 A consistência proposta é
 
-$$q_t=\operatorname{clip}\left(\frac{\widehat s_t^2}{\widehat u_t+\epsilon^2},0,1\right).$$
+$$q_t=\operatorname{clip}\left(\frac{\widehat \mu_t^2}{\widehat u_t+\epsilon^2},0,1\right).$$
 
 As operações são coordenada a coordenada. A expressão tem interpretação de momento normalizado: a média mantém seu peso quando os gradientes concordam e sofre cancelamento quando mudam de sinal. Oscilações de magnitude também reduzem q.
 
-Com pesos normalizados não negativos, Jensen garante `(média g)² ≤ média(g²)`. Assim, a razão pertence a [0,1], salvo arredondamento. Usar a mesma janela e a mesma correção de viés é essencial para essa interpretação. A subtração histórica `v − m2²`, com v e m2 calculados em janelas diferentes, não oferece essa propriedade.
+Com pesos normalizados não negativos, Jensen garante `(média g)² ≤ média(g²)`. Assim, a razão pertence a [0,1], salvo arredondamento. Usar a mesma janela e a mesma correção de viés é essencial para essa interpretação. Na subtração dos slides `v − m2²`, essa propriedade não pode ser assumida quando v e m2 usam janelas ou ponderações diferentes. A recorrência original precisa ser recuperada para estabelecer a relação exata entre eles.
 
 ### Exemplos sem ambiguidade
 
@@ -82,7 +147,7 @@ $$N_{\mathrm{eff},t}=\frac{1+\beta_w}{1-\beta_w}\frac{1-\beta_w^t}{1+\beta_w^t}.
 
 Janelas curtas reagem cedo, mas podem confundir ruído com persistência. Janelas longas reduzem esse ruído e atrasam a resposta a inversões. No primeiro passo não nulo, q é praticamente 1 mesmo sem evidência de persistência. O warmup reduz gradualmente a amplificação inicial. Ele não elimina esse viés nem substitui a análise da janela.
 
-## 4. Regra de atualização proposta
+## 4. Regra adicional para a janela comum
 
 Mantemos os momentos do Adam separados da janela:
 
@@ -134,9 +199,33 @@ Cada expressão usa a mesma grade de LR e as mesmas sementes de triagem. A sele�
 
 Uma extensão deve usar árvores tipadas de profundidade limitada, deduplicação algébrica e comparação numérica de expressões equivalentes. Testes com gradiente zero, sinal invertido, spikes e escalas diferentes devem filtrar fórmulas antes de treinar redes. Operações protegidas precisam registrar quando a proteção atua, pois ela altera a fórmula efetiva.
 
-## 6. Evidência nova e interpretação
+## 6. Resultados disponíveis: testes do autor e ensaio adicional
+
+### Experimentos realizados pelo autor
+
+O relatório `results/original_tests/report.md` incorpora os resultados de `Data` com as condições do metadata. Ele inclui as comparações em Fashion-MNIST e CIFAR-10, o controle de LR 2×, as varreduras de LR e de transição da sigmoide, as grades de coeficientes de m2 e os contadores do piso.
+
+| Teste do autor | Condições registradas | Resultado recalculado |
+|---|---|---|
+| AdaSym / AdaSymSigmoid / AdamW | Fashion-MNIST, 100 épocas | Médias na curva: 0,291404 / 0,287134 / 0,302175. Sigmoid tem menor média na curva e nas últimas dez épocas |
+| AdaSym / AdamW | LeNet, Fashion-MNIST, 150 épocas, LR 1e-3 | Médias nas últimas dez épocas: 0,038349 / 0,041992 |
+| Variante AdaSym nored | Mesmo grupo de arquivos LeNet / Fashion-MNIST, sem redução temporal pelo nome | Média nas últimas dez épocas: 0,038083; ligação exata entre scheduler e arquivos documentada no mapa |
+| AdaSymSigmoid / AdamW | CIFAR-10, ResNet-20, 150 épocas, LR 1e-3, WD 1e-2, T=15, piso v/8 | Médias nas últimas dez épocas: 0,015382 / 0,017411 |
+| AdamW com LR 2× | LeNet, 150 épocas, dataset descrito de forma diferente entre metadata e slides | Média na curva 0,109575, menor que 0,120462 de AdaSym; no trecho final AdaSym tem média menor |
+| LR de AdaSym, 80 pontos | 300 épocas, 10% Fashion-MNIST, AUC, WD 1e-2, valores (0,75; 0,35) | Mínimo 101,313248, índice 54; a grade de LRs não foi fornecida |
+| LRs comparativas, 27 pontos | Grade reconstruída do metadata de 1e-4 a 9e-2 | Mínimos 109,020409 e 105,941498; LRs inferidas 0,02 e 0,04 |
+| Ponto de transição da sigmoide | LeNet, 20% Fashion-MNIST, 150 épocas, LR 1e-3, WD 1e-2, faixa 0–50 | Menor AUC 121,601784, índice 17 |
+| beta3 / beta4 de m2 | Duas grades de 10 × 70 | Mínimos em (0,584341; 0,740568) e (0,674355; 0,406159), como nos slides |
+| Ativação do piso v/4 | LeNet, Fashion-MNIST, 150 registros | Razão final c4/full = 9,9777%; c2/full = 14,0758% |
+| Divisor do piso, 2–20 | LeNet, 20% Fashion-MNIST, 150 épocas, LR 1e-3, WD 1e-2, sem decaimento | Teste descrito no metadata; arquivo `div_aucloss` não incluído |
+
+Esses experimentos integram a evidência original da pesquisa. As losses menores em várias comparações apoiam investigar a dinâmica do AdaSym. A falta de identificação do split e das sementes limita o alcance das conclusões, sem transformar os testes existentes em experimentos apenas planejados. As notas da auditoria complementam essa apresentação dos resultados.
+
+### Ensaio sintético adicional desta revisão
 
 O experimento incluído treina um MLP tanh 12–24–2 em classificação sintética não linear. A triagem usa duas inicializações. A confirmação usa cinco inicializações novas e novas amostras, mantendo o mesmo gerador da tarefa. As configurações são congeladas antes de avaliar o teste. A seleção do checkpoint usa validação.
+
+Esse ensaio usa a extensão de janela comum e uma reconstrução explicitada do denominador histórico. Ele não executa o código original de m2 e não substitui os experimentos de visão realizados pelo autor.
 
 No ensaio de 35 épocas, a busca escolheu `sqrt(q)`. O AdamW com grade de LR ampliada pelo fator sqrt(c) obteve melhor resultado de teste que as variantes AdaSym. O relatório com médias, dispersão e todos os logs está em `results/synthetic/report.md`. Assim, este ensaio não confirma uma vantagem própria da janela. A melhor LR de várias famílias está na borda da grade, sinal de que a faixa deve ser ampliada na próxima fase, usando outro teste ainda não consultado.
 
@@ -148,13 +237,13 @@ O protocolo completo aparece em `docs/protocolo.md`. As comparações centrais s
 
 Medir loss e acurácia de validação, tempo até alvo, taxa de divergência, normas de update, distribuição de q, ganho aplicado e frequência de saturação. Um teto que atua quase sempre transforma a regra em um escalonamento quase constante da LR. Isso enfraquece a explicação por consistência seletiva e precisa ser mostrado.
 
-Testar Fashion-MNIST com LeNet, CIFAR-10 com ResNet-20 e ao menos uma tarefa fora de visão. Congelar a regra antes da avaliação de transferência. A configuração histórica citada é parte do contexto, não uma reprodução já obtida.
+Reproduzir com logs completos os testes já realizados pelo autor em Fashion-MNIST com LeNet e CIFAR-10 com ResNet-20, e acrescentar ao menos uma tarefa fora de visão. Congelar a regra antes da avaliação de transferência. Os treinamentos originais já existem nos dados; o que permanece futuro é sua reprodução com uma especificação completa e a avaliação das extensões adicionais.
 
 ## 8. Critério para uma ideia final
 
 Uma fórmula só deve se tornar candidata final quando superar controles de LR sob orçamento equivalente, repetir o efeito em sementes e tarefas distintas e justificar seu custo adicional. A versão escolhida precisa manter implementação, configurações, logs, falhas e ablações rastreáveis.
 
-O resultado desta revisão é uma hipótese operacional: **amplificar de forma limitada o passo do AdamW segundo a consistência de gradientes em uma janela comum**. A janela linear é o ponto de partida interpretável. A transformação raiz é uma candidata surgida na triagem sintética, ainda sem confirmação de superioridade. As evidências atuais não justificam declarar um otimizador final.
+A hipótese central do AdaSym permanece a dos slides: **amplificar o passo por uma correção de consistência m2², limitada por um piso relativo v/c e eventualmente reduzida por uma sigmoide**. Os experimentos do autor documentam sua investigação empírica. A janela comum normalizada é uma extensão opcional para estudar essa ideia com uma estatística explicitada. A transformação raiz é uma candidata apenas dessa extensão, surgida no ensaio sintético. A seleção de uma regra final deve combinar a recuperação do código original, os testes já realizados e uma rodada controlada de confirmação.
 
 ## 9. Relação com trabalhos anteriores
 
