@@ -52,7 +52,7 @@ Uma configuração registrada em `metadata.txt` usa `sigmoid(15 − cur_epoch)` 
 
 ## Resultados disponíveis
 
-Os dados dos experimentos estão em `data/original/`. O [relatório dos experimentos](results/original_tests/report.md) contém os números completos e as condições descritas no metadata. As losses não identificam se o registro pertence ao treino, à validação ou ao teste; por isso, as comparações abaixo descrevem a dinâmica das curvas, sem concluir sobre acurácia ou generalização.
+Os dados dos experimentos estão em `data/original/`. O [relatório dos experimentos](results/original_tests/report.md) contém os números completos e as condições descritas no metadata. As losses pertencem ao conjunto de treino; as comparações abaixo descrevem a dinâmica das curvas.
 
 ![Curvas de treinamento em Fashion-MNIST e CIFAR-10](results/original_tests/author_training.png)
 
