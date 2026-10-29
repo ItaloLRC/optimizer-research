@@ -1,0 +1,80 @@
+{
+  "target": 0.1,
+  "consecutive_epochs": 5,
+  "final_window": 20,
+  "design": "post hoc exploratory description; no equivalence test; row seeds and data split unrecorded",
+  "results": {
+    "fashion_adamw": {
+      "file": "AdamW_losses.npy",
+      "target_epoch_mean_curve": 73,
+      "target_epoch_per_row": [
+        79,
+        70,
+        75
+      ],
+      "last20_mean": 0.043519413513526936,
+      "last20_temporal_sd_mean": 0.003417294327043595,
+      "last20_successive_change_rms": 0.0041384972707256325
+    },
+    "fashion_adasym": {
+      "file": "AdaSym_losses.npy",
+      "target_epoch_mean_curve": 63,
+      "target_epoch_per_row": [
+        69,
+        57,
+        67
+      ],
+      "last20_mean": 0.03963415506797264,
+      "last20_temporal_sd_mean": 0.003162593326551364,
+      "last20_successive_change_rms": 0.003927882407560517
+    },
+    "fashion_nored": {
+      "file": "AdaSym_loss_fmnist_nored.npy",
+      "target_epoch_mean_curve": 60,
+      "target_epoch_per_row": [
+        56,
+        57,
+        62
+      ],
+      "last20_mean": 0.03907059044769965,
+      "last20_temporal_sd_mean": 0.00753544184529435,
+      "last20_successive_change_rms": 0.011916904400226825
+    },
+    "fashion_adamw_2x": {
+      "file": "Adam_losses2x.npy",
+      "target_epoch_mean_curve": 54,
+      "target_epoch_per_row": [
+        49,
+        53,
+        57
+      ],
+      "last20_mean": 0.04209643167277845,
+      "last20_temporal_sd_mean": 0.005113990411910975,
+      "last20_successive_change_rms": 0.0076904335731456585
+    },
+    "cifar_adamw": {
+      "file": "AdamW_losses_cifar10.npy",
+      "target_epoch_mean_curve": 22,
+      "target_epoch_per_row": [
+        22,
+        22,
+        23
+      ],
+      "last20_mean": 0.01801718977253884,
+      "last20_temporal_sd_mean": 0.004495490021222696,
+      "last20_successive_change_rms": 0.006553766621252642
+    },
+    "cifar_adasym_sigmoid": {
+      "file": "AdaSymSig_losses_cifar10.npy",
+      "target_epoch_mean_curve": 16,
+      "target_epoch_per_row": [
+        16,
+        16,
+        17
+      ],
+      "last20_mean": 0.015439929733906883,
+      "last20_temporal_sd_mean": 0.004120112895867802,
+      "last20_successive_change_rms": 0.005705604596948694
+    }
+  }
+}

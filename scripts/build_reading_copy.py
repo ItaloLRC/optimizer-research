@@ -32,7 +32,7 @@ def render(path, before=None):
 
 
 def main():
-    sections = [('inicio','Visão geral','README.md'),('testes','Testes do autor','results/original_tests/report.md'),('pesquisa','Formulação detalhada','docs/pesquisa.md'),('mapa','Mapa dos testes','docs/mapa_experimentos.md'),('historico','Notas da auditoria','results/historical/report.md'),('novo','Ensaio adicional','results/synthetic/report.md'),('protocolo','Próximos experimentos','docs/protocolo.md'),('verificacao','Verificação','results/verification.md'),('origem','Proveniência','docs/proveniencia.md')]
+    sections = [('inicio','Visão geral','README.md'),('convergencia','Convergência observada','results/original_tests/convergence.md'),('testes','Testes do autor','results/original_tests/report.md'),('pesquisa','Formulação detalhada','docs/pesquisa.md'),('mapa','Mapa dos testes','docs/mapa_experimentos.md'),('historico','Notas da auditoria','results/historical/report.md'),('novo','Ensaio adicional','results/synthetic/report.md'),('protocolo','Próximos experimentos','docs/protocolo.md'),('verificacao','Verificação','results/verification.md'),('origem','Proveniência','docs/proveniencia.md')]
     navigation = ''.join(f'<a href="#{id}">{label}</a>' for id,label,_ in sections)
     content = []
     for id,label,path in sections:

@@ -1,59 +1,61 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AdaSym · Janela de consistência</title><style>
 :root{color-scheme:light;--ink:#182937;--teal:#006e69;--line:#d5e0e3}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f7f9f9;color:var(--ink);font:17px/1.7 'Segoe UI',Arial,sans-serif}header{background:#142e3b;color:white;padding:55px max(28px,calc((100vw - 1040px)/2)) 42px}header p{max-width:780px;color:#d9e8e8;margin:10px 0}header h1{font-size:46px;line-height:1.15;margin:8px 0 18px}.eyebrow{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#8dd1c5}nav{padding:20px 28px;background:white;border-bottom:1px solid var(--line);display:flex;justify-content:center;gap:10px 24px;flex-wrap:wrap}nav a{font-size:14px}main{max-width:1100px;margin:auto;padding:30px 40px 70px;background:white}section{padding:32px 0 16px;border-bottom:1px solid var(--line);scroll-margin-top:20px}section h1{font-size:29px;line-height:1.35;margin:0 0 24px}h2{font-size:24px;margin-top:40px;line-height:1.35}h3{font-size:20px;margin-top:30px}a{color:var(--teal);text-underline-offset:3px}p{margin:16px 0}table{border-collapse:collapse;font-size:14px;display:block;overflow-x:auto;width:100%;margin:24px 0}td,th{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{background:#edf4f4}code{font:0.87em Consolas,monospace;background:#edf2f4;padding:2px 5px;border-radius:3px;overflow-wrap:anywhere}pre{background:#edf2f4;padding:18px;overflow-x:auto}pre code{padding:0}.equation{padding:18px 12px;margin:20px 0;background:#f3f8f7;overflow-x:auto;font-size:20px}figure{margin:22px 0 40px}img{max-width:100%;height:auto}figcaption{font-size:13px;color:#506875}li{margin:8px 0}footer{color:#536b77;padding:30px;text-align:center;font-size:13px}@media(max-width:700px){header h1{font-size:35px}main{padding:20px}body{font-size:16px}.equation{font-size:16px}}@media print{nav{display:none}header{background:white;color:black;padding:20px}header p{color:black}main{padding:0}.equation{break-inside:avoid}h2,h3{break-after:avoid}}
-</style></head><body><header><div class="eyebrow">Optimizer Research · AdaSym</div><h1>Uma janela de consistência<br>para adaptar o passo</h1><p>Fundamentação matemática, análise dos testes originais e uma implementação para testar a hipótese.</p><p>Revisão de 29 de outubro de 2026 · Pesquisa exploratória</p></header><nav><a href="#inicio">Visão geral</a><a href="#testes">Testes do autor</a><a href="#pesquisa">Formulação detalhada</a><a href="#mapa">Mapa dos testes</a><a href="#historico">Notas da auditoria</a><a href="#novo">Ensaio adicional</a><a href="#protocolo">Próximos experimentos</a><a href="#verificacao">Verificação</a><a href="#origem">Proveniência</a></nav><main><section id="inicio"><h1>Optimizer Research · AdaSym</h1>
-<p>Pesquisa sobre <strong>otimizadores com uma janela de consistência dos gradientes</strong>, usando busca simbólica para explorar e restringir as regras de atualização.</p>
-<p>A ideia central é amplificar o passo quando direção e magnitude do gradiente persistem. A pesquisa começou com a exploração de fórmulas por regressão simbólica, seguida de ajustes e testes empíricos. A apresentação AdaSym e os experimentos do autor em <code>Data</code>, descritos no <code>metadata.txt</code>, constituem a base deste projeto.</p>
-<p><strong>Comece pela <a href="docs/pesquisa.md">pesquisa completa</a></strong> ou abra <code>LEIA-ME.html</code> no navegador. Consulte também o <a href="docs/mapa_experimentos.md">mapa dos testes recebidos</a>, o <a href="docs/protocolo.md">protocolo de experimentos</a>, a <a href="docs/proveniencia.md">proveniência</a> e os resultados abaixo.</p>
-<h2>Formulação</h2>
-<h3>A regra do AdaSym apresentada nos slides</h3>
-<p>O ponto de partida é uma atualização do tipo Adam: usar a direção acumulada dos gradientes, m1, e dividir seu tamanho pela raiz de v, uma memória da magnitude dos gradientes ao quadrado. AdaSym altera esse denominador para permitir passos maiores quando a memória da direção, m2, permanece forte.</p>
-<p>Na notação dos slides, a regra final é:</p>
-<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>d</mi><mo>&#x0003D;</mo><mo>max</mo><mrow><mo stretchy="true" fence="true" form="prefix">&#x00028;</mo><mi>v</mi><mo>&#x02212;</mo><mi>s</mi><mspace width="0.167em" /><msubsup><mi>m</mi><mn>2</mn><mn>2</mn></msubsup><mo>&#x0002C;</mo><mfrac><mrow><mi>v</mi></mrow><mrow><mi>c</mi></mrow></mfrac><mo stretchy="true" fence="true" form="postfix">&#x00029;</mo></mrow><mo>&#x0002C;</mo><mspace width="2em" /><msub><mi>&#x003B8;</mi><mrow><mi>k</mi><mo>&#x0002B;</mo><mn>1</mn></mrow></msub><mo>&#x0003D;</mo><msub><mi>&#x003B8;</mi><mi>k</mi></msub><mo>&#x02212;</mo><mi>&#x003B7;</mi><mfrac><mrow><msub><mi>m</mi><mn>1</mn></msub></mrow><mrow><msqrt><mi>d</mi></msqrt></mrow></mfrac><mo>&#x0002E;</mo></mrow></math></div>
+</style></head><body><header><div class="eyebrow">Optimizer Research · AdaSym</div><h1>Uma janela de consistência<br>para adaptar o passo</h1><p>Fundamentação matemática, análise dos testes originais e uma implementação para testar a hipótese.</p><p>Revisão de 29 de outubro de 2026 · Pesquisa exploratória</p></header><nav><a href="#inicio">Visão geral</a><a href="#convergencia">Convergência observada</a><a href="#testes">Testes do autor</a><a href="#pesquisa">Formulação detalhada</a><a href="#mapa">Mapa dos testes</a><a href="#historico">Notas da auditoria</a><a href="#novo">Ensaio adicional</a><a href="#protocolo">Próximos experimentos</a><a href="#verificacao">Verificação</a><a href="#origem">Proveniência</a></nav><main><section id="inicio"><h1>AdaSym</h1>
+<p>AdaSym é um otimizador experimental para redes neurais que adapta o tamanho do passo à consistência recente dos gradientes. Quando os gradientes mantêm uma direção, o método permite atualizações maiores. Um limite no denominador controla essa amplificação, e uma variante com sigmoide reduz o incentivo ao longo do treinamento.</p>
+<p>A pesquisa usa regressão simbólica para explorar fórmulas de atualização. As expressões promissoras passam por simplificação e testes empíricos, até restringir a busca a regras que possam ser interpretadas e comparadas com AdamW. O objetivo é reduzir o número de épocas necessário para chegar a uma loss baixa, preservando o comportamento estável no final do treino.</p>
+<p>Os experimentos incluem Fashion-MNIST com LeNet e CIFAR-10 com ResNet-20, além de varreduras de hiperparâmetros. As curvas dessas duas comparações, descritas com a mesma taxa de aprendizado, apoiam a hipótese de convergência mais rápida com oscilação final da loss comparável à de AdamW. A seção de resultados apresenta as medidas e as exceções observadas.</p>
+<p>A <a href="docs/pesquisa.md">pesquisa completa</a> desenvolve a fundamentação e as extensões do método. Para uma leitura no navegador, abra <code>LEIA-ME.html</code>. O <a href="docs/mapa_experimentos.md">mapa de experimentos</a> identifica os arquivos de cada teste, e o <a href="docs/protocolo.md">protocolo de avaliação</a> descreve as próximas comparações. A <a href="docs/proveniencia.md">proveniência</a> registra a origem dos dados.</p>
+<h2>Como funciona</h2>
+<p>Durante o treinamento, o gradiente indica como alterar os pesos para reduzir a função de perda, ou loss. Como cada minibatch contém exemplos diferentes, essa indicação varia de um passo para outro. Adam usa uma média dos gradientes para definir a direção e uma média dos gradientes ao quadrado para ajustar a escala da atualização.</p>
+<p>AdaSym acrescenta uma memória da direção, m2, à normalização. Gradientes que concordam tendem a manter essa memória forte. Mudanças de sinal tendem a produzir cancelamento. Essa é a ideia da janela de consistência: usar o histórico recente para decidir quanto ampliar o passo em cada coordenada.</p>
+<h3>Regra de atualização</h3>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>d</mi><mo>&#x0003D;</mo><mo>max</mo><mrow><mo stretchy="true" fence="true" form="prefix">&#x00028;</mo><mi>v</mi><mo>&#x02212;</mo><mi>s</mi><mo>&#x000B7;</mo><msubsup><mi>m</mi><mn>2</mn><mn>2</mn></msubsup><mo>&#x0002C;</mo><mfrac><mrow><mi>v</mi></mrow><mrow><mi>c</mi></mrow></mfrac><mo stretchy="true" fence="true" form="postfix">&#x00029;</mo></mrow><mo>&#x0002C;</mo><mspace width="2em" /><msub><mi>&#x003B8;</mi><mrow><mi>k</mi><mo>&#x0002B;</mo><mn>1</mn></mrow></msub><mo>&#x0003D;</mo><msub><mi>&#x003B8;</mi><mi>k</mi></msub><mo>&#x02212;</mo><mi>&#x003B7;</mi><mfrac><mrow><msub><mi>m</mi><mn>1</mn></msub></mrow><mrow><msqrt><mi>d</mi></msqrt></mrow></mfrac><mo>&#x0002E;</mo></mrow></math></div>
 <table>
 <thead>
 <tr>
 <th>Termo</th>
-<th>Papel na atualização</th>
+<th>Significado</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>m1</td>
-<td>Memória da direção usada para mover os pesos</td>
+<td>Média dos gradientes que define a direção da atualização</td>
 </tr>
 <tr>
 <td>v</td>
-<td>Memória da magnitude dos gradientes ao quadrado; fornece a escala de normalização</td>
+<td>Média dos gradientes ao quadrado, usada para normalizar o passo</td>
 </tr>
 <tr>
 <td>m2</td>
-<td>Memória adicional da direção, associada à janela de consistência; <strong>não é o segundo momento v</strong></td>
+<td>Memória adicional da direção recente; tem um papel distinto de v</td>
 </tr>
 <tr>
 <td>s</td>
-<td>Peso da correção de consistência: 1 na variante constante ou uma sigmoide na variante temporal</td>
+<td>Peso da correção de consistência, constante ou variável no tempo</td>
 </tr>
 <tr>
 <td>c</td>
-<td>Divisor do piso do denominador; os testes incluem v/4 e v/8</td>
+<td>Divisor do piso v/c, que limita o aumento do passo</td>
 </tr>
 <tr>
 <td>eta</td>
 <td>Taxa de aprendizado</td>
 </tr>
+<tr>
+<td>theta</td>
+<td>Pesos da rede</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Como funciona:</strong> quando os gradientes recentes concordam, sua memória m2 tende a manter magnitude. Subtrair s·m2² reduz d e aumenta o passo. Quando há cancelamento das direções, a correção tende a diminuir. O <code>max</code> impede que d fique abaixo de v/c e limita a amplificação relativa a sqrt(c), para o mesmo estado dos momentos. Com c=4, o limite é 2×; com c=8, aproximadamente 2,83×. Esse é um limite relativo do passo adaptativo, não uma garantia de convergência.</p>
-<p>Na variante <strong>AdaSymSigmoid</strong>, os slides usam uma sigmoide decrescente. Escrevendo T para a época de transição e e para a época atual:</p>
-<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>e</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mi>&#x003C3;</mi><mo stretchy="false">&#x00028;</mo><mi>T</mi><mo>&#x02212;</mo><mi>e</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>1</mn><mo>&#x0002B;</mo><mi>exp</mi><mo stretchy="false">&#x00028;</mo><mi>e</mi><mo>&#x02212;</mo><mi>T</mi><mo stretchy="false">&#x00029;</mo></mrow></mfrac><mo>&#x0002E;</mo></mrow></math></div>
-<p>Antes de T, a correção permanece forte. Em T, seu peso é 0,5. Depois, ela diminui e o denominador se aproxima de v. O metadata contém <code>sigmoid(15 − cur_epoch)</code> e <code>max(v_hat − alpha·s_hat², v_hat/8)</code>: nesse trecho, <code>alpha</code> corresponde ao peso s dos slides e <code>s_hat</code> corresponde à memória m2. A recorrência exata de m2, incluindo beta3/beta4, não foi fornecida e não é substituída por uma definição inventada.</p>
-<p>Exemplo com v=4, m1=0,2, c=4 e s=1:</p>
+<p>A correção s·m2² diminui d. Como a atualização divide por raiz(d), essa diminuição aumenta o passo. O <code>max</code> impede que d caia abaixo de v/c. Para o mesmo estado dos momentos, a amplificação adaptativa fica entre 1 e raiz(c): com c=4, até 2×; com c=8, até aproximadamente 2,83×.</p>
+<p>Por exemplo, considere uma coordenada com v=4, m1=0,2, c=4 e s=1:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: right;">Valor de m2²</th>
-<th style="text-align: right;">Denominador d</th>
+<th style="text-align: right;">m2²</th>
+<th style="text-align: right;">d</th>
 <th style="text-align: right;">Tamanho do passo, sem o fator eta</th>
 </tr>
 </thead>
@@ -75,74 +77,244 @@
 </tr>
 </tbody>
 </table>
-<p>Essa é a explicação do otimizador dos slides. A <a href="docs/pesquisa.md">pesquisa completa</a> também acompanha a sequência de modificações da fórmula descoberta até essa regra. Epsilon, correção de viés e weight decay exigem uma especificação de implementação além da equação resumida da apresentação.</p>
+<p>No treinamento, m1, m2 e v mudam juntos. O limite descreve quanto o denominador pode ampliar o passo em um dado estado; ele não garante descida da loss a cada atualização. Epsilon, correção de viés e weight decay completam a especificação numérica da implementação.</p>
+<h3>Redução temporal da correção</h3>
+<p>A variante AdaSym sem redução temporal mantém s=1. AdaSymSigmoid usa uma sigmoide decrescente, com época de transição T e época atual e:</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>s</mi><mo stretchy="false">&#x00028;</mo><mi>e</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mi>&#x003C3;</mi><mo stretchy="false">&#x00028;</mo><mi>T</mi><mo>&#x02212;</mo><mi>e</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>1</mn><mo>&#x0002B;</mo><mi>exp</mi><mo stretchy="false">&#x00028;</mo><mi>e</mi><mo>&#x02212;</mo><mi>T</mi><mo stretchy="false">&#x00029;</mo></mrow></mfrac><mo>&#x0002E;</mo></mrow></math></div>
+<p>Antes de T, o método aplica quase toda a correção de consistência. Em T, o peso é 0,5. Depois, o denominador se aproxima de v. Essa transição procura combinar passos maiores no início com uma normalização mais próxima da usada por Adam no final.</p>
+<p>Uma configuração registrada em <code>metadata.txt</code> usa <code>sigmoid(15 − cur_epoch)</code> e <code>max(v_hat − alpha·s_hat², v_hat/8)</code>. Nessa implementação, <code>alpha</code> é o peso temporal s, e <code>s_hat</code> é a memória m2. Os testes incluem pisos v/4 e v/8. A recorrência original de m2, incluindo o papel de beta3 e beta4, ainda precisa ser recuperada para reproduzir esses treinamentos exatamente.</p>
 <h2>Resultados disponíveis</h2>
-<h3>Testes realizados pelo autor</h3>
-<p>Os resultados abaixo vêm dos seus arquivos originais e das condições do metadata. O <a href="results/original_tests/report.md">relatório dos testes do autor</a> reúne tabelas, gráficos, arquivos associados e a interpretação de cada experimento. Os valores das tabelas são losses registradas; o split não está identificado nos arquivos recebidos.</p>
+<p>Os dados dos experimentos estão em <code>data/original/</code>. O <a href="results/original_tests/report.md">relatório dos experimentos</a> contém os números completos e as condições descritas no metadata. As losses não identificam se o registro pertence ao treino, à validação ou ao teste; por isso, as comparações abaixo descrevem a dinâmica das curvas, sem concluir sobre acurácia ou generalização.</p>
+<p><img alt="Curvas de treinamento em Fashion-MNIST e CIFAR-10" src="results/original_tests/author_training.png" /></p>
+<h3>Rapidez de convergência e comportamento final</h3>
+<p>Para medir a redução da loss em número de épocas, foi usado o primeiro trecho de cinco épocas consecutivas em que a curva média das três trajetórias permanece em loss ≤ 0,1. A oscilação final é a média dos desvios padrão temporais de cada trajetória nas últimas 20 épocas.</p>
 <table>
 <thead>
 <tr>
-<th>Teste</th>
-<th>Condições registradas</th>
-<th>Resultado disponível</th>
+<th>Experimento</th>
+<th>Método</th>
+<th style="text-align: right;">Época até o alvo</th>
+<th style="text-align: right;">Loss média final, 20 épocas</th>
+<th style="text-align: right;">DP temporal final, 20 épocas</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>AdaSym × AdaSymSigmoid × AdamW</td>
-<td>Fashion-MNIST, 100 épocas</td>
-<td>Média da loss na curva: <strong>0,291404 / 0,287134 / 0,302175</strong>, respectivamente. Sigmoid tem a menor média também nas últimas 10 épocas</td>
+<td>Fashion-MNIST / LeNet</td>
+<td>AdamW</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">0,043519</td>
+<td style="text-align: right;">0,003417</td>
 </tr>
 <tr>
-<td>AdaSym × AdamW e variante sem redução temporal</td>
-<td>LeNet, Fashion-MNIST, 150 épocas, LR 1e-3; o metadata cita piso v/4 e valores (0,75; 0,35) em um dos trechos</td>
-<td>Média das últimas 10 épocas: <strong>AdaSym 0,038349</strong>, <strong>AdamW 0,041992</strong> e <strong>AdaSym nored 0,038083</strong>. A associação exata de cada variante ao scheduler está indicada no relatório</td>
+<td>Fashion-MNIST / LeNet</td>
+<td>AdaSym</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">0,039634</td>
+<td style="text-align: right;">0,003163</td>
 </tr>
 <tr>
-<td>AdaSymSigmoid × AdamW</td>
-<td>CIFAR-10, ResNet-20, 150 épocas, LR 1e-3, WD 1e-2, transição na época 15, piso v/8</td>
-<td>Média nas últimas 10 épocas: <strong>0,015382 × 0,017411</strong>. Média na curva: <strong>0,069594 × 0,081801</strong></td>
+<td>CIFAR-10 / ResNet-20</td>
+<td>AdamW</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0,018017</td>
+<td style="text-align: right;">0,004495</td>
 </tr>
 <tr>
-<td>AdaSym × AdamW com LR 2×</td>
-<td>LeNet, 150 épocas; metadata diz MNIST e slides dizem Fashion-MNIST</td>
-<td>AdamW 2× tem menor média na curva (<strong>0,109575 × 0,120462</strong>), enquanto AdaSym tem menor média nas últimas 10 épocas (<strong>0,038349 × 0,041124</strong>)</td>
-</tr>
-<tr>
-<td>Varreduras de LR</td>
-<td>AdaSym: 300 épocas, 10% de Fashion-MNIST, AUC, WD 1e-2, valores (0,75; 0,35); mais dois vetores de 27 LRs</td>
-<td>Na varredura de 80 pontos, mínimo <strong>101,313248</strong>, índice 54, sem eixo de LR salvo. Nos vetores de 27 pontos, mínimos <strong>109,020409</strong> e <strong>105,941498</strong>; LRs inferidas do metadata <strong>0,02</strong> e <strong>0,04</strong></td>
-</tr>
-<tr>
-<td>Transição da sigmoide</td>
-<td>LeNet, 20% de Fashion-MNIST, 150 épocas, LR 1e-3, WD 1e-2, faixa descrita 0–50</td>
-<td>Menor AUC salva <strong>121,601784</strong>, índice 17 da grade. O relatório distingue o índice da época exata, cujo eixo não foi salvo</td>
-</tr>
-<tr>
-<td>Coeficientes de m2</td>
-<td>Duas grades beta3 × beta4 de 10 × 70 posições</td>
-<td>Mínimos em <strong>(0,584341; 0,740568)</strong> e <strong>(0,674355; 0,406159)</strong>, correspondentes aos destaques dos slides</td>
-</tr>
-<tr>
-<td>Ativação do piso</td>
-<td>LeNet, Fashion-MNIST, piso v/4; vetores com 150 registros</td>
-<td>Razões acumuladas finais: <strong>9,9777%</strong> para c4/full e <strong>14,0758%</strong> para c2/full</td>
-</tr>
-<tr>
-<td>Divisor do piso</td>
-<td>LeNet, 20% de Fashion-MNIST, 150 épocas, LR 1e-3, WD 1e-2, sem decaimento, divisores 2–20</td>
-<td>Experimento descrito no metadata como <code>div_aucloss</code>; arquivo numérico não incluído no material recebido</td>
+<td>CIFAR-10 / ResNet-20</td>
+<td>AdaSymSigmoid</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0,015440</td>
+<td style="text-align: right;">0,004120</td>
 </tr>
 </tbody>
 </table>
-<p><img alt="Testes realizados pelo autor: Fashion-MNIST, LeNet e CIFAR-10" src="results/original_tests/author_training.png" /></p>
-<p>As comparações mostram comportamentos distintos no início e no final do treino. A identificação de seeds e do split permite aprofundar as conclusões; a <a href="results/historical/report.md">auditoria dos arquivos</a> conserva essas observações técnicas e as diferenças entre metadata e slides.</p>
-<h3>Implementação e experimentos adicionais desta revisão</h3>
-<p>A revisão acrescentou uma <strong>variante de janela comum</strong>, em que uma razão normalizada q mede consistência e uma função h(q) controla o denominador. Essa é uma proposta complementar; ela não substitui a fórmula original nem define retroativamente o m2 dos seus testes.</p>
+<p>Nos pares descritos com LR 1e-3, AdaSym chega ao alvo antes de AdamW e termina com loss média menor. A variabilidade temporal no trecho final também é ligeiramente menor nessas duas comparações.</p>
+<p><strong>A hipótese apoiada por esses resultados é que AdaSym pode acelerar a convergência em número de épocas, mantendo estabilidade final comparável à de AdamW nas configurações avaliadas.</strong> Aqui, estabilidade se refere à oscilação observada da loss. Demonstrar igualdade de estabilidade exige uma comparação estatística própria.</p>
+<p>O alvo, as cinco épocas consecutivas e a janela de 20 épocas são resumos exploratórios escolhidos após observar as curvas. O DP temporal inclui qualquer tendência residual no trecho final. Esses números não medem tempo de execução nem dispersão entre sementes. O <a href="results/original_tests/convergence.md">cálculo de convergência</a> apresenta a definição das medidas e os resultados por arquivo.</p>
+<p>Há dois controles que limitam a conclusão. AdamW com LR 2× alcança o mesmo alvo na época 54, antes de AdaSym. Já a variante AdaSym sem redução temporal alcança o alvo na época 60, mas apresenta oscilação final maior, com DP temporal de 0,007535. O efeito depende da taxa de aprendizado e da variante usada.</p>
+<h3>Comparações de loss</h3>
+<p>As médias nas últimas dez épocas e sobre a curva inteira complementam a análise de convergência:</p>
+<table>
+<thead>
+<tr>
+<th>Experimento</th>
+<th>Método</th>
+<th style="text-align: right;">Média nas últimas 10 épocas</th>
+<th style="text-align: right;">Média na curva inteira</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fashion-MNIST, 100 épocas</td>
+<td>AdaSym</td>
+<td style="text-align: right;">0,290194</td>
+<td style="text-align: right;">0,291404</td>
+</tr>
+<tr>
+<td>Fashion-MNIST, 100 épocas</td>
+<td>AdaSymSigmoid</td>
+<td style="text-align: right;">0,282255</td>
+<td style="text-align: right;">0,287134</td>
+</tr>
+<tr>
+<td>Fashion-MNIST, 100 épocas</td>
+<td>AdamW</td>
+<td style="text-align: right;">0,289600</td>
+<td style="text-align: right;">0,302175</td>
+</tr>
+<tr>
+<td>LeNet, 150 épocas</td>
+<td>AdaSym</td>
+<td style="text-align: right;">0,038349</td>
+<td style="text-align: right;">0,120462</td>
+</tr>
+<tr>
+<td>LeNet, 150 épocas</td>
+<td>AdamW</td>
+<td style="text-align: right;">0,041992</td>
+<td style="text-align: right;">0,135194</td>
+</tr>
+<tr>
+<td>LeNet, 150 épocas</td>
+<td>AdaSym sem redução temporal</td>
+<td style="text-align: right;">0,038083</td>
+<td style="text-align: right;">0,117264</td>
+</tr>
+<tr>
+<td>LeNet, 150 épocas</td>
+<td>AdamW com LR 2×</td>
+<td style="text-align: right;">0,041124</td>
+<td style="text-align: right;">0,109575</td>
+</tr>
+<tr>
+<td>CIFAR-10, 150 épocas</td>
+<td>AdaSymSigmoid</td>
+<td style="text-align: right;">0,015382</td>
+<td style="text-align: right;">0,069594</td>
+</tr>
+<tr>
+<td>CIFAR-10, 150 épocas</td>
+<td>AdamW</td>
+<td style="text-align: right;">0,017411</td>
+<td style="text-align: right;">0,081801</td>
+</tr>
+</tbody>
+</table>
+<p>A rodada de 100 épocas compara AdaSym, AdaSymSigmoid e AdamW em Fashion-MNIST. O grupo LeNet de 150 épocas usa LR 1e-3; seu registro cita piso v/4 e valores (0,75; 0,35), com uma ambiguidade na associação entre arquivos e redução temporal. A rodada CIFAR-10 usa ResNet-20, LR 1e-3, weight decay 1e-2, transição na época 15 e piso v/8.</p>
+<p>O controle LR 2× tem dois rótulos de dataset nos registros: MNIST no metadata e Fashion-MNIST na <a href="references/AdaSym-original.pptx">apresentação original</a>. A <a href="results/historical/report.md">auditoria dos arquivos</a> detalha essa diferença, a identificação das trajetórias e as demais lacunas de reprodução.</p>
+<h3>Varreduras de hiperparâmetros</h3>
+<table>
+<thead>
+<tr>
+<th>Teste</th>
+<th>Condições</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LR de AdaSym, 80 pontos</td>
+<td>300 épocas, 10% de Fashion-MNIST, AUC de loss, WD 1e-2, valores (0,75; 0,35)</td>
+<td>Mínimo 101,313248 no índice 54. O eixo de LRs não foi salvo</td>
+</tr>
+<tr>
+<td>LRs comparativas, 27 pontos</td>
+<td>Grade de 1e-4 a 9e-2 reconstruída do metadata</td>
+<td>Mínimos 109,020409 e 105,941498; LRs inferidas de 0,02 e 0,04</td>
+</tr>
+<tr>
+<td>Transição da sigmoide</td>
+<td>LeNet, 20% de Fashion-MNIST, 150 épocas, LR 1e-3, WD 1e-2, faixa de 0 a 50</td>
+<td>Menor AUC 121,601784 no índice 17. A época exata depende do eixo original</td>
+</tr>
+<tr>
+<td>Coeficientes de m2</td>
+<td>Duas grades beta3 × beta4 de 10 × 70</td>
+<td>Mínimos em (0,584341; 0,740568) e (0,674355; 0,406159)</td>
+</tr>
+<tr>
+<td>Ativação do piso v/4</td>
+<td>LeNet, Fashion-MNIST, 150 registros</td>
+<td>Razões acumuladas finais de 9,9777% para c4/full e 14,0758% para c2/full</td>
+</tr>
+<tr>
+<td>Divisor do piso</td>
+<td>LeNet, 20% de Fashion-MNIST, 150 épocas, LR 1e-3, WD 1e-2, sem decaimento, divisores de 2 a 20</td>
+<td>Teste registrado como <code>div_aucloss</code>; o arquivo numérico ainda não está no repositório</td>
+</tr>
+</tbody>
+</table>
+<p>As varreduras investigam a duração da janela, a intensidade da correção e a frequência com que o limite do passo atua. Seus mínimos orientam novas configurações. Os registros ainda precisam de identificação completa das sementes, dos splits e das recorrências para permitir uma confirmação independente.</p>
+<h2>Implementações e extensões</h2>
+<p>O repositório contém uma variante de janela comum: a média dos gradientes e a média dos gradientes ao quadrado usam a mesma ponderação temporal. Uma razão normalizada q mede a consistência, e uma função h(q) controla a correção do denominador. Essa extensão tem uma definição executável; a recorrência histórica de m2 permanece documentada como uma lacuna.</p>
 <ul>
-<li><a href="results/synthetic/report.md">Teste adicional em MLP sintético</a>: triagem de funções h(q), cinco inicializações de confirmação e controle de LR maior. Esse ensaio não demonstrou vantagem sobre AdamW com LR maior e não constitui uma reavaliação dos seus testes de visão.</li>
-<li><a href="results/verification.md">Verificação da implementação adicional</a>: recorrência, limites, gradientes, paridade NumPy/PyTorch e checkpoint.</li>
-</ul></section><section id="testes"><h1>Testes realizados pelo autor</h1>
+<li>O <a href="results/synthetic/report.md">ensaio sintético</a> compara funções h(q), usa cinco inicializações na confirmação e inclui AdamW com LR maior. Nessa tarefa, o controle com LR maior superou as variantes AdaSym.</li>
+<li>A <a href="results/verification.md">verificação da implementação</a> cobre recorrência, limites de ganho, gradientes, paridade NumPy/PyTorch e retomada de estado.</li>
+</ul>
+<p>Esses resultados delimitam a hipótese de aceleração. Sua confirmação requer recuperar a implementação original, repetir as comparações com orçamento equivalente de ajuste e avaliar a fórmula em tarefas que não participaram da seleção.</p></section><section id="convergencia"><h1>Convergência e oscilação da loss no final do treino</h1>
+<p>A comparação considera as curvas salvas de 150 épocas. O tempo até o alvo é a primeira época de uma sequência de cinco épocas em que a média das três trajetórias permanece em loss ≤ 0,1. A medida usa épocas de treinamento, sem estimar tempo de execução.</p>
+<p>A variabilidade final é a média dos desvios padrão temporais, calculados separadamente em cada trajetória nas últimas 20 épocas, com ddof=1. Ela inclui qualquer tendência residual desse trecho. A medida descreve a oscilação da loss e não equivale à dispersão entre sementes ou a uma garantia de estabilidade do otimizador.</p>
+<table>
+<thead>
+<tr>
+<th>Experimento</th>
+<th>Método</th>
+<th style="text-align: right;">Época até o alvo na curva média</th>
+<th style="text-align: right;">Loss média nas últimas 20 épocas</th>
+<th style="text-align: right;">DP temporal médio nas últimas 20 épocas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fashion-MNIST / LeNet</td>
+<td>AdamW</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">0.043519</td>
+<td style="text-align: right;">0.003417</td>
+</tr>
+<tr>
+<td>Fashion-MNIST / LeNet</td>
+<td>AdaSym</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">0.039634</td>
+<td style="text-align: right;">0.003163</td>
+</tr>
+<tr>
+<td>CIFAR-10 / ResNet-20</td>
+<td>AdamW</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0.018017</td>
+<td style="text-align: right;">0.004495</td>
+</tr>
+<tr>
+<td>CIFAR-10 / ResNet-20</td>
+<td>AdaSymSigmoid</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.015440</td>
+<td style="text-align: right;">0.004120</td>
+</tr>
+<tr>
+<td>Grupo LeNet, variante sem redução temporal</td>
+<td>AdaSym nored</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">0.039071</td>
+<td style="text-align: right;">0.007535</td>
+</tr>
+<tr>
+<td>Grupo LeNet, rótulo de dataset divergente</td>
+<td>AdamW LR 2×</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">0.042096</td>
+<td style="text-align: right;">0.005114</td>
+</tr>
+</tbody>
+</table>
+<h2>Interpretação</h2>
+<p>No par Fashion-MNIST/LeNet descrito com LR 1e-3, AdaSym atinge o alvo na época 63 e AdamW na 73. No par CIFAR-10/ResNet-20, ambos com LR 1e-3, AdaSymSigmoid atinge o alvo na época 16 e AdamW na 22. As variantes AdaSym dessas duas comparações apresentam loss média menor e DP temporal ligeiramente menor nas últimas 20 épocas.</p>
+<p>Essas observações apoiam a hipótese de que AdaSym acelera a convergência em número de épocas com oscilação final da loss comparável à de AdamW, nas configurações avaliadas. Elas não demonstram equivalência estatística de estabilidade nem superioridade em tarefas não avaliadas.</p>
+<p>A conclusão tem exceções importantes: o controle AdamW com LR 2× alcança o alvo antes de AdaSym, e a variante AdaSym nored apresenta DP temporal maior no final. A alegação de aceleração se refere aos pares descritos com a mesma LR; o comportamento depende da variante e do ajuste dos hiperparâmetros.</p>
+<p>O alvo de 0,1, as cinco épocas consecutivas e a janela final de 20 épocas foram escolhidos após observar as curvas, para produzir uma descrição auditável. Não constituem um protocolo pré-registrado. Os IDs de sementes e o split da loss não acompanham os arquivos; há ainda uma ambiguidade de scheduler no grupo LeNet e de dataset no controle LR 2×, detalhada no mapa de experimentos. Uma comparação confirmatória deve congelar essas escolhas antes dos próximos testes.</p></section><section id="testes"><h1>Testes realizados pelo autor</h1>
 <p>Esta seção incorpora os experimentos já realizados na pesquisa AdaSym. As condições vêm de <code>data/original/metadata.txt</code> e da apresentação AdaSym. Os números abaixo foram recalculados a partir dos arrays fornecidos. A revisão não executou novamente esses treinamentos.</p>
 <p>A loss é apresentada conforme registrada. Nas matrizes 3 × 150, as tabelas agregam as três trajetórias, como os gráficos de média e desvio padrão dos slides. No arquivo 3 × 100, cada linha corresponde a um otimizador. A média da loss ao longo das épocas descreve a curva inteira e não equivale à loss final, à acurácia nem à AUC original dos vetores de varredura.</p>
 <h2>1. Fashion-MNIST: AdaSym, AdaSymSigmoid e AdamW</h2>
