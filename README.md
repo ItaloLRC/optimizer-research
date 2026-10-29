@@ -14,7 +14,7 @@ O ponto de partida é uma atualização do tipo Adam: usar a direção acumulada
 
 Na notação dos slides, a regra final é:
 
-$$d=\max\left(v-s\,m_2^2,\frac{v}{c}\right),\qquad \theta_{k+1}=\theta_k-\eta\frac{m_1}{\sqrt d}.$$
+$$d=\max\left(v-s \cdot m_2^2,\frac{v}{c}\right),\qquad \theta_{k+1}=\theta_k-\eta\frac{m_1}{\sqrt d}.$$
 
 | Termo | Papel na atualização |
 |---|---|
