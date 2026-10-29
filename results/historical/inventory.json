@@ -1,0 +1,203 @@
+[
+  {
+    "file": "Adam_losses2x.npy",
+    "sha256": "229c39774d11c93671de50b7b61d7cd985a3e221880a47af4588eb8972c07c8b",
+    "shape": [
+      3,
+      150
+    ],
+    "dtype": "float64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 0.027782306101407483,
+    "finite_max": 0.7498219027829323
+  },
+  {
+    "file": "AdamW_losses.npy",
+    "sha256": "acf3998374ce9c433b3acd88b95653fd6dad649fdab9105a5744f2c24228aee5",
+    "shape": [
+      3,
+      150
+    ],
+    "dtype": "float64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 0.028086843303660913,
+    "finite_max": 0.8474205355527304
+  },
+  {
+    "file": "AdamW_losses_cifar10.npy",
+    "sha256": "710eb3f3aad4d186089705d2116bee4176a40fe61f1a6884d6bd3ee33f1f5ca8",
+    "shape": [
+      3,
+      150
+    ],
+    "dtype": "float64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 0.00881882564401697,
+    "finite_max": 1.3511111484769056
+  },
+  {
+    "file": "AdaSym_fminist_c2.npy",
+    "sha256": "3b219ea9aea3bf094c92b91a2553d79024557c36d032cbf6ff9655e834b8def6",
+    "shape": [
+      150
+    ],
+    "dtype": "int64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 1315632693.0,
+    "finite_max": 205636961999.0
+  },
+  {
+    "file": "AdaSym_fminist_c4.npy",
+    "sha256": "b6c5ab4a5c955b0628e2c2a6c194e0d4b1d26c63a2bfe6c6d6ddf510ab454ca0",
+    "shape": [
+      150
+    ],
+    "dtype": "int64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 1074508209.0,
+    "finite_max": 145766992885.0
+  },
+  {
+    "file": "AdaSym_fminist_full.npy",
+    "sha256": "aabf66360d07c2e624c870da317f1361272b692451bae17dd9863f2081cbcc3b",
+    "shape": [
+      150
+    ],
+    "dtype": "int64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 4896411590.0,
+    "finite_max": 1460922532104.0
+  },
+  {
+    "file": "AdaSym_loss_fmnist_nored.npy",
+    "sha256": "e24ca8b8b1b25697f92d3d67ebfff51d912e9970c095ee13237048d149338fbf",
+    "shape": [
+      3,
+      150
+    ],
+    "dtype": "float64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 0.021813374514361897,
+    "finite_max": 0.7528394770139316
+  },
+  {
+    "file": "AdaSym_losses.npy",
+    "sha256": "48dac60a5593a51625922d17a8fabf8be25ed3f80575d2719bb2e629410babce",
+    "shape": [
+      3,
+      150
+    ],
+    "dtype": "float64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 0.025186795980107587,
+    "finite_max": 0.764248722651874
+  },
+  {
+    "file": "AdaSymSig_losses_cifar10.npy",
+    "sha256": "2b8b28292c7087efc9748357c0f996a75e907ebc35682056f3d6f9f909438f36",
+    "shape": [
+      3,
+      150
+    ],
+    "dtype": "float64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 0.0068430974488155535,
+    "finite_max": 1.3666937310067588
+  },
+  {
+    "file": "lim_aucloss.npy",
+    "sha256": "e520c342015fddaf3b27349dc9c6ca38534114698e45222814bcd46fd8ad0a29",
+    "shape": [
+      50
+    ],
+    "dtype": "float32",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 121.6017837524414,
+    "finite_max": 145.20706176757812
+  },
+  {
+    "file": "loss_matrix (1).npy",
+    "sha256": "6132220f13c978ae7a551507a934291888a1429fb1e777f1efde39d25a30c323",
+    "shape": [
+      10,
+      70
+    ],
+    "dtype": "float64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 14.53420064047532,
+    "finite_max": 54.538297323626466
+  },
+  {
+    "file": "loss_matrix.npy",
+    "sha256": "f9afc8e52152d5afb85b33b0f57404c25faae1ae11c640df64e02972982252cb",
+    "shape": [
+      10,
+      70
+    ],
+    "dtype": "float64",
+    "nan": 70,
+    "inf": 0,
+    "finite_min": 15.459558732822188,
+    "finite_max": 55.04053782403935
+  },
+  {
+    "file": "losses_FashionMNIST.npy",
+    "sha256": "fad44e83d64a223f539fe067b64201e6ee85097b637ff5f3ed2955dd7b1c1122",
+    "shape": [
+      3,
+      100
+    ],
+    "dtype": "float64",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 0.25457570226987203,
+    "finite_max": 0.5952310315767924
+  },
+  {
+    "file": "lrs_AdaSym_aucloss.npy",
+    "sha256": "f604c6ac1421284598fe03cbe1084223790b6c9da51e18dc8d26f365ed26abfc",
+    "shape": [
+      80
+    ],
+    "dtype": "float32",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 101.31324768066406,
+    "finite_max": 46927260.0
+  },
+  {
+    "file": "lrs_aucloss.npy",
+    "sha256": "b1814edead498ebb87713c6a8b88617ed5af01a70185e7e5c4bdcc4ba0fc5ba6",
+    "shape": [
+      27
+    ],
+    "dtype": "float32",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 109.0204086303711,
+    "finite_max": 2991.0615234375
+  },
+  {
+    "file": "lrs_aucloss_adamW.npy",
+    "sha256": "9dda9560a5c506f21e268eab1a5a16f2cdf89c955533a286f60d55de44125b76",
+    "shape": [
+      27
+    ],
+    "dtype": "float32",
+    "nan": 0,
+    "inf": 0,
+    "finite_min": 105.94149780273438,
+    "finite_max": 529.9244384765625
+  }
+]

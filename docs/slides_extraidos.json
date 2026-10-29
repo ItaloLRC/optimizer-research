@@ -1,0 +1,148 @@
+[
+  {
+    "slide": 1,
+    "text": "Descoberta simbólica de otimizadores\nAdaSym",
+    "images": []
+  },
+  {
+    "slide": 2,
+    "text": "Uso de regressão simbólica para explorar o espaço de fórmulas\nInspirado no paper “Symbolic Discovery of Optimization Algorithms”",
+    "images": []
+  },
+  {
+    "slide": 3,
+    "text": "Indivíduo de uma regressão simbólica",
+    "images": [
+      "references/slide_images/image1.png",
+      "references/slide_images/image2.png"
+    ]
+  },
+  {
+    "slide": 4,
+    "text": "Fórmula descoberta",
+    "images": [
+      "references/slide_images/image3.png"
+    ]
+  },
+  {
+    "slide": 5,
+    "text": "Fórmula final",
+    "images": [
+      "references/slide_images/image3.png",
+      "references/slide_images/image4.png",
+      "references/slide_images/image5.png"
+    ]
+  },
+  {
+    "slide": 6,
+    "text": "Fórmula final",
+    "images": [
+      "references/slide_images/image5.png",
+      "references/slide_images/image6.png",
+      "references/slide_images/image7.png"
+    ]
+  },
+  {
+    "slide": 7,
+    "text": "Fórmula final",
+    "images": [
+      "references/slide_images/image8.png",
+      "references/slide_images/image9.png",
+      "references/slide_images/image10.png",
+      "references/slide_images/image11.png",
+      "references/slide_images/image12.png"
+    ]
+  },
+  {
+    "slide": 8,
+    "text": "AdaSymSigmoid x AdamW\nFashion MNIST",
+    "images": [
+      "references/slide_images/image13.png"
+    ]
+  },
+  {
+    "slide": 9,
+    "text": "AdaSymSigmoid x AdaSym\nFashion MNIST",
+    "images": [
+      "references/slide_images/image14.png"
+    ]
+  },
+  {
+    "slide": 10,
+    "text": "AdaSymSigmoid x AdaSym\nFashion MNIST",
+    "images": [
+      "references/slide_images/image15.png"
+    ]
+  },
+  {
+    "slide": 11,
+    "text": "AdaSymSigmoid x AdaSym\nFashion MNIST",
+    "images": [
+      "references/slide_images/image16.png"
+    ]
+  },
+  {
+    "slide": 12,
+    "text": "AdaSymSigmoid x AdaSym\nCIFAR10",
+    "images": [
+      "references/slide_images/image17.png"
+    ]
+  },
+  {
+    "slide": 13,
+    "text": "AdaSymSigmoid x AdaSym\nCIFAR10",
+    "images": [
+      "references/slide_images/image18.png"
+    ]
+  },
+  {
+    "slide": 14,
+    "text": "AdaSymSigmoid x AdamW 2x LR\nFashion MNIST",
+    "images": [
+      "references/slide_images/image19.png"
+    ]
+  },
+  {
+    "slide": 15,
+    "text": "AdaSymSigmoid x AdamW 2x LR\nFashion MNIST",
+    "images": [
+      "references/slide_images/image20.png"
+    ]
+  },
+  {
+    "slide": 16,
+    "text": "Ativações do limite inferior AdaSym",
+    "images": [
+      "references/slide_images/image21.png",
+      "references/slide_images/image9.png"
+    ]
+  },
+  {
+    "slide": 17,
+    "text": "AdaSym x AdamW LRs ",
+    "images": [
+      "references/slide_images/image22.png"
+    ]
+  },
+  {
+    "slide": 18,
+    "text": "AdaSymSigmoid m_2 Betas",
+    "images": [
+      "references/slide_images/image23.png",
+      "references/slide_images/image24.png"
+    ]
+  },
+  {
+    "slide": 19,
+    "text": "AdaSymSigmoid m_2 Betas",
+    "images": [
+      "references/slide_images/image25.png",
+      "references/slide_images/image24.png"
+    ]
+  },
+  {
+    "slide": 20,
+    "text": "Fim",
+    "images": []
+  }
+]

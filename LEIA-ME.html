@@ -1,0 +1,567 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AdaSym · Janela de consistência</title><style>
+:root{color-scheme:light;--ink:#182937;--teal:#006e69;--line:#d5e0e3}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f7f9f9;color:var(--ink);font:17px/1.7 'Segoe UI',Arial,sans-serif}header{background:#142e3b;color:white;padding:55px max(28px,calc((100vw - 1040px)/2)) 42px}header p{max-width:780px;color:#d9e8e8;margin:10px 0}header h1{font-size:46px;line-height:1.15;margin:8px 0 18px}.eyebrow{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#8dd1c5}nav{padding:20px 28px;background:white;border-bottom:1px solid var(--line);display:flex;justify-content:center;gap:10px 24px;flex-wrap:wrap}nav a{font-size:14px}main{max-width:1100px;margin:auto;padding:30px 40px 70px;background:white}section{padding:32px 0 16px;border-bottom:1px solid var(--line);scroll-margin-top:20px}section h1{font-size:29px;line-height:1.35;margin:0 0 24px}h2{font-size:24px;margin-top:40px;line-height:1.35}h3{font-size:20px;margin-top:30px}a{color:var(--teal);text-underline-offset:3px}p{margin:16px 0}table{border-collapse:collapse;font-size:14px;display:block;overflow-x:auto;width:100%;margin:24px 0}td,th{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{background:#edf4f4}code{font:0.87em Consolas,monospace;background:#edf2f4;padding:2px 5px;border-radius:3px;overflow-wrap:anywhere}pre{background:#edf2f4;padding:18px;overflow-x:auto}pre code{padding:0}.equation{padding:18px 12px;margin:20px 0;background:#f3f8f7;overflow-x:auto;font-size:20px}figure{margin:22px 0 40px}img{max-width:100%;height:auto}figcaption{font-size:13px;color:#506875}li{margin:8px 0}footer{color:#536b77;padding:30px;text-align:center;font-size:13px}@media(max-width:700px){header h1{font-size:35px}main{padding:20px}body{font-size:16px}.equation{font-size:16px}}@media print{nav{display:none}header{background:white;color:black;padding:20px}header p{color:black}main{padding:0}.equation{break-inside:avoid}h2,h3{break-after:avoid}}
+</style></head><body><header><div class="eyebrow">Optimizer Research · AdaSym</div><h1>Uma janela de consistência<br>para adaptar o passo</h1><p>Fundamentação matemática, análise dos testes originais e uma implementação para testar a hipótese.</p><p>Revisão de 29 de outubro de 2026 · Pesquisa exploratória</p></header><nav><a href="#pesquisa">Pesquisa completa</a><a href="#mapa">Mapa dos testes</a><a href="#historico">Dados originais</a><a href="#novo">Experimento novo</a><a href="#protocolo">Próximos experimentos</a><a href="#verificacao">Verificação</a><a href="#origem">Proveniência</a></nav><main><section id="pesquisa"><h1>AdaSym: descoberta simbólica de otimizadores com janela de consistência</h1>
+<p><strong>Versão de pesquisa: 29 de outubro de 2026.</strong> Projeto exploratório. O material original contém slides e arrays de resultados, sem os programas de busca e treinamento. Esta revisão preserva o histórico e propõe uma especificação nova e verificável.</p>
+<h2>1. Pergunta de pesquisa</h2>
+<p>Uma rede neural pode convergir mais rapidamente quando o otimizador aumenta seletivamente seus passos nas coordenadas cujos gradientes mantêm direção e magnitude durante uma janela recente?</p>
+<p>A hipótese do projeto é que a persistência do gradiente informa o quanto se pode amplificar o passo. A regressão simbólica serve para explorar regras candidatas, identificar estruturas promissoras e restringir progressivamente o espaço de busca. A avaliação empírica deve separar um ganho causado pela consistência de um ganho obtido apenas por uma taxa de aprendizado maior.</p>
+<p>O objetivo verificável é melhorar a eficiência até uma loss ou acurácia predefinida, mantendo qualidade de teste e orçamento de ajuste comparáveis. Convergência em menos épocas, tempo até o alvo, custo de estado e generalização são resultados diferentes e devem aparecer separadamente.</p>
+<h2>2. O que o material original sustenta</h2>
+<p>Os slides documentam a sequência:</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mfrac><mrow><msub><mi>m</mi><mn>1</mn></msub></mrow><mrow><msqrt><mrow><mo stretchy="false">&#x0007C;</mo><mi>v</mi><mo>&#x02212;</mo><msub><mi>m</mi><mn>1</mn></msub><mo stretchy="false">&#x0007C;</mo></mrow></msqrt></mrow></mfrac><mspace width="1em" /><mi>&#x027F6;</mi><mspace width="1em" /><mfrac><mrow><msub><mi>m</mi><mn>1</mn></msub></mrow><mrow><msqrt><mrow><mo stretchy="false">&#x0007C;</mo><mi>v</mi><mo>&#x02212;</mo><msubsup><mi>m</mi><mn>1</mn><mn>2</mn></msubsup><mo stretchy="false">&#x0007C;</mo></mrow></msqrt></mrow></mfrac><mspace width="1em" /><mi>&#x027F6;</mi><mspace width="1em" /><mfrac><mrow><msub><mi>m</mi><mn>1</mn></msub></mrow><mrow><msqrt><mrow><mo>max</mo><mo stretchy="false">&#x00028;</mo><mi>v</mi><mo>&#x02212;</mo><msubsup><mi>m</mi><mn>2</mn><mn>2</mn></msubsup><mo>&#x0002C;</mo><mi>v</mi><mo>&#x0002F;</mo><mi>c</mi><mo stretchy="false">&#x00029;</mo></mrow></msqrt></mrow></mfrac><mspace width="1em" /><mi>&#x027F6;</mi><mspace width="1em" /><mfrac><mrow><msub><mi>m</mi><mn>1</mn></msub></mrow><mrow><msqrt><mrow><mo>max</mo><mo stretchy="false">&#x00028;</mo><mi>v</mi><mo>&#x02212;</mo><mi>&#x003B1;</mi><msubsup><mi>m</mi><mn>2</mn><mn>2</mn></msubsup><mo>&#x0002C;</mo><mi>v</mi><mo>&#x0002F;</mo><mi>c</mi><mo stretchy="false">&#x00029;</mo></mrow></msqrt></mrow></mfrac><mo>&#x0002E;</mo></mrow></math></div>
+<p>A primeira expressão subtrai grandezas de ordens diferentes se v representa E[g²] e m1 representa E[g]. A versão com m1² corrige a compatibilidade dimensional. O valor absoluto transforma qualquer diferença negativa em uma normalização positiva, mas sua interpretação depende da diferença entre as janelas. O piso v/c torna explícito um limite relativo do denominador. A sigmoide controla quanto da correção permanece ao longo do treinamento.</p>
+<p>As matrizes existentes permitem descrever a loss registrada e localizar valores inválidos. Elas não identificam integralmente sementes, split dos dados, precisão, inicializações, scheduler ou recorrência de m2. Por isso, não demonstram uma nova garantia de convergência, superioridade estatística nem reprodução da descoberta simbólica. O relatório em <code>results/historical/report.md</code> quantifica o que pode ser medido e explicita as ambiguidades.</p>
+<p>O histórico já contém um controle relevante de escala do passo: nos arquivos de 150 posições, a média registrada é 0,135194 para AdamW, 0,120462 para AdaSym e 0,109575 para o arquivo descrito como AdamW com LR 2×. Nas últimas dez posições, AdaSym tem média menor, 0,038349 contra 0,041124 do controle 2×. Essa diferença entre velocidade inicial e loss tardia ajuda a formular a próxima comparação. O conflito de rótulo MNIST/Fashion-MNIST e a ausência do código impedem tratar esses números como um experimento controlado já estabelecido. O mapa em <code>docs/mapa_experimentos.md</code> organiza as condições relatadas, incluindo os testes de LR, sigmoide, piso e betas.</p>
+<h2>3. Janela de consistência</h2>
+<p>Para cada coordenada i, mantemos uma média exponencial do gradiente e uma média do gradiente ao quadrado, ambas com o mesmo beta:</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>s</mi><mi>t</mi></msub><mo>&#x0003D;</mo><msub><mi>&#x003B2;</mi><mi>w</mi></msub><msub><mi>s</mi><mrow><mi>t</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><msub><mi>&#x003B2;</mi><mi>w</mi></msub><mo stretchy="false">&#x00029;</mo><msub><mi>g</mi><mi>t</mi></msub><mo>&#x0002C;</mo></mrow></math></div>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>u</mi><mi>t</mi></msub><mo>&#x0003D;</mo><msub><mi>&#x003B2;</mi><mi>w</mi></msub><msub><mi>u</mi><mrow><mi>t</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><msub><mi>&#x003B2;</mi><mi>w</mi></msub><mo stretchy="false">&#x00029;</mo><msubsup><mi>g</mi><mi>t</mi><mn>2</mn></msubsup><mo>&#x0002E;</mo></mrow></math></div>
+<p>Com estado inicial zero, usamos a mesma correção de viés nas duas:</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mover><mi>s</mi><mo>&#x0005E;</mo></mover><mi>t</mi></msub><mo>&#x0003D;</mo><mfrac><mrow><msub><mi>s</mi><mi>t</mi></msub></mrow><mrow><mn>1</mn><mo>&#x02212;</mo><msubsup><mi>&#x003B2;</mi><mi>w</mi><mi>t</mi></msubsup></mrow></mfrac><mo>&#x0002C;</mo><mspace width="2em" /><msub><mover><mi>u</mi><mo>&#x0005E;</mo></mover><mi>t</mi></msub><mo>&#x0003D;</mo><mfrac><mrow><msub><mi>u</mi><mi>t</mi></msub></mrow><mrow><mn>1</mn><mo>&#x02212;</mo><msubsup><mi>&#x003B2;</mi><mi>w</mi><mi>t</mi></msubsup></mrow></mfrac><mo>&#x0002E;</mo></mrow></math></div>
+<p>A consistência proposta é</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>q</mi><mi>t</mi></msub><mo>&#x0003D;</mo><mo>clip</mo><mrow><mo stretchy="true" fence="true" form="prefix">&#x00028;</mo><mfrac><mrow><msubsup><mover><mi>s</mi><mo>&#x0005E;</mo></mover><mi>t</mi><mn>2</mn></msubsup></mrow><mrow><msub><mover><mi>u</mi><mo>&#x0005E;</mo></mover><mi>t</mi></msub><mo>&#x0002B;</mo><msup><mi>&#x003F5;</mi><mn>2</mn></msup></mrow></mfrac><mo>&#x0002C;</mo><mn>0</mn><mo>&#x0002C;</mo><mn>1</mn><mo stretchy="true" fence="true" form="postfix">&#x00029;</mo></mrow><mo>&#x0002E;</mo></mrow></math></div>
+<p>As operações são coordenada a coordenada. A expressão tem interpretação de momento normalizado: a média mantém seu peso quando os gradientes concordam e sofre cancelamento quando mudam de sinal. Oscilações de magnitude também reduzem q.</p>
+<p>Com pesos normalizados não negativos, Jensen garante <code>(média g)² ≤ média(g²)</code>. Assim, a razão pertence a [0,1], salvo arredondamento. Usar a mesma janela e a mesma correção de viés é essencial para essa interpretação. A subtração histórica <code>v − m2²</code>, com v e m2 calculados em janelas diferentes, não oferece essa propriedade.</p>
+<h3>Exemplos sem ambiguidade</h3>
+<table>
+<thead>
+<tr>
+<th>Gradientes em uma janela com pesos iguais</th>
+<th style="text-align: right;">Média</th>
+<th style="text-align: right;">Segundo momento</th>
+<th style="text-align: right;">Consistência sem epsilon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1, 1, 1, 1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>1, −1, 1, −1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>1, 3, 1, 3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0,8</td>
+</tr>
+<tr>
+<td>0, 0, 0, 0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0 pela convenção estabilizada</td>
+</tr>
+</tbody>
+</table>
+<p>Na EMA, o caso alternante geralmente tem q pequeno e diferente de zero porque o último gradiente pesa mais. Sob um modelo estacionário com média μ e variância σ², a razão populacional é <code>μ²/(μ²+σ²)</code>. A razão das estimativas em uma janela finita não é um estimador sem viés dessa quantidade.</p>
+<p>Esta definição combina consistência de sinal e de magnitude. Ela não é uma medida exclusiva do ângulo do gradiente global, nem um intervalo de confiança. Um gradiente persistentemente errado, provocado por viés no minibatch ou mudança na tarefa, pode ter consistência alta.</p>
+<h3>O tamanho da janela</h3>
+<p>Uma EMA não possui corte rígido. Seu tamanho efetivo assintótico é</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>N</mi><mrow><mrow><mi mathvariant="normal">e</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">f</mi></mrow></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>1</mn><mo>&#x0002B;</mo><msub><mi>&#x003B2;</mi><mi>w</mi></msub></mrow><mrow><mn>1</mn><mo>&#x02212;</mo><msub><mi>&#x003B2;</mi><mi>w</mi></msub></mrow></mfrac><mo>&#x0002E;</mo></mrow></math></div>
+<p>Depois de t observações, o tamanho efetivo é</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>N</mi><mrow><mrow><mi mathvariant="normal">e</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">f</mi></mrow><mo>&#x0002C;</mo><mi>t</mi></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><mn>1</mn><mo>&#x0002B;</mo><msub><mi>&#x003B2;</mi><mi>w</mi></msub></mrow><mrow><mn>1</mn><mo>&#x02212;</mo><msub><mi>&#x003B2;</mi><mi>w</mi></msub></mrow></mfrac><mfrac><mrow><mn>1</mn><mo>&#x02212;</mo><msubsup><mi>&#x003B2;</mi><mi>w</mi><mi>t</mi></msubsup></mrow><mrow><mn>1</mn><mo>&#x0002B;</mo><msubsup><mi>&#x003B2;</mi><mi>w</mi><mi>t</mi></msubsup></mrow></mfrac><mo>&#x0002E;</mo></mrow></math></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">beta da janela</th>
+<th style="text-align: right;">Tamanho efetivo assintótico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0,35</td>
+<td style="text-align: right;">2,08</td>
+</tr>
+<tr>
+<td style="text-align: right;">0,75</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td style="text-align: right;">0,90</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr>
+<td style="text-align: right;">0,95</td>
+<td style="text-align: right;">39</td>
+</tr>
+<tr>
+<td style="text-align: right;">0,99</td>
+<td style="text-align: right;">199</td>
+</tr>
+</tbody>
+</table>
+<p>Janelas curtas reagem cedo, mas podem confundir ruído com persistência. Janelas longas reduzem esse ruído e atrasam a resposta a inversões. No primeiro passo não nulo, q é praticamente 1 mesmo sem evidência de persistência. O warmup reduz gradualmente a amplificação inicial. Ele não elimina esse viés nem substitui a análise da janela.</p>
+<h2>4. Regra de atualização proposta</h2>
+<p>Mantemos os momentos do Adam separados da janela:</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>m</mi><mi>t</mi></msub><mo>&#x0003D;</mo><msub><mi>&#x003B2;</mi><mn>1</mn></msub><msub><mi>m</mi><mrow><mi>t</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><msub><mi>&#x003B2;</mi><mn>1</mn></msub><mo stretchy="false">&#x00029;</mo><msub><mi>g</mi><mi>t</mi></msub><mo>&#x0002C;</mo><mspace width="2em" /><msub><mi>v</mi><mi>t</mi></msub><mo>&#x0003D;</mo><msub><mi>&#x003B2;</mi><mn>2</mn></msub><msub><mi>v</mi><mrow><mi>t</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><msub><mi>&#x003B2;</mi><mn>2</mn></msub><mo stretchy="false">&#x00029;</mo><msubsup><mi>g</mi><mi>t</mi><mn>2</mn></msubsup><mo>&#x0002E;</mo></mrow></math></div>
+<p>Aplicamos bias correction a m e v. A família restrita é</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>d</mi><mi>t</mi></msub><mo>&#x0003D;</mo><msub><mover><mi>v</mi><mo>&#x0005E;</mo></mover><mi>t</mi></msub><mo>max</mo><mo stretchy="false">&#x0007B;</mo><mn>1</mn><mo>&#x02212;</mo><msub><mi>a</mi><mi>t</mi></msub><mi>h</mi><mo stretchy="false">&#x00028;</mo><msub><mi>q</mi><mi>t</mi></msub><mo stretchy="false">&#x00029;</mo><mo>&#x0002C;</mo><mn>1</mn><mo>&#x0002F;</mo><mi>c</mi><mo stretchy="false">&#x0007D;</mo><mo>&#x0002C;</mo></mrow></math></div>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>&#x003B8;</mi><mi>t</mi></msub><mo>&#x0003D;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><msub><mi>&#x003B7;</mi><mi>t</mi></msub><mi>&#x003BB;</mi><mo stretchy="false">&#x00029;</mo><msub><mi>&#x003B8;</mi><mrow><mi>t</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo>&#x02212;</mo><msub><mi>&#x003B7;</mi><mi>t</mi></msub><mfrac><mrow><msub><mover><mi>m</mi><mo>&#x0005E;</mo></mover><mi>t</mi></msub></mrow><mrow><msqrt><mrow><msub><mi>d</mi><mi>t</mi></msub></mrow></msqrt><mo>&#x0002B;</mo><mi>&#x003F5;</mi></mrow></mfrac><mo>&#x0002E;</mo></mrow></math></div>
+<p>Aqui, c ≥ 1, a está em [0,1], e h leva [0,1] a [0,1], de forma crescente. A primeira hipótese é <code>h(q)=q</code>. O weight decay é desacoplado, como em AdamW. Epsilon entra fora da raiz na atualização, e epsilon² estabiliza a razão de consistência.</p>
+<p>O sinal da atualização adaptativa vem de m. A consistência altera sua magnitude relativa. Quanto maior q, menor o denominador e maior o passo, até o limite definido por c. Esse aumento se refere ao passo que AdamW daria com os mesmos momentos naquele instante. Não implica que todo passo absoluto cresça quando q cresce, porque m e v também mudam.</p>
+<h3>Um limite útil e seu alcance</h3>
+<p>Como <code>v/c ≤ d ≤ v</code>, a amplificação relativa ao AdamW com o mesmo estado satisfaz</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>1</mn><mo>&#x02264;</mo><mfrac><mrow><msqrt><mrow><mover><mi>v</mi><mo>&#x0005E;</mo></mover></mrow></msqrt><mo>&#x0002B;</mo><mi>&#x003F5;</mi></mrow><mrow><msqrt><mi>d</mi></msqrt><mo>&#x0002B;</mo><mi>&#x003F5;</mi></mrow></mfrac><mo>&#x02264;</mo><msqrt><mi>c</mi></msqrt><mo>&#x0002E;</mo></mrow></math></div>
+<p>Com c=4, o ganho adaptativo máximo é 2. Com c=8, é aproximadamente 2,83. Esse limite vale para a parte adaptativa, não para a atualização total que inclui weight decay. Ele não garante descida a cada passo ou convergência. Em trajetórias diferentes, os momentos dos dois otimizadores deixam de coincidir, portanto o limite não compara diretamente seus parâmetros após vários passos.</p>
+<p>Se a=0 ou c=1, a regra coincide com AdamW para os mesmos hiperparâmetros. Se beta_window=beta2, o estado u pode compartilhar v em uma implementação otimizada. A implementação de referência guarda ambos explicitamente para facilitar inspeção. São quatro estados de momento por parâmetro, contra dois no AdamW. Não há alegação de economia de memória ou tempo.</p>
+<h3>Consistência por coordenada ou por bloco</h3>
+<p>A implementação usa q por coordenada. Uma alternativa para uma camada é <code>q_bloco = ||E[g]||²/(E[||g||²]+eps²)</code>. Sem epsilon, essa quantidade equivale à média de q por coordenada ponderada por seu segundo momento. Ela reduz custo de diagnóstico e mistura coordenadas com comportamentos diferentes. A escolha entre as duas é uma ablação futura. Alinhamento angular puro, como cosseno entre gradientes consecutivos, responde a outra pergunta e deve ser testado separadamente.</p>
+<h3>Sigmoide opcional</h3>
+<p>O projeto histórico reduz a correção por época. A especificação nova usa progresso normalizado p em [0,1]:</p>
+<div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>a</mi><mi>t</mi></msub><mo>&#x0003D;</mo><mi>&#x003B1;</mi><mo>min</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x0002C;</mo><mi>t</mi><mo>&#x0002F;</mo><msub><mi>T</mi><mi>w</mi></msub><mo stretchy="false">&#x00029;</mo><mspace width="0.167em" /><mi>&#x003C3;</mi><mo stretchy="false">&#x00028;</mo><mo stretchy="false">&#x00028;</mo><msub><mi>p</mi><mn>0</mn></msub><mo>&#x02212;</mo><msub><mi>p</mi><mi>t</mi></msub><mo stretchy="false">&#x00029;</mo><mo>&#x0002F;</mo><mi>&#x003C4;</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002E;</mo></mrow></math></div>
+<p>O modo constante remove apenas a sigmoide e mantém o warmup. Uma janela já adapta o ganho aos gradientes. Assim, o decaimento temporal é uma hipótese adicional, não requisito da ideia central. Comparar constante e sigmoide permite verificar se a eventual melhora depende de uma política de LR embutida. A sigmoide histórica em épocas e esta versão normalizada não são equivalentes por padrão.</p>
+<h2>5. Regressão simbólica e restrição do espaço</h2>
+<p>Se a busca otimiza uma fórmula diretamente pelo desempenho de treinamento, ela é busca simbólica de programas ou de regras de atualização. O termo regressão simbólica se aplica estritamente quando há pares entrada/alvo para ajustar uma expressão. Ambos podem entrar no projeto, mas o fitness e a origem dos alvos precisam ser registrados.</p>
+<p>A proposta separa duas etapas:</p>
+<ol>
+<li><strong>Exploração ampla futura:</strong> árvores tipadas com gradientes, momentos e funções protegidas. Registrar indivíduos, pais, mutações, sementes, custo, fitness e fórmulas descartadas. Conservar soluções na fronteira de desempenho, complexidade e estabilidade. Essa etapa histórica não pode ser reproduzida com os arquivos entregues.</li>
+<li><strong>Busca restrita executável agora:</strong> fixar direção e momentos, e buscar somente h(q). Isso reduz o espaço a uma variável sem dimensão com domínio conhecido. O código enumera uma gramática pequena em vez de executar um algoritmo evolutivo completo.</li>
+</ol>
+<p>A gramática atual contém <code>q</code>, <code>q*q</code>, <code>sqrt(q)</code>, <code>2*q/(1+q)</code> e <code>tanh(q)/tanh(1)</code>. Todas são monótonas, não negativas e limitadas em [0,1]. O piso externo limita o ganho independentemente da transformação. A normalização impede misturar dimensões incompatíveis e preserva a simetria de sinal. A invariância a reescala é aproximada na presença de epsilon.</p>
+<p>Cada expressão usa a mesma grade de LR e as mesmas sementes de triagem. A seleção ordena pela média da loss de validação ao longo das épocas, com complexidade como desempate. O tamanho da árvore é uma aproximação de complexidade, não de latência. A busca é pequena e auditável, mas não identifica o ótimo do espaço de otimizadores nem reproduz o mecanismo original.</p>
+<p>Uma extensão deve usar árvores tipadas de profundidade limitada, deduplicação algébrica e comparação numérica de expressões equivalentes. Testes com gradiente zero, sinal invertido, spikes e escalas diferentes devem filtrar fórmulas antes de treinar redes. Operações protegidas precisam registrar quando a proteção atua, pois ela altera a fórmula efetiva.</p>
+<h2>6. Evidência nova e interpretação</h2>
+<p>O experimento incluído treina um MLP tanh 12–24–2 em classificação sintética não linear. A triagem usa duas inicializações. A confirmação usa cinco inicializações novas e novas amostras, mantendo o mesmo gerador da tarefa. As configurações são congeladas antes de avaliar o teste. A seleção do checkpoint usa validação.</p>
+<p>No ensaio de 35 épocas, a busca escolheu <code>sqrt(q)</code>. O AdamW com grade de LR ampliada pelo fator sqrt(c) obteve melhor resultado de teste que as variantes AdaSym. O relatório com médias, dispersão e todos os logs está em <code>results/synthetic/report.md</code>. Assim, este ensaio não confirma uma vantagem própria da janela. A melhor LR de várias famílias está na borda da grade, sinal de que a faixa deve ser ampliada na próxima fase, usando outro teste ainda não consultado.</p>
+<p>A busca entre cinco expressões consome mais configurações do que o ajuste de uma baseline individual. Por isso, o resultado do vencedor simbólico inclui vantagem de orçamento de seleção. Antes de qualquer alegação comparativa, é necessário comparar orçamento total de ajuste, replicar em outras tarefas e manter um teste final intocado.</p>
+<h2>7. Experimentos que podem decidir a hipótese</h2>
+<p>O protocolo completo aparece em <code>docs/protocolo.md</code>. As comparações centrais são AdamW com LR ajustada, AdamW com LR multiplicada por sqrt(c), AdaSym sem consistência, janela comum linear, janela histórica com momentos distintos e janela com sigmoide. Uma baseline com ganho escalar médio pode aproximar o tamanho médio dos passos de AdaSym e testar o valor da adaptação coordenada.</p>
+<p>Medir loss e acurácia de validação, tempo até alvo, taxa de divergência, normas de update, distribuição de q, ganho aplicado e frequência de saturação. Um teto que atua quase sempre transforma a regra em um escalonamento quase constante da LR. Isso enfraquece a explicação por consistência seletiva e precisa ser mostrado.</p>
+<p>Testar Fashion-MNIST com LeNet, CIFAR-10 com ResNet-20 e ao menos uma tarefa fora de visão. Congelar a regra antes da avaliação de transferência. A configuração histórica citada é parte do contexto, não uma reprodução já obtida.</p>
+<h2>8. Critério para uma ideia final</h2>
+<p>Uma fórmula só deve se tornar candidata final quando superar controles de LR sob orçamento equivalente, repetir o efeito em sementes e tarefas distintas e justificar seu custo adicional. A versão escolhida precisa manter implementação, configurações, logs, falhas e ablações rastreáveis.</p>
+<p>O resultado desta revisão é uma hipótese operacional: <strong>amplificar de forma limitada o passo do AdamW segundo a consistência de gradientes em uma janela comum</strong>. A janela linear é o ponto de partida interpretável. A transformação raiz é uma candidata surgida na triagem sintética, ainda sem confirmação de superioridade. As evidências atuais não justificam declarar um otimizador final.</p>
+<h2>9. Relação com trabalhos anteriores</h2>
+<ul>
+<li><strong>Adam:</strong> fundamenta o uso de primeiro e segundo momentos e bias correction. <a href="https://arxiv.org/abs/1412.6980">Kingma e Ba</a>.</li>
+<li><strong>AdamW:</strong> define weight decay desacoplado e fornece a baseline de referência. <a href="https://arxiv.org/abs/1711.05101">Loshchilov e Hutter</a>.</li>
+<li><strong>Symbolic Discovery of Optimization Algorithms:</strong> inspiração para busca de programas e seleção de regras transferíveis, incluindo Lion. A implementação atual é uma enumeração restrita e não replica esse sistema. <a href="https://arxiv.org/abs/2302.06675">Chen et al.</a>.</li>
+<li><strong>AdaBelief:</strong> relaciona adaptação do passo à discrepância entre gradiente e sua previsão por momentum. É uma comparação relevante para estudar persistência e variabilidade, mas não usa a mesma estatística desta proposta. <a href="https://arxiv.org/abs/2010.07468">Zhuang et al.</a>.</li>
+<li><strong>Centered RMSprop:</strong> já usa um segundo momento centralizado para normalização. A subtração de média ao quadrado possui precedentes. A novidade de AdaSym precisa ser estabelecida na combinação específica de janela, ganho limitado, busca e evidência empírica. <a href="https://docs.pytorch.org/docs/stable/generated/torch.optim.RMSprop.html">Documentação oficial do PyTorch</a>.</li>
+</ul>
+<p>Esta contextualização não estabelece prioridade nem prova originalidade. Uma revisão bibliográfica sistemática continua necessária antes de submeter um artigo.</p></section><section id="mapa"><h1>Mapa dos testes recebidos</h1>
+<p>Transcrição organizada de <code>data/original/metadata.txt</code>, cruzada com shapes e slides. Campos não informados permanecem desconhecidos. Os nomes preservam a grafia original, incluindo <code>fminist</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Arquivos</th>
+<th>Descrição do metadata / slides</th>
+<th>O que os dados confirmam</th>
+<th>Pontos a resolver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>losses_FashionMNIST.npy</code></td>
+<td>Fashion-MNIST, 100 épocas, AdaSym / AdaSymSig / AdamW. Slides 8 e 9</td>
+<td>3 × 100; ordem inferida AdaSym, AdaSymSigmoid, AdamW pelos valores iniciais e finais</td>
+<td>Split da loss, seeds, configuração e ordem pelo código original</td>
+</tr>
+<tr>
+<td><code>AdamW_losses.npy</code>, <code>AdaSym_losses.npy</code></td>
+<td>LeNet, Fashion-MNIST, 150 épocas, LR 1e-3, sem redução por sigmoide ou exponencial em um trecho; outro trecho cita v/4, (0,75; 0,35), sigmoide por época</td>
+<td>Cada arquivo tem 3 × 150. Slides mostram média e DP</td>
+<td>Qual variante pertence exatamente a cada arquivo; recorrência e significado dos betas</td>
+</tr>
+<tr>
+<td><code>AdaSym_loss_fmnist_nored.npy</code></td>
+<td>Nome sugere ausência de redução temporal, compatível com parte da descrição acima</td>
+<td>3 × 150</td>
+<td>Ligação exata com os trechos de metadata e o baseline correspondente</td>
+</tr>
+<tr>
+<td><code>AdamW_losses_cifar10.npy</code>, <code>AdaSymSig_losses_cifar10.npy</code></td>
+<td>CIFAR-10, ResNet-20, 150 épocas, LR 1e-3, WD 1e-2, sigmoide em torno da época 15, piso v/8. Slides 12 e 13</td>
+<td>Cada arquivo tem 3 × 150 e curvas coerentes com o gráfico de média</td>
+<td>Acurácia, split, scheduler, seeds, arquitetura exata e código</td>
+</tr>
+<tr>
+<td><code>Adam_losses2x.npy</code></td>
+<td>Metadata chama AdamW com LR 2×, LeNet, MNIST, 150 épocas. Slides 14 e 15 dizem Fashion-MNIST</td>
+<td>3 × 150 e curva coerente com o controle AdamW 2× dos slides</td>
+<td>Conflito MNIST/Fashion-MNIST e nome Adam/AdamW</td>
+</tr>
+<tr>
+<td><code>loss_matrix.npy</code></td>
+<td>Varredura para m2. beta3 = 10^linspace(−0,3; 0; 10), beta4 = 10^linspace(−3; 0; 70). Slide 18</td>
+<td>10 × 70, 70 NaNs na última linha. Mínimo finito coincide com o destaque do slide</td>
+<td>Definição da recorrência, fitness e origem dos NaNs</td>
+</tr>
+<tr>
+<td><code>loss_matrix (1).npy</code></td>
+<td>Segunda varredura. beta3 = 10^linspace(−0,3; −0,01; 10), beta4 = 10^linspace(−1,5; 0; 70). Slide 19</td>
+<td>10 × 70, sem NaN. Mínimo coincide com o destaque do slide</td>
+<td>Mesmas lacunas da recorrência e do fitness</td>
+</tr>
+<tr>
+<td><code>lrs_AdaSym_aucloss.npy</code></td>
+<td>300 épocas, 10% de Fashion-MNIST, AUC de loss, WD 1e-2, valores (0,75; 0,35)</td>
+<td>Vetor com 80 posições e valores muito altos em parte da faixa</td>
+<td>A grade de 80 LRs e quais valores representam divergência</td>
+</tr>
+<tr>
+<td><code>lrs_aucloss.npy</code>, <code>lrs_aucloss_adamW.npy</code></td>
+<td>Uma grade concatenada 1e-4…9e-4, 1e-3…9e-3, 1e-2…9e-2; trecho próximo cita sigmoide(15−época), piso v/8</td>
+<td>Cada vetor tem 27 posições, compatível com o tamanho da grade</td>
+<td>Associação exata entre configuração, fitness e cada vetor; o slide 17 usa outra descrição de métrica</td>
+</tr>
+<tr>
+<td><code>lim_aucloss.npy</code></td>
+<td>Ponto médio da sigmoide entre 0 e 50, LeNet, 20% Fashion-MNIST, LR 1e-3, WD 1e-2, 150 épocas</td>
+<td>Vetor com 50 posições</td>
+<td>Valores exatos do eixo, repetições e definição de AUC</td>
+</tr>
+<tr>
+<td><code>AdaSym_fminist_c2.npy</code>, <code>AdaSym_fminist_c4.npy</code>, <code>AdaSym_fminist_full.npy</code></td>
+<td>LeNet, Fashion-MNIST, piso v/4; contagens para ≤v/2, ≤v/4 e total. Metadata diz 1550 épocas. Slide 16 mostra 150</td>
+<td>Três vetores inteiros monotônicos de tamanho 150; razões acumuladas coincidem com o slide</td>
+<td>Unidade de contagem, frequência e correção do número de épocas</td>
+</tr>
+</tbody>
+</table>
+<p>O metadata também menciona <code>div_aucloss</code>, uma varredura de divisor de 2 a 20 com 150 épocas, LeNet e 20% de Fashion-MNIST. Esse arquivo não acompanha a pasta recebida, portanto não há como recalcular esse teste.</p>
+<p>Os exemplos de código preservados em metadata esclarecem a intenção do denominador:</p>
+<pre><code class="language-python">alpha = torch.sigmoid(torch.tensor(15 - cur_epoch))
+val = torch.clamp(v_hat - s_hat.square() * alpha, min=v_hat/8)
+</code></pre>
+<p>Eles não definem como <code>v_hat</code> e <code>s_hat</code> são calculados, nem epsilon, bias correction e atualização dos parâmetros. Por isso, a implementação nova explicita essas decisões em vez de atribuí-las ao histórico.</p></section><section id="historico"><h1>Auditoria dos resultados originais</h1>
+<p>Cada linha das matrizes 3 × 150 é tratada como trajetória sem identidade confirmada. A tabela agrega essas três trajetórias descritivamente. Não se presume que sejam sementes independentes ou que a loss seja de validação. Arquivos e hashes constam em <code>inventory.json</code>. AUC usa espaçamento de uma época, começando na primeira loss registrada. O código do cálculo original de AUC não foi fornecido.</p>
+<table>
+<thead>
+<tr>
+<th>Arquivo</th>
+<th style="text-align: right;">Média das últimas 10 posições</th>
+<th style="text-align: right;">Média de todas as posições</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AdaSymSig_losses_cifar10.npy</td>
+<td style="text-align: right;">0.015382</td>
+<td style="text-align: right;">0.069594</td>
+</tr>
+<tr>
+<td>AdaSym_loss_fmnist_nored.npy</td>
+<td style="text-align: right;">0.038083</td>
+<td style="text-align: right;">0.117264</td>
+</tr>
+<tr>
+<td>AdaSym_losses.npy</td>
+<td style="text-align: right;">0.038349</td>
+<td style="text-align: right;">0.120462</td>
+</tr>
+<tr>
+<td>AdamW_losses.npy</td>
+<td style="text-align: right;">0.041992</td>
+<td style="text-align: right;">0.135194</td>
+</tr>
+<tr>
+<td>AdamW_losses_cifar10.npy</td>
+<td style="text-align: right;">0.017411</td>
+<td style="text-align: right;">0.081801</td>
+</tr>
+<tr>
+<td>Adam_losses2x.npy</td>
+<td style="text-align: right;">0.041124</td>
+<td style="text-align: right;">0.109575</td>
+</tr>
+</tbody>
+</table>
+<h2>Cruzamento com o PowerPoint</h2>
+<p>Os gráficos dos slides 10, 12 e 14 identificam médias e desvios padrão, coerentes com três trajetórias por arquivo 3 × 150. Isso sustenta a interpretação como repetições, mas não identifica sementes ou independência. O gráfico do slide 16 explicita contadores acumulados, reforçando essa leitura dos arquivos c2/c4/full.</p>
+<p>Para <code>losses_FashionMNIST.npy</code> (3 × 100), a correspondência dos valores iniciais e finais com os gráficos dos slides 8 e 9 permite inferir a ordem abaixo. É uma inferência visual verificável, ainda sem o programa que gerou o gráfico. Essas linhas representam métodos diferentes e não três sementes do mesmo método.</p>
+<table>
+<thead>
+<tr>
+<th>Linha (índice zero)</th>
+<th>Método inferido</th>
+<th style="text-align: right;">Primeiro valor</th>
+<th style="text-align: right;">Último valor</th>
+<th style="text-align: right;">Média registrada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>AdaSym</td>
+<td style="text-align: right;">0.553933</td>
+<td style="text-align: right;">0.278333</td>
+<td style="text-align: right;">0.291404</td>
+</tr>
+<tr>
+<td>1</td>
+<td>AdaSymSigmoid</td>
+<td style="text-align: right;">0.550282</td>
+<td style="text-align: right;">0.262625</td>
+<td style="text-align: right;">0.287134</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AdamW</td>
+<td style="text-align: right;">0.595231</td>
+<td style="text-align: right;">0.275254</td>
+<td style="text-align: right;">0.302175</td>
+</tr>
+</tbody>
+</table>
+<p>Os gráficos dos slides 18 e 19 indicam mínimos em (0,5843; 0,7406) e (0,6744; 0,4062). A reconstrução dos eixos pelo metadata e os mínimos numéricos abaixo coincidem com essas marcações. Essa concordância identifica as duas varreduras, sem resolver o significado de beta4.</p>
+<h2>Inconsistências e limites</h2>
+<ul>
+<li><code>loss_matrix.npy</code> inclui betas iguais a 1 na grade declarada, inválidos para uma EMA normalizada com bias correction. A presença de NaN coincide com a última linha, mas falta código para estabelecer a causa.</li>
+<li><code>lrs_AdaSym_aucloss.npy</code> tem 80 valores. A grade com 27 LRs em metadata não permite reconstruir seu eixo. Não se atribui uma LR ótima a esse arquivo.</li>
+<li>O slide 17 rotula sua métrica como média das últimas 15 losses e mostra LRs até 1e-2. Os vetores de LR em metadata são descritos como AUC e incluem valores até 9e-2. Não se presume que sejam a fonte exata desse gráfico sem o pós-processamento original.</li>
+<li><code>metadata.txt</code> diz 1550 épocas para os contadores. Os três arquivos correspondentes têm 150 posições, compatíveis com o eixo do slide 16. Preserva-se a divergência textual no registro original.</li>
+<li><code>Adam_losses2x.npy</code> é chamado AdamW 2× no texto e nos gráficos, mas o nome diz Adam. O dataset aparece como MNIST em metadata e Fashion-MNIST nos slides. A comparação não é rotulada como controlada.</li>
+<li>A sigmoide usa ponto de transição 5 no exemplo visual e 15 em metadata. As recorrências de m2, bias correction, epsilon e scheduler completo estão ausentes.</li>
+<li>Ausência de acurácia, separação treino/validação/teste, sementes, checkpoints, tempos, versões e logs da busca impede concluir superioridade de generalização ou reconstruir a regressão simbólica histórica.</li>
+</ul>
+<h2>Grade de betas</h2>
+<table>
+<thead>
+<tr>
+<th>Arquivo</th>
+<th style="text-align: right;">Não finitos</th>
+<th style="text-align: right;">Menor valor finito</th>
+<th>Índice mínimo</th>
+<th>Betas inferidos por metadata</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>loss_matrix.npy</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">15.459559</td>
+<td>(2, 66)</td>
+<td>(0.584341, 0.740568)</td>
+</tr>
+<tr>
+<td>loss_matrix (1).npy</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14.534201</td>
+<td>(4, 51)</td>
+<td>(0.674355, 0.406159)</td>
+</tr>
+</tbody>
+</table>
+<p>Esses mínimos são observações de uma varredura, sem repetições identificadas. Não constituem hiperparâmetros confirmados. O papel de beta4 não é definido e não equivale automaticamente ao complemento 1−beta3.</p>
+<h2>Contadores</h2>
+<ul>
+<li><code>c2</code>: razão acumulada final = 14.0758%. Se os arquivos registram contadores acumulados compatíveis, a razão por época deve usar diferenças sucessivas do numerador e denominador, não a razão acumulada em cada época.</li>
+<li><code>c4</code>: razão acumulada final = 9.9777%. Se os arquivos registram contadores acumulados compatíveis, a razão por época deve usar diferenças sucessivas do numerador e denominador, não a razão acumulada em cada época.</li>
+</ul>
+<p>As curvas registradas sugerem diferenças na dinâmica de treinamento. Os dados disponíveis não sustentam a afirmação de que um otimizador generaliza melhor nem separam o efeito da janela do efeito de uma LR maior.</p></section><figure><img src="results/historical/historical_curves.png" alt="Curvas históricas recalculadas"><figcaption>Arrays originais: comparação descritiva, split e sementes não identificados.</figcaption></figure><figure><img src="results/historical/beta_grids.png" alt="Grades de betas históricas"><figcaption>Grades preservam a região de valores inválidos.</figcaption></figure><section id="novo"><h1>Experimento novo em MLP sintético</h1>
+<p>Classificação não linear, 900 amostras de treino, 250 de validação e 250 de teste. MLP tanh 12–24–2, minibatch 64. Valores abaixo são média ± desvio padrão amostral entre 5 inicializações. O conjunto de teste é o mesmo nas 5 inicializações.</p>
+<p>Épocas: 35. Fórmula selecionada na triagem: <code>sqrt(q)</code>. A triagem usou outras sementes e outras amostras.</p>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th style="text-align: right;">LR congelada</th>
+<th style="text-align: right;">Test loss</th>
+<th style="text-align: right;">Test accuracy</th>
+<th style="text-align: right;">AUC val média por época</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>adamw_tuned</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.49164 ± 0.01840</td>
+<td style="text-align: right;">0.76400 ± 0.02668</td>
+<td style="text-align: right;">0.57811 ± 0.00567</td>
+</tr>
+<tr>
+<td>adamw_scaled_lr</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.36677 ± 0.03558</td>
+<td style="text-align: right;">0.83360 ± 0.01345</td>
+<td style="text-align: right;">0.52476 ± 0.01715</td>
+</tr>
+<tr>
+<td>historical</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.46001 ± 0.02915</td>
+<td style="text-align: right;">0.79040 ± 0.03182</td>
+<td style="text-align: right;">0.56906 ± 0.00774</td>
+</tr>
+<tr>
+<td>adasym_linear</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.47284 ± 0.02673</td>
+<td style="text-align: right;">0.78000 ± 0.03187</td>
+<td style="text-align: right;">0.57171 ± 0.00712</td>
+</tr>
+<tr>
+<td>symbolic_selected</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.44138 ± 0.03437</td>
+<td style="text-align: right;">0.79760 ± 0.03067</td>
+<td style="text-align: right;">0.56213 ± 0.01029</td>
+</tr>
+</tbody>
+</table>
+<h2>Limites da interpretação</h2>
+<p>Este teste verifica a implementação e fornece evidência limitada sobre esta tarefa sintética. A seleção simbólica consumiu 15 configurações, enquanto cada baseline usou 3. A comparação da melhor família simbólica contra uma baseline inclui esse orçamento adicional e não prova superioridade em orçamento igual. A confirmação usa apenas uma tarefa nova, 5 inicializações e amostras do mesmo gerador. Não substitui Fashion-MNIST, CIFAR-10 ou avaliação de transferência entre domínios.</p>
+<p>Os modelos de teste usam o checkpoint de menor loss de validação. As configurações não são escolhidas pelo teste. O desvio padrão descreve variação entre inicializações, não incerteza entre datasets nem um intervalo de confiança.</p>
+<p>Os métodos históricos são reconstruções novas com momentos explicitados. Não reproduzem o treinamento original ausente. A formulação linear com janela comum constitui a hipótese principal, mesmo se outra transformação vencer a triagem. Não se escolhe uma ideia final com base neste único experimento.</p></section><figure><img src="results/synthetic/summary.png" alt="Experimento sintético e consistência"><figcaption>À esquerda, MLP sintético. À direita, resposta a gradientes controlados.</figcaption></figure><section id="protocolo"><h1>Protocolo de continuação</h1>
+<h2>Hipóteses registradas antes da próxima rodada</h2>
+<p>H1: a consistência coordenada reduz o tempo até uma qualidade alvo em comparação com AdamW ajustado. H2: esse efeito permanece quando AdamW pode usar taxas maiores e o orçamento total de ajuste é equivalente. H3: uma janela comum é mais interpretável e ao menos tão robusta quanto a subtração histórica com janelas distintas. H4: a janela transfere para tarefas que não participaram da seleção simbólica.</p>
+<p>O teste sintético já observado é exploratório. Qualquer modificação baseada nele inicia uma nova rodada e precisa de novos dados finais de confirmação.</p>
+<h2>Fases e separação dos dados</h2>
+<table>
+<thead>
+<tr>
+<th>Fase</th>
+<th>Uso permitido</th>
+<th>Saída congelada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Busca</td>
+<td>Treino e validação em tarefas proxy, 3 sementes por configuração</td>
+<td>Fronteira de fórmulas e logs da busca</td>
+</tr>
+<tr>
+<td>Seleção</td>
+<td>Validação com 5 sementes novas e tarefas proxy adicionais</td>
+<td>Uma fórmula e regra de ajuste de hiperparâmetros</td>
+</tr>
+<tr>
+<td>Confirmação</td>
+<td>Treino/validação com 10 sementes e configuração congelada</td>
+<td>Comparação principal e suas falhas</td>
+</tr>
+<tr>
+<td>Transferência</td>
+<td>Novos datasets e arquiteturas que não guiaram a fórmula</td>
+<td>Evidência de generalidade ou seus limites</td>
+</tr>
+</tbody>
+</table>
+<p>Separar as sementes de ordem de minibatch, inicialização, divisão dos dados e busca simbólica. Teste oficial só pode servir à avaliação final. A escolha de época/checkpoint usa validação. Evitar ajustar repetidamente a fórmula após ler resultados do mesmo teste.</p>
+<h2>Orçamento justo</h2>
+<p>Definir antes da rodada quantos treinamentos ou GPU-horas cada família pode usar. Incluir no custo de AdaSym a seleção entre expressões e não apenas o melhor treinamento. Com orçamento pequeno, comparar uma família congelada de cada vez e reservar a busca ampla para uma análise separada.</p>
+<p>O ensaio sintético incluído usa três LRs por família e duas sementes. Há cinco famílias simbólicas: seu custo total de seleção é maior que o de uma única baseline. Todas as escolhas e os resultados ficam em <code>results/synthetic/runs.json</code>.</p>
+<p>Próxima grade sugerida: LRs logarítmicas entre 1e-4 e 3e-2, expandindo se o melhor ponto estiver na borda. Fixar como essa expansão será decidida pela validação antes de tocar o teste. Ajustar weight decay e scheduler de maneira equivalente. Mesmo custo por tentativa e mesmas regras de early stopping.</p>
+<h2>Controles e ablações</h2>
+<table>
+<thead>
+<tr>
+<th>Comparação</th>
+<th>Pergunta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AdamW, alpha=0</td>
+<td>A consistência melhora a baseline dentro da mesma implementação?</td>
+</tr>
+<tr>
+<td>AdamW com LR maior e bem ajustada</td>
+<td>O ganho é apenas escala do passo?</td>
+</tr>
+<tr>
+<td>AdamW com scheduler equivalente ao ganho médio</td>
+<td>O efeito depende do tempo, sem seletividade por coordenada?</td>
+</tr>
+<tr>
+<td>AdaBelief e centered RMSprop</td>
+<td>A estatística proposta agrega algo sobre adaptação por variabilidade?</td>
+</tr>
+<tr>
+<td>SGD momentum e Lion</td>
+<td>A conclusão depende de comparar apenas com AdamW?</td>
+</tr>
+<tr>
+<td>h(q)=q contra sqrt(q), q² e demais</td>
+<td>Qual forma de resposta tem suporte?</td>
+</tr>
+<tr>
+<td>Janela comum contra v−s² histórico</td>
+<td>O benefício exige momentos de janelas diferentes?</td>
+</tr>
+<tr>
+<td>beta_window: 0,75 / 0,9 / 0,95 / 0,99</td>
+<td>Qual escala temporal captura consistência útil?</td>
+</tr>
+<tr>
+<td>c: 1 / 2 / 4 / 8</td>
+<td>O ganho sobrevive ao controle da amplificação máxima?</td>
+</tr>
+<tr>
+<td>Warmup: 0 / 20 / 100 passos</td>
+<td>Quanto do efeito vem do viés de consistência inicial?</td>
+</tr>
+<tr>
+<td>Alpha constante contra sigmoide</td>
+<td>A persistência observada basta ou o efeito depende do decaimento temporal?</td>
+</tr>
+<tr>
+<td>Coordenada contra camada/bloco</td>
+<td>A seletividade local importa?</td>
+</tr>
+</tbody>
+</table>
+<p>Esses controles são um plano. O experimento entregue executa apenas as famílias enumeradas em seu relatório. Não são testes já concluídos em visão.</p>
+<h2>Métricas e comparação</h2>
+<p>Fixar uma métrica primária, como tempo até uma acurácia de validação alvo, com a qualidade final de teste como condição de não inferioridade. Se não houver alvo justificável, usar AUC de loss de validação normalizada pelo horizonte e apresentar também curvas completas. Não confundir soma das losses com integral trapezoidal. Declarar o eixo em passos, exemplos ou segundos.</p>
+<p>Registrar média, desvio padrão e diferenças pareadas entre sementes. No relatório final, estimar IC por bootstrap pareado sobre repetições independentes, com a unidade de reamostragem explícita. Dez sementes ainda não estimam variabilidade entre datasets. Não aplicar teste t independente a observações autocorrelacionadas de épocas nem tratar milhares de minibatches como milhares de replicações.</p>
+<p>Declarar todas as falhas. Reportar não finitos, runs interrompidas, saturação do piso, passos máximos, normas de parâmetros e custo de memória. Não excluir runs divergentes só da média do método. Em buscas grandes, avaliar o vencedor em sementes e tarefas independentes para reduzir viés de seleção.</p>
+<h2>Registro por execução</h2>
+<p>Salvar commit do código, configuração completa, sementes separadas, dataset/split, hash da divisão, arquitetura, inicialização, batch size, precisão, dispositivo, versões, scheduler, épocas, passos, loss/accuracy por split, duração, estado do otimizador, checkpoint escolhido e motivo de falha. Incluir a expressão simbólica canônica, complexidade e histórico de seleção.</p>
+<h2>Gate para promoção de uma fórmula</h2>
+<p>Promover somente se ela melhorar a métrica primária em mais de uma tarefa, mantiver a qualidade final predefinida, superar controles de LR com orçamento equivalente e apresentar custo compatível com o ganho. Se a evidência falhar, publicar o resultado negativo e restringir a hipótese ao domínio onde houver suporte.</p></section><section id="verificacao"><h1>Verificação realizada</h1>
+<p>Data: 29 de outubro de 2026. Ambiente local Windows, Python 3.12.14. Experimento sintético executado com NumPy 2.3.5. Testes da regra executados com NumPy 2.5.4 e PyTorch 2.15.0+cpu.</p>
+<h2>Testes da regra</h2>
+<p>Dez testes passaram, sem testes ignorados:</p>
+<ul>
+<li>Limites alpha=0 e c=1 comparados com recorrência AdamW independente.</li>
+<li>Estatística distingue sinal constante, cancelamento de sinal e variação de magnitude.</li>
+<li>Limites de ganho para todas as seis regras em gradientes aleatórios e nulos.</li>
+<li>Gradientes inválidos não alteram parâmetros e gradientes ausentes pulam a atualização.</li>
+<li>Simetria por inversão de sinal e reescala aproximada dos gradientes.</li>
+<li>Gradiente do MLP comparado com diferenças finitas em todos os tensores.</li>
+<li>Sigmoide exige progresso explícito e reduz o ganho no final.</li>
+<li>Retomada de estado PyTorch reproduz o passo seguinte.</li>
+<li>Paridade NumPy/PyTorch em 6 regras, 2 schedules e 25 passos.</li>
+<li>Alpha=0 comparado com <code>torch.optim.AdamW</code> nativo em precisão dupla.</li>
+</ul>
+<h2>Execuções empíricas</h2>
+<p>A triagem sintética executou 30 treinamentos de candidatos simbólicos e 24 treinamentos para quatro controles/famílias. A confirmação executou 25 treinamentos com configurações congeladas e sementes novas. Cada treinamento teve 35 épocas. Esses 79 treinamentos são pequenos e não equivalem a testes em datasets de visão. Seus resultados completos estão em <code>synthetic/runs.json</code>.</p>
+<p>O piloto LeNet passou por duas execuções funcionais de uma época em pixels e rótulos artificiais: AdaSym linear e AdamW nativo. Os logs em <code>functional/</code> têm <code>smoke: true</code>. Essas execuções verificam integração e formato dos logs e não medem desempenho em Fashion-MNIST. Nenhum novo treino completo de Fashion-MNIST ou CIFAR-10 foi realizado nesta revisão.</p>
+<h2>Integridade e figuras</h2>
+<p>Os hashes das cópias dos arquivos de origem constam em <code>data/source_manifest.json</code>. Os arrays foram carregados com <code>allow_pickle=False</code>. A auditoria encontrou 70 NaNs em <code>loss_matrix.npy</code>, preservados como parte do histórico.</p>
+<p>Os gráficos históricos e sintéticos foram gerados a partir dos arrays/logs e inspecionados visualmente. As curvas de média não foram apresentadas como intervalos de confiança. A incerteza sobre os metadados originais permanece explícita.</p>
+<h2>Limitações conhecidas</h2>
+<p>A implementação PyTorch é uma referência com diagnósticos que sincronizam o dispositivo. Não foi medida em GPU nem em precisão mista. A paridade numérica testada usa float64. Não há otimizações fused/foreach, gradientes esparsos ou modo diferenciável. O código prioriza rastreabilidade da hipótese.</p></section><section id="origem"><h1>Proveniência e escopo</h1>
+<h2>Material recebido</h2>
+<ul>
+<li><code>references/AdaSym-original.pptx</code>: cópia integral da apresentação original com 20 slides.</li>
+<li><code>data/original/</code>: cópia dos 16 arrays NumPy, <code>metadata.txt</code> e <code>teste.py</code> originais.</li>
+<li><code>data/source_manifest.json</code>: hashes SHA-256 das fontes copiadas, sem caminhos pessoais.</li>
+<li><code>docs/slides_extraidos.json</code>: texto e mapeamento das imagens dos slides para consulta. As fórmulas originais estão em imagens, não em texto editável.</li>
+</ul>
+<p>Os documentos são evidência da pesquisa. Seu conteúdo não foi tratado como instrução para executar programas ou publicar dados. <code>teste.py</code> não foi executado nem modificado. As fontes originais em <code>optim</code> permanecem intactas.</p>
+<h2>Reconstruções novas</h2>
+<p>A recorrência de m2 não acompanha o material. Os nomes beta3 e beta4 aparecem numa varredura, sem definição da fórmula. A implementação <code>historical</code> é uma reconstrução que adota uma EMA normalizada para s e bias correction em todos os momentos. Ela explicita uma possível interpretação e não reivindica equivalência ao programa original.</p>
+<p>A janela comum, a gramática pequena, o warmup, a implementação NumPy/PyTorch, os testes e o MLP sintético são adições desta revisão. Os testes novos têm logs próprios. As evidências históricas e novas não foram mescladas em uma estatística única.</p>
+<h2>Dados que ainda precisam ser recuperados</h2>
+<ol>
+<li>Notebook/código original de regressão simbólica e objetivos usados no fitness.</li>
+<li>Implementação do otimizador histórico, recorrência de m2, beta4 e bias correction.</li>
+<li>Código dos treinamentos, curvas de validação e acurácia, sementes e checkpoints.</li>
+<li>Confirmação da ordem inferida das linhas de <code>losses_FashionMNIST.npy</code> e identificação das demais trajetórias.</li>
+<li>Grade de 80 LRs de <code>lrs_AdaSym_aucloss.npy</code> e scheduler de cada comparação.</li>
+<li>Definição e periodicidade dos contadores c2/c4/full.</li>
+</ol>
+<p>Sem esses itens, repetir exatamente os números dos slides seria uma alegação incorreta.</p>
+<h2>Autoria, licença e publicação</h2>
+<p>A pesquisa e os arquivos recebidos pertencem a seus respectivos autores. Esta pasta não concede uma licença de distribuição: nenhuma licença aberta foi escolhida em nome do usuário. Foi preparada para uso local. O pedido posterior do usuário cancelou a publicação no GitHub, portanto nenhum upload faz parte desta entrega.</p></section></main><footer>Entrega local. As fórmulas usam MathML nativo e os gráficos estão nesta pasta. Não requer conexão com a internet.</footer></body></html>

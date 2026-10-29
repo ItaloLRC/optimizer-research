@@ -1,0 +1,54 @@
+METADADOS DOS nmpy arquivos
+
+
+loss matrix para identificar melhores valores de beta para o m2
+
+loss_matrix(1)
+beta3e = torch.linspace(-0.3, -0.01, 10)
+beta3s = 10 ** beta3e
+
+beta4e = torch.linspace(-1.5, 0, 70)
+beta4s = 10 ** beta4e
+
+loss_matrix
+
+beta3e = torch.linspace(-0.3, 0, 10)
+beta3s = 10 ** beta3e
+
+beta4e = torch.linspace(-3, 0, 70)
+beta4s = 10 ** beta4e
+
+
+losses_FashionMNIST.npy, 100 epochs, fashionmnist
+comparaçao entre AdaSym, AdaSymSig e AdamW
+
+lrs_AdaSym_aucloss.npy 300 epochs, 10% fashionmnist, auc da loss, wd = 1e-2, b1,b2 = (0.75, 0.35)
+
+lim_aucloss sigmoid epoch half 0-50, lenet, fashion mnist 20%, 1e-3 lr, 1e-2 wd 150epochs
+
+div_aucloss 150epochs lenet, fashion mnist20%, 1e-3lr, 1e-2wd no decay, 2-20
+
+lrs = torch.cat((torch.arange(1e-4, 1e-3, 1e-4), torch.arange(1e-3, 1e-2, 1e-3), torch.arange(1e-2, 1e-1, 1e-2))) 
+alpha = torch.sigmoid(torch.tensor(15 - cur_epoch))
+                #alpha = 1.0
+
+                val = torch.clamp(v_hat - s_hat.square() * alpha, min=v_hat/8)
+
+lrs_aucloss.npy e lrs_aucloss_AdamW.npy
+
+
+adamW & adamSym losses lenet, 150 epcohs, fmnist, 1e-3lr,  nored with no sigmoid or exp
+v/4 (0.75, 0.35) epoch sigmoid, 
+
+adamw e adamSym losses cifar 10
+150 epochs, 1e-3lr, 1e-2wd, 15 epochs, v/8 sigmoid, resnet20
+
+
+
+
+AdaSym_fminist_c2, c4, full
+1550 epochs, fmnist, lenet, v/4
+iteraçoes q atingiram <=v/4, <=v/2 e total 
+
+
+adamW losses 2x, adamW 2xlr mnist lenet 150 epochs

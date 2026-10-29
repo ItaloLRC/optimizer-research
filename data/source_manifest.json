@@ -1,0 +1,97 @@
+[
+  {
+    "path": "references/AdaSym-original.pptx",
+    "bytes": 969789,
+    "sha256": "8fe66534586998799030f90b2f5c12a0fc3d7bebbcc85c8f73bb2fd8f029ca81"
+  },
+  {
+    "path": "data/original/Adam_losses2x.npy",
+    "bytes": 3728,
+    "sha256": "229c39774d11c93671de50b7b61d7cd985a3e221880a47af4588eb8972c07c8b"
+  },
+  {
+    "path": "data/original/AdamW_losses.npy",
+    "bytes": 3728,
+    "sha256": "acf3998374ce9c433b3acd88b95653fd6dad649fdab9105a5744f2c24228aee5"
+  },
+  {
+    "path": "data/original/AdamW_losses_cifar10.npy",
+    "bytes": 3728,
+    "sha256": "710eb3f3aad4d186089705d2116bee4176a40fe61f1a6884d6bd3ee33f1f5ca8"
+  },
+  {
+    "path": "data/original/AdaSym_fminist_c2.npy",
+    "bytes": 1328,
+    "sha256": "3b219ea9aea3bf094c92b91a2553d79024557c36d032cbf6ff9655e834b8def6"
+  },
+  {
+    "path": "data/original/AdaSym_fminist_c4.npy",
+    "bytes": 1328,
+    "sha256": "b6c5ab4a5c955b0628e2c2a6c194e0d4b1d26c63a2bfe6c6d6ddf510ab454ca0"
+  },
+  {
+    "path": "data/original/AdaSym_fminist_full.npy",
+    "bytes": 1328,
+    "sha256": "aabf66360d07c2e624c870da317f1361272b692451bae17dd9863f2081cbcc3b"
+  },
+  {
+    "path": "data/original/AdaSym_loss_fmnist_nored.npy",
+    "bytes": 3728,
+    "sha256": "e24ca8b8b1b25697f92d3d67ebfff51d912e9970c095ee13237048d149338fbf"
+  },
+  {
+    "path": "data/original/AdaSym_losses.npy",
+    "bytes": 3728,
+    "sha256": "48dac60a5593a51625922d17a8fabf8be25ed3f80575d2719bb2e629410babce"
+  },
+  {
+    "path": "data/original/AdaSymSig_losses_cifar10.npy",
+    "bytes": 3728,
+    "sha256": "2b8b28292c7087efc9748357c0f996a75e907ebc35682056f3d6f9f909438f36"
+  },
+  {
+    "path": "data/original/lim_aucloss.npy",
+    "bytes": 328,
+    "sha256": "e520c342015fddaf3b27349dc9c6ca38534114698e45222814bcd46fd8ad0a29"
+  },
+  {
+    "path": "data/original/loss_matrix (1).npy",
+    "bytes": 5728,
+    "sha256": "6132220f13c978ae7a551507a934291888a1429fb1e777f1efde39d25a30c323"
+  },
+  {
+    "path": "data/original/loss_matrix.npy",
+    "bytes": 5728,
+    "sha256": "f9afc8e52152d5afb85b33b0f57404c25faae1ae11c640df64e02972982252cb"
+  },
+  {
+    "path": "data/original/losses_FashionMNIST.npy",
+    "bytes": 2528,
+    "sha256": "fad44e83d64a223f539fe067b64201e6ee85097b637ff5f3ed2955dd7b1c1122"
+  },
+  {
+    "path": "data/original/lrs_AdaSym_aucloss.npy",
+    "bytes": 448,
+    "sha256": "f604c6ac1421284598fe03cbe1084223790b6c9da51e18dc8d26f365ed26abfc"
+  },
+  {
+    "path": "data/original/lrs_aucloss.npy",
+    "bytes": 236,
+    "sha256": "b1814edead498ebb87713c6a8b88617ed5af01a70185e7e5c4bdcc4ba0fc5ba6"
+  },
+  {
+    "path": "data/original/lrs_aucloss_adamW.npy",
+    "bytes": 236,
+    "sha256": "9dda9560a5c506f21e268eab1a5a16f2cdf89c955533a286f60d55de44125b76"
+  },
+  {
+    "path": "data/original/metadata.txt",
+    "bytes": 1477,
+    "sha256": "9b2a185526eb567a075e9637d52ab9d7c41c821c933cb41d741a1ccf0e4e2e7c"
+  },
+  {
+    "path": "data/original/teste.py",
+    "bytes": 162,
+    "sha256": "d91c06ad1ecc114b28862081d1da2e9a21c5f0195fcfcc106b1b52ea412e1ef3"
+  }
+]

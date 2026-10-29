@@ -1,0 +1,43 @@
+{
+  "method": "adamw",
+  "smoke": true,
+  "seed": 101,
+  "split_seed": 42,
+  "config": {
+    "lr": 0.001,
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "beta_window": 0.9,
+    "cap": 4.0,
+    "alpha": 0,
+    "eps": 1e-08,
+    "weight_decay": 0.01,
+    "rule": "linear",
+    "warmup_steps": 20,
+    "schedule": "constant",
+    "midpoint": 0.3,
+    "temperature": 0.05
+  },
+  "dataset_hashes": {},
+  "train_size": 32,
+  "val_size": 16,
+  "batch_size": 128,
+  "epochs": 1,
+  "curve": [
+    {
+      "epoch": 1,
+      "validation": {
+        "loss": 2.25411057472229,
+        "accuracy": 0.125
+      },
+      "diagnostics": {}
+    }
+  ],
+  "elapsed_seconds": 0.025885299997753464,
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.5.4",
+    "torch": "2.15.0+cpu"
+  },
+  "device": "cpu"
+}

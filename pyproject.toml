@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optimizer-research"
+version = "0.1.0"
+description = "AdaSym: consistent-gradient windows and constrained symbolic optimizer search"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<3"]
+
+[project.optional-dependencies]
+plots = ["matplotlib>=3.7,<4"]
+torch = ["torch>=2.2,<3"]
+docs = ["Markdown>=3.7,<4", "latex2mathml>=3.77,<4"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
