@@ -190,4 +190,5 @@ O gerador de `LEIA-ME.html` requer `python -m pip install -e ".[docs]"` e pode s
 | `references/` | Apresentação original |
 | `results/` | Relatórios, logs e figuras reproduzíveis |
 
-O workflow `.github/workflows/tests.yml` executa os testes no GitHub Actions. O projeto ainda não declara uma licença de distribuição.
+O workflow `.github/workflows/tests.yml` executa os testes no GitHub Actions.
+
