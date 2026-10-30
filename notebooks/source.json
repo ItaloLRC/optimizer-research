@@ -1,0 +1,10 @@
+{
+  "title": "Symbolic Optimizer Discovery on MNIST via GP",
+  "author": "Italo Capuzzo",
+  "source_url": "https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp",
+  "kaggle_version": 14,
+  "downloaded_at_utc": "2026-10-30T01:29:18.729173+00:00",
+  "notebook_file": "symbolic-optimizer-discovery-on-mnist-via-gp.ipynb",
+  "sha256": "39d8d987985a7c5c5a748b61c4abe4816e4de44b98f8d8606406da2f1b63b8e7",
+  "source_preserved": true
+}

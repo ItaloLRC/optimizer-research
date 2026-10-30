@@ -4,8 +4,18 @@
 </style></head><body><header><div class="eyebrow">Optimizer Research · AdaSym</div><h1>Uma janela de consistência<br>para adaptar o passo</h1><p>Fundamentação matemática, análise dos testes originais e uma implementação para testar a hipótese.</p><p>Revisão de 29 de outubro de 2026 · Pesquisa exploratória</p></header><nav><a href="#inicio">Visão geral</a><a href="#convergencia">Convergência observada</a><a href="#testes">Testes do autor</a><a href="#pesquisa">Formulação detalhada</a><a href="#mapa">Mapa dos testes</a><a href="#historico">Notas da auditoria</a><a href="#novo">Ensaio adicional</a><a href="#protocolo">Próximos experimentos</a><a href="#verificacao">Verificação</a><a href="#origem">Proveniência</a></nav><main><section id="inicio"><h1>AdaSym</h1>
 <p>AdaSym é um otimizador experimental para redes neurais que adapta o tamanho do passo à consistência recente dos gradientes. Quando os gradientes mantêm uma direção, o método permite atualizações maiores. Um limite no denominador controla essa amplificação, e uma variante com sigmoide reduz o incentivo ao longo do treinamento.</p>
 <p>A pesquisa usa regressão simbólica para explorar fórmulas de atualização. As expressões promissoras passam por simplificação e testes empíricos, até restringir a busca a regras que possam ser interpretadas e comparadas com AdamW. O objetivo é reduzir o número de épocas necessário para chegar a uma loss baixa, preservando o comportamento estável no final do treino.</p>
+<p><strong>Notebook de descoberta simbólica:</strong> <a href="https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp">abrir no Kaggle</a> · <a href="notebooks/symbolic-optimizer-discovery-on-mnist-via-gp.ipynb">ver o código neste repositório</a>.</p>
 <p>Os experimentos incluem Fashion-MNIST com LeNet e CIFAR-10 com ResNet-20, além de varreduras de hiperparâmetros. As curvas dessas duas comparações, descritas com a mesma taxa de aprendizado, apoiam a hipótese de convergência mais rápida com oscilação final da loss comparável à de AdamW. A seção de resultados apresenta as medidas e as exceções observadas.</p>
 <p>A <a href="docs/pesquisa.md">pesquisa completa</a> desenvolve a fundamentação e as extensões do método. Para uma leitura no navegador, abra <code>LEIA-ME.html</code>. O <a href="docs/mapa_experimentos.md">mapa de experimentos</a> identifica os arquivos de cada teste, e o <a href="docs/protocolo.md">protocolo de avaliação</a> descreve as próximas comparações. A <a href="docs/proveniencia.md">proveniência</a> registra a origem dos dados.</p>
+<h2>Descoberta simbólica de otimizadores</h2>
+<p>O notebook <strong>Symbolic Optimizer Discovery on MNIST via GP</strong> implementa uma busca por regras de atualização usando <strong>programação genética com DEAP e PyTorch</strong>. Cada candidato é uma expressão matemática construída a partir do gradiente e dos momentos de primeira e segunda ordem.</p>
+<ul>
+<li><strong>Busca evolutiva:</strong> seleção por torneio, cruzamento, mutação e preservação dos melhores indivíduos por elitismo.</li>
+<li><strong>Avaliação em redes neurais:</strong> treinamento de uma LeNet em MNIST, com fitness baseado na área sob a curva de perda de validação em relação a um baseline AdamW.</li>
+<li><strong>Controle da complexidade:</strong> penalização do tamanho das expressões e limites de altura das árvores.</li>
+<li><strong>Análise da busca:</strong> acompanhamento da evolução do fitness, tamanho das árvores e fórmulas selecionadas no Hall of Fame.</li>
+</ul>
+<p>Essa implementação documenta a frente de descoberta simbólica da pesquisa e complementa a formulação e os experimentos do AdaSym apresentados neste repositório. O <a href="notebooks/README.md">guia do notebook</a> explica a organização do código e como executá-lo.</p>
 <h2>Como funciona</h2>
 <p>Durante o treinamento, o gradiente indica como alterar os pesos para reduzir a função de perda, ou loss. Como cada minibatch contém exemplos diferentes, essa indicação varia de um passo para outro. Adam usa uma média dos gradientes para definir a direção e uma média dos gradientes ao quadrado para ajustar a escala da atualização.</p>
 <p>AdaSym acrescenta uma memória da direção, m2, à normalização. Gradientes que concordam tendem a manter essa memória forte. Mudanças de sinal tendem a produzir cancelamento. Essa é a ideia da janela de consistência: usar o histórico recente para decidir quanto ampliar o passo em cada coordenada.</p>
@@ -84,7 +94,7 @@
 <p>Antes de T, o método aplica quase toda a correção de consistência. Em T, o peso é 0,5. Depois, o denominador se aproxima de v. Essa transição procura combinar passos maiores no início com uma normalização mais próxima da usada por Adam no final.</p>
 <p>Uma configuração registrada em <code>metadata.txt</code> usa <code>sigmoid(15 − cur_epoch)</code> e <code>max(v_hat − alpha·s_hat², v_hat/8)</code>. Nessa implementação, <code>alpha</code> é o peso temporal s, e <code>s_hat</code> é a memória m2. Os testes incluem pisos v/4 e v/8. A recorrência original de m2, incluindo o papel de beta3 e beta4, ainda precisa ser recuperada para reproduzir esses treinamentos exatamente.</p>
 <h2>Resultados disponíveis</h2>
-<p>Os dados dos experimentos estão em <code>data/original/</code>. O <a href="results/original_tests/report.md">relatório dos experimentos</a> contém os números completos e as condições descritas no metadata. As losses não identificam se o registro pertence ao treino, à validação ou ao teste; por isso, as comparações abaixo descrevem a dinâmica das curvas, sem concluir sobre acurácia ou generalização.</p>
+<p>Os dados dos experimentos estão em <code>data/original/</code>. O <a href="results/original_tests/report.md">relatório dos experimentos</a> contém os números completos e as condições descritas no metadata. As losses pertencem ao conjunto de treino; as comparações abaixo descrevem a dinâmica das curvas.</p>
 <p><img alt="Curvas de treinamento em Fashion-MNIST e CIFAR-10" src="results/original_tests/author_training.png" /></p>
 <h3>Rapidez de convergência e comportamento final</h3>
 <p>Para medir a redução da loss em número de épocas, foi usado o primeiro trecho de cinco épocas consecutivas em que a curva média das três trajetórias permanece em loss ≤ 0,1. A oscilação final é a média dos desvios padrão temporais de cada trajetória nas últimas 20 épocas.</p>
@@ -1281,6 +1291,7 @@ val = torch.clamp(v_hat - s_hat.square() * alpha, min=v_hat/8)
 <li><code>data/original/</code>: cópia dos 16 arrays NumPy, <code>metadata.txt</code> e <code>teste.py</code> originais.</li>
 <li><code>data/source_manifest.json</code>: hashes SHA-256 das fontes copiadas, sem caminhos pessoais.</li>
 <li><code>docs/slides_extraidos.json</code>: texto e mapeamento das imagens dos slides para consulta. As fórmulas originais estão em imagens, não em texto editável.</li>
+<li><code>notebooks/symbolic-optimizer-discovery-on-mnist-via-gp.ipynb</code>: cópia da versão 14 do notebook público do autor no Kaggle, adicionada a seu pedido. O arquivo <code>notebooks/source.json</code> registra sua origem e hash SHA-256.</li>
 </ul>
 <p>Os documentos são evidência da pesquisa. Seu conteúdo não foi tratado como instrução para executar programas ou publicar dados. <code>teste.py</code> não foi executado nem modificado. As fontes originais em <code>optim</code> permanecem intactas.</p>
 <h2>Reconstruções novas</h2>
@@ -1289,7 +1300,7 @@ val = torch.clamp(v_hat - s_hat.square() * alpha, min=v_hat/8)
 <p><code>results/original_tests/report.md</code> apresenta os experimentos realizados pelo autor, com as condições transcritas do metadata e números recalculados dos arrays. O script <code>summarize_author_experiments.py</code> gera essa apresentação e seus gráficos sem treinar novamente as redes. A fórmula <code>d = max(v − s·m2², v/c)</code> é a do AdaSym dos slides. A razão normalizada q e a função h(q) são identificadas como extensões opcionais, sem atribuí-las aos experimentos originais.</p>
 <h2>Dados que ainda precisam ser recuperados</h2>
 <ol>
-<li>Notebook/código original de regressão simbólica e objetivos usados no fitness.</li>
+<li>Identificação das execuções de descoberta simbólica associadas a cada experimento histórico. O notebook público de programação genética e sua função de fitness estão disponíveis em <code>notebooks/</code>.</li>
 <li>Implementação do otimizador histórico, recorrência de m2, beta4 e bias correction.</li>
 <li>Código dos treinamentos, curvas de validação e acurácia, sementes e checkpoints.</li>
 <li>Confirmação da ordem inferida das linhas de <code>losses_FashionMNIST.npy</code> e identificação das demais trajetórias.</li>
@@ -1298,4 +1309,4 @@ val = torch.clamp(v_hat - s_hat.square() * alpha, min=v_hat/8)
 </ol>
 <p>Sem esses itens, repetir exatamente os números dos slides seria uma alegação incorreta.</p>
 <h2>Autoria, licença e publicação</h2>
-<p>A pesquisa e os arquivos recebidos pertencem a seus respectivos autores. Esta pasta não concede uma licença de distribuição: nenhuma licença aberta foi escolhida em nome do usuário. Foi preparada para uso local. O pedido posterior do usuário cancelou a publicação no GitHub, portanto nenhum upload faz parte desta entrega.</p></section></main><footer>Entrega local. As fórmulas usam MathML nativo e os gráficos estão nesta pasta. Não requer conexão com a internet.</footer></body></html>
+<p>A pesquisa e os arquivos recebidos pertencem a seus respectivos autores. Nenhuma licença aberta foi escolhida em nome do autor. O notebook público do Kaggle e as atualizações de apresentação foram adicionados ao GitHub a pedido do autor.</p></section></main><footer>Entrega local. As fórmulas usam MathML nativo e os gráficos estão nesta pasta. Não requer conexão com a internet.</footer></body></html>

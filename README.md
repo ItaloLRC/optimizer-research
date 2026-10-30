@@ -4,9 +4,22 @@ AdaSym é um otimizador experimental para redes neurais que adapta o tamanho do 
 
 A pesquisa usa regressão simbólica para explorar fórmulas de atualização. As expressões promissoras passam por simplificação e testes empíricos, até restringir a busca a regras que possam ser interpretadas e comparadas com AdamW. O objetivo é reduzir o número de épocas necessário para chegar a uma loss baixa, preservando o comportamento estável no final do treino.
 
+**Notebook de descoberta simbólica:** [abrir no Kaggle](https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp) · [ver o código neste repositório](notebooks/symbolic-optimizer-discovery-on-mnist-via-gp.ipynb).
+
 Os experimentos incluem Fashion-MNIST com LeNet e CIFAR-10 com ResNet-20, além de varreduras de hiperparâmetros. As curvas dessas duas comparações, descritas com a mesma taxa de aprendizado, apoiam a hipótese de convergência mais rápida com oscilação final da loss comparável à de AdamW. A seção de resultados apresenta as medidas e as exceções observadas.
 
 A [pesquisa completa](docs/pesquisa.md) desenvolve a fundamentação e as extensões do método. Para uma leitura no navegador, abra `LEIA-ME.html`. O [mapa de experimentos](docs/mapa_experimentos.md) identifica os arquivos de cada teste, e o [protocolo de avaliação](docs/protocolo.md) descreve as próximas comparações. A [proveniência](docs/proveniencia.md) registra a origem dos dados.
+
+## Descoberta simbólica de otimizadores
+
+O notebook **Symbolic Optimizer Discovery on MNIST via GP** implementa uma busca por regras de atualização usando **programação genética com DEAP e PyTorch**. Cada candidato é uma expressão matemática construída a partir do gradiente e dos momentos de primeira e segunda ordem.
+
+- **Busca evolutiva:** seleção por torneio, cruzamento, mutação e preservação dos melhores indivíduos por elitismo.
+- **Avaliação em redes neurais:** treinamento de uma LeNet em MNIST, com fitness baseado na área sob a curva de perda de validação em relação a um baseline AdamW.
+- **Controle da complexidade:** penalização do tamanho das expressões e limites de altura das árvores.
+- **Análise da busca:** acompanhamento da evolução do fitness, tamanho das árvores e fórmulas selecionadas no Hall of Fame.
+
+Essa implementação documenta a frente de descoberta simbólica da pesquisa e complementa a formulação e os experimentos do AdaSym apresentados neste repositório. O [guia do notebook](notebooks/README.md) explica a organização do código e como executá-lo.
 
 ## Como funciona
 
@@ -182,6 +195,7 @@ O gerador de `LEIA-ME.html` requer `python -m pip install -e ".[docs]"` e pode s
 
 | Pasta | Conteúdo |
 |---|---|
+| `notebooks/` | Notebook de descoberta simbólica com DEAP/PyTorch, guia de execução e origem da versão |
 | `docs/` | Fundamentação, protocolo e proveniência |
 | `src/optimizer_research/` | Otimizadores, gramática e MLP sintético |
 | `scripts/` | Auditoria, triagem, gráficos e piloto em visão |

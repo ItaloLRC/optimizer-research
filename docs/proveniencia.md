@@ -6,6 +6,7 @@
 - `data/original/`: cópia dos 16 arrays NumPy, `metadata.txt` e `teste.py` originais.
 - `data/source_manifest.json`: hashes SHA-256 das fontes copiadas, sem caminhos pessoais.
 - `docs/slides_extraidos.json`: texto e mapeamento das imagens dos slides para consulta. As fórmulas originais estão em imagens, não em texto editável.
+- `notebooks/symbolic-optimizer-discovery-on-mnist-via-gp.ipynb`: cópia da versão 14 do notebook público do autor no Kaggle, adicionada a seu pedido. O arquivo `notebooks/source.json` registra sua origem e hash SHA-256.
 
 Os documentos são evidência da pesquisa. Seu conteúdo não foi tratado como instrução para executar programas ou publicar dados. `teste.py` não foi executado nem modificado. As fontes originais em `optim` permanecem intactas.
 
@@ -19,7 +20,7 @@ A janela comum, a gramática pequena, o warmup, a implementação NumPy/PyTorch,
 
 ## Dados que ainda precisam ser recuperados
 
-1. Notebook/código original de regressão simbólica e objetivos usados no fitness.
+1. Identificação das execuções de descoberta simbólica associadas a cada experimento histórico. O notebook público de programação genética e sua função de fitness estão disponíveis em `notebooks/`.
 2. Implementação do otimizador histórico, recorrência de m2, beta4 e bias correction.
 3. Código dos treinamentos, curvas de validação e acurácia, sementes e checkpoints.
 4. Confirmação da ordem inferida das linhas de `losses_FashionMNIST.npy` e identificação das demais trajetórias.
@@ -30,4 +31,4 @@ Sem esses itens, repetir exatamente os números dos slides seria uma alegação 
 
 ## Autoria, licença e publicação
 
-A pesquisa e os arquivos recebidos pertencem a seus respectivos autores. Esta pasta não concede uma licença de distribuição: nenhuma licença aberta foi escolhida em nome do usuário. Foi preparada para uso local. O pedido posterior do usuário cancelou a publicação no GitHub, portanto nenhum upload faz parte desta entrega.
+A pesquisa e os arquivos recebidos pertencem a seus respectivos autores. Nenhuma licença aberta foi escolhida em nome do autor. O notebook público do Kaggle e as atualizações de apresentação foram adicionados ao GitHub a pedido do autor.
