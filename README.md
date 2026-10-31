@@ -1,6 +1,6 @@
 # AdaSym — pesquisa em algoritmos de otimização
 
-Pesquisa em algoritmos de otimização desenvolvida em um grupo de estudos de machine learning e IA em parceria com a Neospace. O projeto reúne **descoberta simbólica de regras de atualização, implementações em NumPy e PyTorch e experimentos com redes neurais**.
+Pesquisa em algoritmos de otimização desenvolvida em um grupo de estudos de machine learning e IA. O projeto reúne **descoberta simbólica de regras de atualização, implementações em NumPy e PyTorch e experimentos com redes neurais**.
 
 O AdaSym adapta o tamanho do passo à consistência recente dos gradientes. A formulação combina momentos do gradiente, normalização adaptativa e um piso no denominador para controlar a amplificação do passo. A variante AdaSymSigmoid incorpora uma transição temporal da correção de consistência.
 
