@@ -1,60 +1,62 @@
-# AdaSym — pesquisa em algoritmos de otimização
+# AdaSym — optimization algorithm research
 
-Pesquisa em algoritmos de otimização desenvolvida em um grupo de estudos de machine learning e IA. O projeto reúne **descoberta simbólica de regras de atualização, implementações em NumPy e PyTorch e experimentos com redes neurais**.
+English | [Português (Brasil)](README.pt-BR.md)
 
-O AdaSym adapta o tamanho do passo à consistência recente dos gradientes. A formulação combina momentos do gradiente, normalização adaptativa e um piso no denominador para controlar a amplificação do passo. A variante AdaSymSigmoid incorpora uma transição temporal da correção de consistência.
+Research on optimization algorithms developed within a machine learning and AI study group. The project brings together **symbolic discovery of update rules, NumPy and PyTorch implementations, and neural network experiments**.
 
-[Notebook no Kaggle](https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp) · [Código do notebook](notebooks/symbolic-optimizer-discovery-on-mnist-via-gp.ipynb) · [Formulação e fundamentação](docs/pesquisa.md)
+AdaSym adapts the step size to the recent consistency of gradients. Its formulation combines gradient moments, adaptive normalization, and a denominator floor to control step amplification. The AdaSymSigmoid variant adds a time-dependent transition to the consistency correction.
 
-## Frentes do projeto
+[Notebook on Kaggle](https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp) · [Notebook code](notebooks/symbolic-optimizer-discovery-on-mnist-via-gp.ipynb) · [Formulation and rationale](docs/pesquisa.md)
 
-- **Descoberta simbólica:** busca de expressões matemáticas por programação genética com DEAP.
-- **Implementação de otimizadores:** regras de atualização em NumPy e PyTorch, estados de momento e diagnósticos.
-- **Experimentação:** comparação de curvas de treinamento com AdamW e estudo de hiperparâmetros.
-- **Análise e visualização:** scripts para consolidar dados, gerar gráficos e examinar a dinâmica das atualizações.
+## Project areas
 
-## Descoberta simbólica de otimizadores
+- **Symbolic discovery:** search for mathematical expressions through genetic programming with DEAP.
+- **Optimizer implementation:** NumPy and PyTorch update rules, moment states, and diagnostics.
+- **Experimentation:** comparison of training curves with AdamW and hyperparameter studies.
+- **Analysis and visualization:** scripts to consolidate data, generate plots, and examine update dynamics.
 
-O notebook **Symbolic Optimizer Discovery on MNIST via GP** implementa uma busca por regras de atualização usando **programação genética com DEAP e PyTorch**. Cada candidato é uma expressão matemática construída a partir do gradiente e dos momentos de primeira e segunda ordem.
+## Symbolic optimizer discovery
 
-- **Busca evolutiva:** seleção por torneio, cruzamento, mutação e preservação dos melhores indivíduos por elitismo.
-- **Avaliação em redes neurais:** treinamento de uma LeNet em MNIST, com fitness baseado na área sob a curva de perda de validação em relação a um baseline AdamW.
-- **Controle da complexidade:** penalização do tamanho das expressões e limites de altura das árvores.
-- **Análise da busca:** acompanhamento da evolução do fitness, tamanho das árvores e fórmulas selecionadas no Hall of Fame.
+The **Symbolic Optimizer Discovery on MNIST via GP** notebook implements a search for update rules using **genetic programming with DEAP and PyTorch**. Each candidate is a mathematical expression built from the gradient and its first- and second-order moments.
 
-Essa implementação documenta a frente de descoberta simbólica da pesquisa e complementa a formulação e os experimentos do AdaSym apresentados neste repositório. O [guia do notebook](notebooks/README.md) explica a organização do código e como executá-lo.
+- **Evolutionary search:** tournament selection, crossover, mutation, and preservation of the best individuals through elitism.
+- **Neural network evaluation:** LeNet training on MNIST, with fitness based on the area under the validation loss curve relative to an AdamW baseline.
+- **Complexity control:** expression-size penalties and tree-height limits.
+- **Search analysis:** tracking fitness evolution, tree size, and formulas selected for the Hall of Fame.
 
-## Regra de atualização
+This implementation documents the symbolic discovery part of the research and complements the AdaSym formulation and experiments in this repository. The [notebook guide](notebooks/README.md) explains the code structure and how to run it.
+
+## Update rule
 
 $$d=\max\left(v-s\cdot m_2^2,\frac{v}{c}\right),\qquad \theta_{k+1}=\theta_k-\eta\frac{m_1}{\sqrt d}.$$
 
-| Termo | Papel |
+| Term | Role |
 |---|---|
-| `m1` | Média dos gradientes que define a direção da atualização |
-| `v` | Média dos gradientes ao quadrado |
-| `m2` | Memória da direção recente dos gradientes |
-| `s` | Peso da correção de consistência |
-| `c` | Divisor do piso que controla a amplificação do passo |
-| `eta` | Taxa de aprendizado |
+| `m1` | Average of gradients that defines the update direction |
+| `v` | Average of squared gradients |
+| `m2` | Memory of the recent gradient direction |
+| `s` | Weight of the consistency correction |
+| `c` | Floor divisor that controls step amplification |
+| `eta` | Learning rate |
 
-A correção de consistência ajusta o denominador conforme a direção recente dos gradientes. O piso `v/c` controla a escala da atualização. Na variante AdaSymSigmoid, o peso da correção segue uma sigmoide decrescente ao longo das épocas.
+The consistency correction adjusts the denominator according to the recent gradient direction. The `v/c` floor controls the update scale. In the AdaSymSigmoid variant, the correction weight follows a decreasing sigmoid over the epochs.
 
-## Experimentos e análises
+## Experiments and analysis
 
-| Frente | Configuração |
+| Area | Configuration |
 |---|---|
-| Busca simbólica | LeNet e MNIST, programação genética com DEAP e PyTorch |
-| Comparação de otimizadores | LeNet em Fashion-MNIST e ResNet-20 em CIFAR-10, com AdamW como referência |
-| Hiperparâmetros | Taxa de aprendizado, coeficientes de momento, transição da sigmoide e piso do denominador |
-| Análise das curvas | Perda de treinamento, área sob a curva e evolução ao longo das épocas |
+| Symbolic search | LeNet and MNIST, genetic programming with DEAP and PyTorch |
+| Optimizer comparison | LeNet on Fashion-MNIST and ResNet-20 on CIFAR-10, with AdamW as a reference |
+| Hyperparameters | Learning rate, moment coefficients, sigmoid transition, and denominator floor |
+| Curve analysis | Training loss, area under the curve, and evolution across epochs |
 
-![Curvas de treinamento em Fashion-MNIST e CIFAR-10](results/original_tests/author_training.png)
+![Training curves on Fashion-MNIST and CIFAR-10](results/original_tests/author_training.png)
 
-Os scripts de análise consolidam os registros em tabelas e figuras. Os dados estão em `data/original/` e os relatórios em `results/`.
+Analysis scripts consolidate the records into tables and figures. Data is in `data/original/`, and reports are in `results/`.
 
-## Executar
+## Run
 
-Requer Python 3.10 ou superior. Na raiz do repositório:
+Requires Python 3.10 or newer. From the repository root:
 
 ```bash
 python -m venv .venv
@@ -63,25 +65,25 @@ python -m venv .venv
 python -m pip install -e ".[plots,torch]"
 ```
 
-Para analisar os dados e gerar os resumos dos experimentos:
+To analyze the data and generate experiment summaries:
 
 ```bash
 python scripts/analyze_original.py
 python scripts/summarize_author_experiments.py
 ```
 
-Para executar os testes da implementação e o experimento sintético:
+To run the implementation tests and synthetic experiment:
 
 ```bash
 python -m unittest discover -s tests -v
 python scripts/run_synthetic.py --epochs 35 --output results/runs/synthetic
 ```
 
-O [guia do notebook](notebooks/README.md) apresenta a execução da busca simbólica no Kaggle e em ambiente local.
+The [notebook guide](notebooks/README.md) covers running the symbolic search on Kaggle and locally.
 
-### Exemplo em PyTorch
+### PyTorch example
 
-A implementação abaixo utiliza a variante de janela comum:
+The implementation below uses the common-window variant:
 
 ```python
 from optimizer_research import Config
@@ -98,9 +100,9 @@ for inputs, targets in train_loader:
     optimizer.step()
 ```
 
-O modo sigmoide utiliza `optimizer.set_progress(step / max(total_steps - 1, 1))` antes de cada passo.
+Sigmoid mode uses `optimizer.set_progress(step / max(total_steps - 1, 1))` before each step.
 
-### Experimentos em Fashion-MNIST
+### Fashion-MNIST experiments
 
 ```bash
 python scripts/run_fashion_mnist.py --download --method linear --epochs 30 --seed 101
@@ -108,17 +110,17 @@ python scripts/run_fashion_mnist.py --method adamw --epochs 30 --seed 101
 python scripts/run_fashion_mnist.py --method adamw_scaled --epochs 30 --seed 101
 ```
 
-## Organização
+## Structure
 
-| Pasta | Conteúdo |
+| Folder | Contents |
 |---|---|
-| `notebooks/` | Busca simbólica com DEAP/PyTorch e guia de execução |
-| `docs/` | Formulação matemática e documentação da pesquisa |
-| `src/optimizer_research/` | Otimizadores, gramática e MLP sintético |
-| `scripts/` | Análises, gráficos e experimentos |
-| `tests/` | Testes da regra de atualização e da implementação |
-| `data/original/` | Arrays NumPy e metadados dos experimentos |
-| `references/` | Apresentação da pesquisa |
-| `results/` | Relatórios, logs e figuras |
+| `notebooks/` | Symbolic search with DEAP/PyTorch and execution guide |
+| `docs/` | Mathematical formulation and research documentation |
+| `src/optimizer_research/` | Optimizers, grammar, and synthetic MLP |
+| `scripts/` | Analysis, plots, and experiments |
+| `tests/` | Tests of the update rule and implementation |
+| `data/original/` | NumPy arrays and experiment metadata |
+| `references/` | Research presentation |
+| `results/` | Reports, logs, and figures |
 
-O workflow `.github/workflows/tests.yml` executa os testes no GitHub Actions.
+The `.github/workflows/tests.yml` workflow runs the tests on GitHub Actions.

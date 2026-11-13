@@ -1,39 +1,41 @@
-# Descoberta simbólica de otimizadores
+# Symbolic optimizer discovery
 
-[Abrir no Kaggle](https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp) · [Abrir o notebook no GitHub](symbolic-optimizer-discovery-on-mnist-via-gp.ipynb)
+English | [Português (Brasil)](README.pt-BR.md)
 
-O notebook **Symbolic Optimizer Discovery on MNIST via GP**, de Ítalo Capuzzo, implementa uma busca evolutiva por fórmulas de atualização de redes neurais. A implementação combina **DEAP, PyTorch e MNIST** para transformar expressões simbólicas em otimizadores executáveis e avaliar sua dinâmica de treinamento em uma LeNet.
+[Open on Kaggle](https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp) · [Open the notebook on GitHub](symbolic-optimizer-discovery-on-mnist-via-gp.ipynb)
 
-## Organização
+The **Symbolic Optimizer Discovery on MNIST via GP** notebook, by Ítalo Capuzzo, implements an evolutionary search for neural network update formulas. The implementation combines **DEAP, PyTorch, and MNIST** to turn symbolic expressions into executable optimizers and evaluate their training dynamics on a LeNet.
 
-1. **Representação das regras:** árvores de expressões com entradas `g`, `m_hat` e `v_hat` — gradiente e momentos com correção de viés.
-2. **Execução das fórmulas:** `SymOptimizer` aplica a expressão compilada pelo DEAP aos parâmetros da rede.
-3. **Fitness:** a função `train_one` calcula a área sob a curva de perda de validação; `evalSymbReg` compara esse valor ao baseline AdamW e aplica uma penalização por complexidade.
-4. **Evolução:** seleção por torneio, cruzamento, mutação, elitismo e Hall of Fame.
-5. **Visualização:** gráficos do fitness, tamanho das árvores e fórmulas selecionadas.
+## Structure
 
-A população inicial inclui expressões inspiradas em SGD e Adam. Os operadores incluem operações aritméticas, raiz e divisão protegidas, funções de sinal e clipping.
+1. **Rule representation:** expression trees with inputs `g`, `m_hat`, and `v_hat` — the gradient and bias-corrected moments.
+2. **Formula execution:** `SymOptimizer` applies the DEAP-compiled expression to the network parameters.
+3. **Fitness:** the `train_one` function computes the area under the validation loss curve; `evalSymbReg` compares it with the AdamW baseline and applies a complexity penalty.
+4. **Evolution:** tournament selection, crossover, mutation, elitism, and Hall of Fame.
+5. **Visualization:** plots of fitness, tree size, and selected formulas.
 
-## Executar no Kaggle
+The initial population includes expressions inspired by SGD and Adam. Operators include arithmetic operations, protected square root and division, sign functions, and clipping.
 
-1. Abra o [notebook original](https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp) e use **Copy & Edit**.
-2. Adicione os dados da competição [Digit Recognizer](https://www.kaggle.com/competitions/digit-recognizer/data), conforme as condições de acesso do Kaggle.
-3. Confira o caminho de `train.csv` na função `task_mnist` e selecione o ambiente de execução.
-4. Execute as células em ordem. `NUM_POPULATION`, `NUM_GENERATIONS` e `DATA_SIZE` controlam a configuração da busca.
+## Run on Kaggle
 
-O código seleciona CUDA quando uma GPU está disponível e também possui caminho de execução em CPU.
+1. Open the [original notebook](https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp) and use **Copy & Edit**.
+2. Add the [Digit Recognizer](https://www.kaggle.com/competitions/digit-recognizer/data) competition data according to Kaggle's access conditions.
+3. Check the `train.csv` path in the `task_mnist` function and select the execution environment.
+4. Run the cells in order. `NUM_POPULATION`, `NUM_GENERATIONS`, and `DATA_SIZE` control the search configuration.
 
-## Executar localmente
+The code selects CUDA when a GPU is available and also supports CPU execution.
 
-Instale PyTorch adequado ao seu ambiente, JupyterLab e as bibliotecas utilizadas:
+## Run locally
+
+Install PyTorch for your environment, JupyterLab, and the required libraries:
 
 ```bash
 python -m pip install torch numpy pandas matplotlib scikit-learn deap jupyterlab
 python -m jupyterlab
 ```
 
-Abra `symbolic-optimizer-discovery-on-mnist-via-gp.ipynb`, ajuste o caminho de `train.csv` em `task_mnist` para a cópia local dos dados e execute as células em ordem.
+Open `symbolic-optimizer-discovery-on-mnist-via-gp.ipynb`, adjust the `train.csv` path in `task_mnist` to the local data copy, and run the cells in order.
 
-## Origem
+## Source
 
-Esta cópia preserva o código da **versão 14** publicada no Kaggle. A versão e o hash SHA-256 do arquivo estão registrados em [source.json](source.json).
+This copy preserves the code from **version 14** published on Kaggle. The version and file SHA-256 hash are recorded in [source.json](source.json).
