@@ -1,0 +1,163 @@
+group,method,file,row,target,width,epoch,reached,horizon
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,0,0.05,1,134,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,0,0.05,5,136,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,0,0.05,10,,False,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,0,0.1,1,79,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,0,0.1,5,79,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,0,0.1,10,79,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,0,0.2,1,33,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,0,0.2,5,33,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,0,0.2,10,33,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,1,0.05,1,112,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,1,0.05,5,118,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,1,0.05,10,118,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,1,0.1,1,68,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,1,0.1,5,70,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,1,0.1,10,70,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,1,0.2,1,29,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,1,0.2,5,29,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,1,0.2,10,29,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,2,0.05,1,125,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,2,0.05,5,135,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,2,0.05,10,135,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,2,0.1,1,75,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,2,0.1,5,75,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,2,0.1,10,75,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,2,0.2,1,32,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,2,0.2,5,32,True,150
+Fashion-MNIST / LeNet,AdamW,AdamW_losses.npy,2,0.2,10,32,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,0,0.05,1,122,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,0,0.05,5,130,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,0,0.05,10,130,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,0,0.1,1,69,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,0,0.1,5,69,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,0,0.1,10,69,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,0,0.2,1,26,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,0,0.2,5,26,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,0,0.2,10,26,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,1,0.05,1,97,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,1,0.05,5,100,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,1,0.05,10,100,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,1,0.1,1,57,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,1,0.1,5,57,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,1,0.1,10,57,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,1,0.2,1,22,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,1,0.2,5,22,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,1,0.2,10,22,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,2,0.05,1,126,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,2,0.05,5,134,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,2,0.05,10,134,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,2,0.1,1,67,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,2,0.1,5,67,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,2,0.1,10,67,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,2,0.2,1,25,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,2,0.2,5,25,True,150
+Fashion-MNIST / LeNet,AdaSym,AdaSym_losses.npy,2,0.2,10,25,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,0,0.05,1,93,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,0,0.05,5,103,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,0,0.05,10,115,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,0,0.1,1,56,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,0,0.1,5,56,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,0,0.1,10,56,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,0,0.2,1,25,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,0,0.2,5,25,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,0,0.2,10,25,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,1,0.05,1,104,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,1,0.05,5,107,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,1,0.05,10,123,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,1,0.1,1,57,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,1,0.1,5,57,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,1,0.1,10,57,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,1,0.2,1,25,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,1,0.2,5,25,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,1,0.2,10,25,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.05,1,111,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.05,5,132,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.05,10,132,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.1,1,62,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.1,5,62,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.1,10,62,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.2,1,27,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.2,5,27,True,150
+Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.2,10,27,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.05,1,89,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.05,5,100,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.05,10,100,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.1,1,49,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.1,5,49,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.1,10,49,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.2,1,20,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.2,5,20,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.2,10,20,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.05,1,101,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.05,5,120,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.05,10,137,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.1,1,53,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.1,5,53,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.1,10,53,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.2,1,21,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.2,5,21,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.2,10,21,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.05,1,115,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.05,5,134,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.05,10,134,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.1,1,57,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.1,5,57,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.1,10,57,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.2,1,23,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.2,5,23,True,150
+Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.2,10,23,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.05,1,37,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.05,5,43,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.05,10,49,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.1,1,22,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.1,5,22,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.1,10,22,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.2,1,15,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.2,5,15,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.2,10,15,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,1,0.05,1,37,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,1,0.05,5,44,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,1,0.05,10,44,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,1,0.1,1,22,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,1,0.1,5,22,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,1,0.1,10,22,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,1,0.2,1,14,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,1,0.2,5,14,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,1,0.2,10,14,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,2,0.05,1,35,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,2,0.05,5,43,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,2,0.05,10,43,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,2,0.1,1,23,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,2,0.1,5,23,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,2,0.1,10,23,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,2,0.2,1,15,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,2,0.2,5,15,True,150
+CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,2,0.2,10,15,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,0,0.05,1,23,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,0,0.05,5,27,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,0,0.05,10,27,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,0,0.1,1,16,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,0,0.1,5,16,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,0,0.1,10,16,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,0,0.2,1,14,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,0,0.2,5,14,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,0,0.2,10,14,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,1,0.05,1,23,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,1,0.05,5,27,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,1,0.05,10,27,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,1,0.1,1,16,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,1,0.1,5,16,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,1,0.1,10,16,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,1,0.2,1,14,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,1,0.2,5,14,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,1,0.2,10,14,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,2,0.05,1,22,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,2,0.05,5,22,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,2,0.05,10,22,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,2,0.1,1,17,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,2,0.1,5,17,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,2,0.1,10,17,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,2,0.2,1,14,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,2,0.2,5,14,True,150
+CIFAR-10 / ResNet-20,AdaSymSigmoid,AdaSymSig_losses_cifar10.npy,2,0.2,10,14,True,150

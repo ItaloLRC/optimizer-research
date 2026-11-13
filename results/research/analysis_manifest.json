@@ -1,0 +1,116 @@
+{
+  "author": "Ítalo Capuzzo",
+  "experiment": "historical author experiments; no new training",
+  "counter_unit": "repeated coordinate evaluations",
+  "counter_epochs": 150,
+  "cumulative": true,
+  "zero_initial_counts_assumed": true,
+  "targets": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "sustained_widths": [
+    1,
+    5,
+    10
+  ],
+  "late_window": 20,
+  "rolling_window": 10,
+  "inference": "descriptive; no iid coordinates or paired seeds assumed",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2"
+  },
+  "inputs": [
+    {
+      "file": "Adam_losses2x.npy",
+      "sha256": "229c39774d11c93671de50b7b61d7cd985a3e221880a47af4588eb8972c07c8b"
+    },
+    {
+      "file": "AdamW_losses.npy",
+      "sha256": "acf3998374ce9c433b3acd88b95653fd6dad649fdab9105a5744f2c24228aee5"
+    },
+    {
+      "file": "AdamW_losses_cifar10.npy",
+      "sha256": "710eb3f3aad4d186089705d2116bee4176a40fe61f1a6884d6bd3ee33f1f5ca8"
+    },
+    {
+      "file": "AdaSym_fminist_c2.npy",
+      "sha256": "3b219ea9aea3bf094c92b91a2553d79024557c36d032cbf6ff9655e834b8def6"
+    },
+    {
+      "file": "AdaSym_fminist_c4.npy",
+      "sha256": "b6c5ab4a5c955b0628e2c2a6c194e0d4b1d26c63a2bfe6c6d6ddf510ab454ca0"
+    },
+    {
+      "file": "AdaSym_fminist_full.npy",
+      "sha256": "aabf66360d07c2e624c870da317f1361272b692451bae17dd9863f2081cbcc3b"
+    },
+    {
+      "file": "AdaSym_loss_fmnist_nored.npy",
+      "sha256": "e24ca8b8b1b25697f92d3d67ebfff51d912e9970c095ee13237048d149338fbf"
+    },
+    {
+      "file": "AdaSym_losses.npy",
+      "sha256": "48dac60a5593a51625922d17a8fabf8be25ed3f80575d2719bb2e629410babce"
+    },
+    {
+      "file": "AdaSymSig_losses_cifar10.npy",
+      "sha256": "2b8b28292c7087efc9748357c0f996a75e907ebc35682056f3d6f9f909438f36"
+    },
+    {
+      "file": "lim_aucloss.npy",
+      "sha256": "e520c342015fddaf3b27349dc9c6ca38534114698e45222814bcd46fd8ad0a29"
+    },
+    {
+      "file": "loss_matrix (1).npy",
+      "sha256": "6132220f13c978ae7a551507a934291888a1429fb1e777f1efde39d25a30c323"
+    },
+    {
+      "file": "loss_matrix.npy",
+      "sha256": "f9afc8e52152d5afb85b33b0f57404c25faae1ae11c640df64e02972982252cb"
+    },
+    {
+      "file": "losses_FashionMNIST.npy",
+      "sha256": "fad44e83d64a223f539fe067b64201e6ee85097b637ff5f3ed2955dd7b1c1122"
+    },
+    {
+      "file": "lrs_AdaSym_aucloss.npy",
+      "sha256": "f604c6ac1421284598fe03cbe1084223790b6c9da51e18dc8d26f365ed26abfc"
+    },
+    {
+      "file": "lrs_aucloss.npy",
+      "sha256": "b1814edead498ebb87713c6a8b88617ed5af01a70185e7e5c4bdcc4ba0fc5ba6"
+    },
+    {
+      "file": "lrs_aucloss_adamW.npy",
+      "sha256": "9dda9560a5c506f21e268eab1a5a16f2cdf89c955533a286f60d55de44125b76"
+    },
+    {
+      "file": "metadata.txt",
+      "sha256": "9b2a185526eb567a075e9637d52ab9d7c41c821c933cb41d741a1ccf0e4e2e7c"
+    }
+  ],
+  "analysis_sources": [
+    {
+      "file": "scripts/analyze_research.py",
+      "sha256": "fefbb73f0d2107ee303f5f7616cb1515607d9f32efa1be4732eb308787842914"
+    },
+    {
+      "file": "src/optimizer_research/diagnostics.py",
+      "sha256": "8b424ca002645923b0368c78a01f0464a5987704406d80b53e4d854f43f61cdb"
+    },
+    {
+      "file": "data/author_clarifications.json",
+      "sha256": "4766ae6e8d05ce9a142b542090af1c78b8a7e2b067c2b02cc909719e7d00603f"
+    }
+  ],
+  "pooled_threshold_rates": {
+    "c4": 0.09977735963526309,
+    "c2": 0.14075829311965266,
+    "middle": 0.04098093348438956,
+    "above_v2": 0.8592417068803473
+  }
+}

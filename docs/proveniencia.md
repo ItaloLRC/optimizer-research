@@ -25,10 +25,18 @@ A janela comum, a gramática pequena, o warmup, a implementação NumPy/PyTorch,
 3. Código dos treinamentos, curvas de validação e acurácia, sementes e checkpoints.
 4. Confirmação da ordem inferida das linhas de `losses_FashionMNIST.npy` e identificação das demais trajetórias.
 5. Grade de 80 LRs de `lrs_AdaSym_aucloss.npy` e scheduler de cada comparação.
-6. Definição e periodicidade dos contadores c2/c4/full.
+6. Código de instrumentação dos contadores, posição da contagem em relação ao clamp e origem da exposição reduzida no primeiro registro. O autor já confirmou as 150 épocas e a unidade de avaliações repetidas de gradientes/parâmetros.
 
 Sem esses itens, repetir exatamente os números dos slides seria uma alegação incorreta.
 
 ## Autoria, licença e publicação
 
 A pesquisa e os arquivos recebidos pertencem a seus respectivos autores. Nenhuma licença aberta foi escolhida em nome do autor. O notebook público do Kaggle e as atualizações de apresentação foram adicionados ao GitHub a pedido do autor.
+
+## Diagnóstico dos dados e esclarecimentos do autor
+
+A pesquisa AdaSym, seus experimentos e o raciocínio que conduziu à evolução da fórmula são de Ítalo Capuzzo. Em 13 de novembro de 2026, o autor confirmou que a análise dos dados e a identificação de padrões participaram das suas conclusões e revisões da regra de atualização. A apresentação registra essa evolução; os arquivos não oferecem um diário que atribua cada mudança a uma execução específica.
+
+O autor esclareceu que os contadores `c4`, `c2` e `full` cobrem **150 épocas** e contam avaliações repetidas de gradientes/parâmetros, respectivamente até v/4, até v/2 e no total. “1550” era um erro de digitação. O esclarecimento está em `data/author_clarifications.json`, preservando o metadata original e seus hashes.
+
+O relatório `results/research/report.md` e o notebook `notebooks/threshold-diagnostics.ipynb` documentam a investigação desses registros: incrementos, exposição, faixas disjuntas, evolução temporal e limites de sensibilidade do threshold. Os materiais também apresentam as curvas de loss e os hiperparâmetros já examinados na pesquisa. Não representam novos treinamentos. O manifesto em `results/research/analysis_manifest.json` registra fontes, parâmetros e versões da análise.

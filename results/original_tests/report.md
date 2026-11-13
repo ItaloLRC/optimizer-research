@@ -90,7 +90,7 @@ As faixas exatas estão no mapa dos experimentos. Esses mínimos descrevem a var
 
 ## 8. Frequência de ativação do piso
 
-**Condições:** LeNet, Fashion-MNIST, piso v/4. Arquivos `AdaSym_fminist_c2.npy`, `AdaSym_fminist_c4.npy` e `AdaSym_fminist_full.npy`. O metadata cita 1550 épocas, mas os vetores têm 150 posições, como o eixo do slide 16.
+**Condições:** LeNet, Fashion-MNIST, piso v/4. Arquivos `AdaSym_fminist_c2.npy`, `AdaSym_fminist_c4.npy` e `AdaSym_fminist_full.npy`. O autor confirmou 150 épocas e contagens de avaliações repetidas de gradientes/parâmetros; “1550” no metadata era um erro de digitação. Ver `data/author_clarifications.json` e o diagnóstico detalhado em `results/research/report.md`.
 
 | Contador | Interpretação pelo slide e metadata | Razão acumulada final |
 |---|---|---:|

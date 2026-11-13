@@ -39,3 +39,7 @@ Abra `symbolic-optimizer-discovery-on-mnist-via-gp.ipynb`, ajuste o caminho de `
 ## Origem
 
 Esta cópia preserva o código da **versão 14** publicada no Kaggle. A versão e o hash SHA-256 do arquivo estão registrados em [source.json](source.json).
+
+## Diagnóstico do threshold
+
+O caderno [threshold-diagnostics.ipynb](threshold-diagnostics.ipynb) percorre a investigação de Ítalo Capuzzo sobre os contadores c4/c2/full: integridade, incrementos, exposição por época, faixas disjuntas, mudança temporal e sensibilidade do threshold. Inclui saídas executadas e conecta os padrões à evolução documentada da fórmula. Requer o pacote instalado com `.[plots]` e um ambiente Jupyter.

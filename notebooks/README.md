@@ -39,3 +39,7 @@ Open `symbolic-optimizer-discovery-on-mnist-via-gp.ipynb`, adjust the `train.csv
 ## Source
 
 This copy preserves the code from **version 14** published on Kaggle. The version and file SHA-256 hash are recorded in [source.json](source.json).
+
+## Threshold diagnostics
+
+The executed [threshold-diagnostics.ipynb](threshold-diagnostics.ipynb) notebook walks through Ítalo Capuzzo's investigation of the c4/c2/full counters: integrity checks, increments, per-epoch exposure, disjoint bins, temporal changes, and threshold sensitivity. It connects the patterns to the documented evolution of the update rule. Requires the package installed with `.[plots]` and a Jupyter environment; the notebook narrative is in Portuguese.

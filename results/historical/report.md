@@ -30,7 +30,7 @@ Os gráficos dos slides 18 e 19 indicam mínimos em (0,5843; 0,7406) e (0,6744; 
 - `loss_matrix.npy` inclui betas iguais a 1 na grade declarada, inválidos para uma EMA normalizada com bias correction. A presença de NaN coincide com a última linha, mas falta código para estabelecer a causa.
 - `lrs_AdaSym_aucloss.npy` tem 80 valores. A grade com 27 LRs em metadata não permite reconstruir seu eixo. Não se atribui uma LR ótima a esse arquivo.
 - O slide 17 rotula sua métrica como média das últimas 15 losses e mostra LRs até 1e-2. Os vetores de LR em metadata são descritos como AUC e incluem valores até 9e-2. Não se presume que sejam a fonte exata desse gráfico sem o pós-processamento original.
-- `metadata.txt` diz 1550 épocas para os contadores. Os três arquivos correspondentes têm 150 posições, compatíveis com o eixo do slide 16. Preserva-se a divergência textual no registro original.
+- O autor confirmou 150 épocas para os contadores; “1550” era um erro de digitação no metadata. A unidade é a avaliação repetida de gradientes/parâmetros. O esclarecimento está em `data/author_clarifications.json`, preservando o registro original.
 - `Adam_losses2x.npy` é chamado AdamW 2× no texto e nos gráficos, mas o nome diz Adam. O dataset aparece como MNIST em metadata e Fashion-MNIST nos slides. A comparação não é rotulada como controlada.
 - A sigmoide usa ponto de transição 5 no exemplo visual e 15 em metadata. As recorrências de m2, bias correction, epsilon e scheduler completo estão ausentes.
 - Ausência de acurácia, separação treino/validação/teste, sementes, checkpoints, tempos, versões e logs da busca impede concluir superioridade de generalização ou reconstruir a regressão simbólica histórica.

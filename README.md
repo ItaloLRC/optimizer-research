@@ -2,7 +2,9 @@
 
 English | [Português (Brasil)](README.pt-BR.md)
 
-Research on optimization algorithms developed within a machine learning and AI study group. The project brings together **symbolic discovery of update rules, NumPy and PyTorch implementations, and neural network experiments**.
+Experimental research by **Ítalo Capuzzo** on optimization algorithms for machine learning, developed within a machine learning and AI study group. The project combines **symbolic discovery, optimizer diagnostics, and data analysis to investigate and refine update rules**.
+
+Data science is part of my research methodology. I analyzed loss curves, hyperparameter sweeps, and internal AdaSym statistics to identify patterns, revisit hypotheses, and develop the update formula. The plots document that investigation and connect the algorithm's internal behavior with experimental outcomes.
 
 AdaSym adapts the step size to the recent consistency of gradients. Its formulation combines gradient moments, adaptive normalization, and a denominator floor to control step amplification. The AdaSymSigmoid variant adds a time-dependent transition to the consistency correction.
 
@@ -14,6 +16,25 @@ AdaSym adapts the step size to the recent consistency of gradients. Its formulat
 - **Optimizer implementation:** NumPy and PyTorch update rules, moment states, and diagnostics.
 - **Experimentation:** comparison of training curves with AdamW and hyperparameter studies.
 - **Analysis and visualization:** scripts to consolidate data, generate plots, and examine update dynamics.
+
+## Data analysis behind the update rule
+
+The presentation records the progression from the discovered expression to a squared memory term, a relative floor `v/c`, a separate memory `m2`, and a sigmoid time weight. I used data analysis and observed patterns to draw conclusions and revise the update rule. The [research report, in Portuguese](results/research/report.md) connects this documented progression to the questions investigated, while keeping the limits of the evidence explicit.
+
+A central investigation was **threshold sensitivity** in LeNet/Fashion-MNIST. Across **150 epochs**, I recorded repeated gradient/parameter coordinate evaluations at or below `v/4`, at or below `v/2`, and in total. The cumulative `c4`, `c2`, and `full` counters diagnose how often the floor participates in updates and how that behavior changes during training.
+
+| Research question | Pattern in the records |
+|---|---|
+| Does the `v/4` floor act almost everywhere? | 9.98% of evaluations reach it; 90.02% remain above it |
+| How much exposure lies between the two thresholds? | 4.10 percentage points; the total at or below `v/2` is 14.08% |
+| Is the activation rate constant during training? | `v/4` incidence is 11.98% in records 1–10 and 8.99% in records 141–150 |
+| Does a larger LR explain the loss comparison? | The LR 2× control has a better whole-curve summary, while AdaSym has lower late loss in that file group |
+
+![Threshold dynamics in the author's experiment](results/research/threshold_dynamics.png)
+
+Per-epoch rates use differences of cumulative counters and exposure-weighted aggregation. `c2` includes `c4`; counts are repeated coordinate evaluations rather than unique parameters or independent statistical replicates. Observed threshold incidence describes this trajectory; choosing a better floor requires training comparisons with other divisors.
+
+[Full research report](results/research/report.md) · [Offline visual report](results/research/report.html) · [Investigation notebook](notebooks/threshold-diagnostics.ipynb) · [Per-epoch data](results/research/threshold_by_epoch.csv) · [Method and authorship](docs/investigacao_dados.md)
 
 ## Symbolic optimizer discovery
 
@@ -70,7 +91,10 @@ To analyze the data and generate experiment summaries:
 ```bash
 python scripts/analyze_original.py
 python scripts/summarize_author_experiments.py
+python scripts/analyze_research.py
 ```
+
+The research report additionally requires `python -m pip install -e ".[plots,docs]"`. It exports CSV tables, PNG/SVG figures, input hashes, and a standalone HTML reading copy with embedded figures. It does not run new training.
 
 To run the implementation tests and synthetic experiment:
 

@@ -4,6 +4,8 @@
 
 ## 1. Pergunta de pesquisa
 
+**A investigação é de Ítalo Capuzzo.** A análise de curvas, hiperparâmetros e estatísticas internas do otimizador participou da identificação de padrões e das conclusões que conduziram à evolução da sua fórmula. Ciência de dados é parte dessa metodologia de pesquisa experimental. O [relato da investigação](investigacao_dados.md) e o [diagnóstico dos dados](../results/research/report.md) colocam esse raciocínio no centro da apresentação, com ênfase na sensibilidade do threshold e nos contadores c4/c2/full de 150 épocas.
+
 Uma rede neural pode convergir mais rapidamente quando o otimizador aumenta seletivamente seus passos nas coordenadas cujos gradientes mantêm direção e magnitude durante uma janela recente?
 
 A hipótese do projeto é que a persistência do gradiente informa o quanto se pode amplificar o passo. A regressão simbólica serve para explorar regras candidatas, identificar estruturas promissoras e restringir progressivamente o espaço de busca. A avaliação empírica deve separar um ganho causado pela consistência de um ganho obtido apenas por uma taxa de aprendizado maior.

@@ -1,0 +1,11 @@
+{
+  "source": "Author clarification in the project revision chat, 2026-11-13",
+  "counter_files": ["AdaSym_fminist_c4.npy", "AdaSym_fminist_c2.npy", "AdaSym_fminist_full.npy"],
+  "epochs": 150,
+  "metadata_typo": "1550 epochs means 150 epochs",
+  "counting_unit": "Repeated gradient/parameter coordinate evaluations affected by the threshold, rather than optimizer steps or distinct parameters",
+  "c4_event": "Denominator at or below v/4",
+  "c2_event": "Denominator at or below v/2",
+  "full_event": "Total coordinate evaluations",
+  "remaining_unknowns": ["Exact instrumentation code", "Counting before or after clamping", "Whether v=0 coordinates are present", "Why the first recorded exposure is about half a later interval", "Seed and exact loss trajectory corresponding to counters"]
+}

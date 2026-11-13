@@ -2,7 +2,9 @@
 
 [English](README.md) | Português (Brasil)
 
-Pesquisa em algoritmos de otimização desenvolvida em um grupo de estudos de machine learning e IA. O projeto reúne **descoberta simbólica de regras de atualização, implementações em NumPy e PyTorch e experimentos com redes neurais**.
+Pesquisa experimental de **Ítalo Capuzzo** em algoritmos de otimização para machine learning, desenvolvida em um grupo de estudos de machine learning e IA. O projeto reúne **descoberta simbólica, diagnóstico do otimizador e análise de dados para investigar e aprimorar regras de atualização**.
+
+A ciência de dados faz parte da metodologia da pesquisa. Analisei curvas de loss, varreduras de hiperparâmetros e estatísticas internas do AdaSym para identificar padrões, revisar hipóteses e desenvolver a fórmula de atualização. Os gráficos documentam esse processo de investigação: relacionam o comportamento interno do algoritmo aos resultados dos experimentos.
 
 O AdaSym adapta o tamanho do passo à consistência recente dos gradientes. A formulação combina momentos do gradiente, normalização adaptativa e um piso no denominador para controlar a amplificação do passo. A variante AdaSymSigmoid incorpora uma transição temporal da correção de consistência.
 
@@ -14,6 +16,25 @@ O AdaSym adapta o tamanho do passo à consistência recente dos gradientes. A fo
 - **Implementação de otimizadores:** regras de atualização em NumPy e PyTorch, estados de momento e diagnósticos.
 - **Experimentação:** comparação de curvas de treinamento com AdamW e estudo de hiperparâmetros.
 - **Análise e visualização:** scripts para consolidar dados, gerar gráficos e examinar a dinâmica das atualizações.
+
+## Ciência de dados na evolução do AdaSym
+
+A apresentação registra a evolução da expressão descoberta para uma regra com memória ao quadrado, piso relativo `v/c`, memória separada `m2` e peso temporal por sigmoide. Essa evolução faz parte da minha investigação: usei a análise dos dados e a identificação de padrões para chegar a conclusões e revisar a regra. O [relatório de investigação](results/research/report.md) conecta a sequência documentada às perguntas examinadas, preservando os limites da evidência disponível.
+
+Uma análise central foi o **diagnóstico da sensibilidade do threshold** em LeNet/Fashion-MNIST. Registrei quantas avaliações de gradientes/parâmetros atingiram `v/4`, quantas ficaram até `v/2` e o total, durante **150 épocas**. Os contadores `c4`, `c2` e `full` permitem investigar se o limitador domina a atualização, qual parcela está entre os dois thresholds e como sua incidência muda durante o treinamento.
+
+| Pergunta de pesquisa | Padrão nos registros |
+|---|---|
+| O piso `v/4` atua quase sempre? | 9,98% das avaliações atingem o limite; 90,02% ficam acima dele |
+| O que muda ao considerar `v/2` na mesma trajetória? | A incidência chega a 14,08%; a faixa entre os limites soma 4,10 pontos percentuais |
+| A incidência se mantém durante o treino? | A taxa em `v/4` é 11,98% nos registros 1–10 e 8,99% nos registros 141–150 |
+| Uma LR maior explica toda a comparação de loss? | O controle LR 2× tem melhor resumo da curva inteira, enquanto AdaSym tem menor loss tardia nesse grupo de arquivos |
+
+![Diagnóstico da sensibilidade do threshold](results/research/threshold_dynamics.png)
+
+As taxas por época usam **incrementos dos contadores acumulados**, ponderados pelo número de avaliações. As faixas são aninhadas: `c2` inclui `c4`. São avaliações repetidas de coordenadas, sem interpretação como parâmetros únicos ou réplicas independentes. A incidência dos dois thresholds descreve a trajetória observada; determinar o melhor piso exige comparar treinamentos com outros valores de `c`.
+
+[Relatório completo](results/research/report.md) · [Relatório visual offline](results/research/report.html) · [Notebook de investigação](notebooks/threshold-diagnostics.ipynb) · [Dados por época](results/research/threshold_by_epoch.csv) · [Método e autoria](docs/investigacao_dados.md)
 
 ## Descoberta simbólica de otimizadores
 
@@ -70,7 +91,10 @@ Para analisar os dados e gerar os resumos dos experimentos:
 ```bash
 python scripts/analyze_original.py
 python scripts/summarize_author_experiments.py
+python scripts/analyze_research.py
 ```
+
+O relatório de investigação requer também `python -m pip install -e ".[plots,docs]"`. Ele gera tabelas CSV, gráficos PNG/SVG, hashes dos dados e uma cópia HTML com figuras incorporadas, sem executar novos treinamentos.
 
 Para executar os testes da implementação e o experimento sintético:
 
