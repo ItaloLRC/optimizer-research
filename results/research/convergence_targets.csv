@@ -80,33 +80,33 @@ Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.1,10,62,True
 Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.2,1,27,True,150
 Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.2,5,27,True,150
 Fashion-MNIST / LeNet,AdaSym nored,AdaSym_loss_fmnist_nored.npy,2,0.2,10,27,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.05,1,89,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.05,5,100,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.05,10,100,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.1,1,49,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.1,5,49,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.1,10,49,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.2,1,20,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.2,5,20,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,0,0.2,10,20,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.05,1,101,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.05,5,120,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.05,10,137,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.1,1,53,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.1,5,53,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.1,10,53,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.2,1,21,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.2,5,21,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,1,0.2,10,21,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.05,1,115,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.05,5,134,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.05,10,134,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.1,1,57,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.1,5,57,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.1,10,57,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.2,1,23,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.2,5,23,True,150
-Fashion-MNIST / LeNet,AdamW LR 2× [dataset ambíguo],Adam_losses2x.npy,2,0.2,10,23,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,0,0.05,1,89,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,0,0.05,5,100,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,0,0.05,10,100,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,0,0.1,1,49,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,0,0.1,5,49,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,0,0.1,10,49,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,0,0.2,1,20,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,0,0.2,5,20,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,0,0.2,10,20,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,1,0.05,1,101,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,1,0.05,5,120,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,1,0.05,10,137,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,1,0.1,1,53,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,1,0.1,5,53,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,1,0.1,10,53,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,1,0.2,1,21,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,1,0.2,5,21,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,1,0.2,10,21,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,2,0.05,1,115,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,2,0.05,5,134,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,2,0.05,10,134,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,2,0.1,1,57,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,2,0.1,5,57,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,2,0.1,10,57,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,2,0.2,1,23,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,2,0.2,5,23,True,150
+Fashion-MNIST / LeNet,Controle LR 2×,Adam_losses2x.npy,2,0.2,10,23,True,150
 CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.05,1,37,True,150
 CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.05,5,43,True,150
 CIFAR-10 / ResNet-20,AdamW,AdamW_losses_cifar10.npy,0,0.05,10,49,True,150

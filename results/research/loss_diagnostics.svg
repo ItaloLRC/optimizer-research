@@ -2104,53 +2104,53 @@ L 472.290073 292.123979
    </g>
    <g id="legend_1">
     <g id="patch_5">
-     <path d="M 306.565073 117.447199
-L 466.690073 117.447199
-Q 468.290073 117.447199 468.290073 115.847199
+     <path d="M 380.355073 117.127199
+L 466.690073 117.127199
+Q 468.290073 117.127199 468.290073 115.527199
 L 468.290073 68.324699
 Q 468.290073 66.724699 466.690073 66.724699
-L 306.565073 66.724699
-Q 304.965073 66.724699 304.965073 68.324699
-L 304.965073 115.847199
-Q 304.965073 117.447199 306.565073 117.447199
+L 380.355073 66.724699
+Q 378.755073 66.724699 378.755073 68.324699
+L 378.755073 115.527199
+Q 378.755073 117.127199 380.355073 117.127199
 z
 " style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
     </g>
     <g id="line2d_31">
-     <path d="M 308.165073 73.203449
-L 316.165073 73.203449
-L 324.165073 73.203449
+     <path d="M 381.955073 73.203449
+L 389.955073 73.203449
+L 397.955073 73.203449
 " style="fill: none; stroke: #087e8b; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_13">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="330.565073" y="76.003449" transform="rotate(-0 330.565073 76.003449)">AdamW</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="404.355073" y="76.003449" transform="rotate(-0 404.355073 76.003449)">AdamW</text>
     </g>
     <g id="line2d_32">
-     <path d="M 308.165073 85.204074
-L 316.165073 85.204074
-L 324.165073 85.204074
+     <path d="M 381.955073 85.204074
+L 389.955073 85.204074
+L 397.955073 85.204074
 " style="fill: none; stroke: #e19c37; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_14">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="330.565073" y="88.004074" transform="rotate(-0 330.565073 88.004074)">AdaSym</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="404.355073" y="88.004074" transform="rotate(-0 404.355073 88.004074)">AdaSym</text>
     </g>
     <g id="line2d_33">
-     <path d="M 308.165073 97.204699
-L 316.165073 97.204699
-L 324.165073 97.204699
+     <path d="M 381.955073 97.204699
+L 389.955073 97.204699
+L 397.955073 97.204699
 " style="fill: none; stroke: #64748b; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_15">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="330.565073" y="100.004699" transform="rotate(-0 330.565073 100.004699)">AdaSym nored</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="404.355073" y="100.004699" transform="rotate(-0 404.355073 100.004699)">AdaSym nored</text>
     </g>
     <g id="line2d_34">
-     <path d="M 308.165073 109.525324
-L 316.165073 109.525324
-L 324.165073 109.525324
+     <path d="M 381.955073 109.205324
+L 389.955073 109.205324
+L 397.955073 109.205324
 " style="fill: none; stroke: #a84f73; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_16">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="330.565073" y="112.325324" transform="rotate(-0 330.565073 112.325324)">AdamW LR 2× [dataset ambíguo]</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="404.355073" y="112.005324" transform="rotate(-0 404.355073 112.005324)">Controle LR 2×</text>
     </g>
    </g>
   </g>
@@ -4029,44 +4029,44 @@ L 472.290073 544.523739
    </g>
    <g id="legend_3">
     <g id="patch_13">
-     <path d="M 73.947656 540.523739
-L 234.072656 540.523739
-Q 235.672656 540.523739 235.672656 538.923739
-L 235.672656 503.401864
-Q 235.672656 501.801864 234.072656 501.801864
-L 73.947656 501.801864
-Q 72.347656 501.801864 72.347656 503.401864
-L 72.347656 538.923739
-Q 72.347656 540.523739 73.947656 540.523739
+     <path d="M 73.947656 357.526334
+L 160.282656 357.526334
+Q 161.882656 357.526334 161.882656 355.926334
+L 161.882656 320.724459
+Q 161.882656 319.124459 160.282656 319.124459
+L 73.947656 319.124459
+Q 72.347656 319.124459 72.347656 320.724459
+L 72.347656 355.926334
+Q 72.347656 357.526334 73.947656 357.526334
 z
 " style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
     </g>
     <g id="line2d_87">
-     <path d="M 75.547656 508.280614
-L 83.547656 508.280614
-L 91.547656 508.280614
+     <path d="M 75.547656 325.603209
+L 83.547656 325.603209
+L 91.547656 325.603209
 " style="fill: none; stroke: #e19c37; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_47">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="97.947656" y="511.080614" transform="rotate(-0 97.947656 511.080614)">AdaSym</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="97.947656" y="328.403209" transform="rotate(-0 97.947656 328.403209)">AdaSym</text>
     </g>
     <g id="line2d_88">
-     <path d="M 75.547656 520.281239
-L 83.547656 520.281239
-L 91.547656 520.281239
+     <path d="M 75.547656 337.603834
+L 83.547656 337.603834
+L 91.547656 337.603834
 " style="fill: none; stroke: #64748b; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_48">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="97.947656" y="523.081239" transform="rotate(-0 97.947656 523.081239)">AdaSym nored</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="97.947656" y="340.403834" transform="rotate(-0 97.947656 340.403834)">AdaSym nored</text>
     </g>
     <g id="line2d_89">
-     <path d="M 75.547656 532.601864
-L 83.547656 532.601864
-L 91.547656 532.601864
+     <path d="M 75.547656 349.604459
+L 83.547656 349.604459
+L 91.547656 349.604459
 " style="fill: none; stroke: #a84f73; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_49">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="97.947656" y="535.401864" transform="rotate(-0 97.947656 535.401864)">AdamW LR 2× [dataset ambíguo]</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="97.947656" y="352.404459" transform="rotate(-0 97.947656 352.404459)">Controle LR 2×</text>
     </g>
    </g>
   </g>

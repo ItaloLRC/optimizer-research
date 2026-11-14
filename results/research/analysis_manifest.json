@@ -1,10 +1,11 @@
 {
   "author": "Ítalo Capuzzo",
-  "experiment": "historical author experiments; no new training",
-  "counter_unit": "repeated coordinate evaluations",
-  "counter_epochs": 150,
-  "cumulative": true,
-  "zero_initial_counts_assumed": true,
+  "experiment": "AdaSym boost diagnostics",
+  "epochs": 150,
+  "counter_unit": "repeated coordinate updates",
+  "storage": "cumulative",
+  "subset_relationship": "c4 included in c2",
+  "normalization": "within c2 only",
   "targets": [
     0.05,
     0.1,
@@ -16,8 +17,6 @@
     10
   ],
   "late_window": 20,
-  "rolling_window": 10,
-  "inference": "descriptive; no iid coordinates or paired seeds assumed",
   "environment": {
     "python": "3.12.14",
     "numpy": "2.5.4",
@@ -96,21 +95,24 @@
   "analysis_sources": [
     {
       "file": "scripts/analyze_research.py",
-      "sha256": "fefbb73f0d2107ee303f5f7616cb1515607d9f32efa1be4732eb308787842914"
+      "sha256": "97ff461225f346136ece04e792d6493042db262eb42b0c9d1f6df0b52e951135"
     },
     {
       "file": "src/optimizer_research/diagnostics.py",
-      "sha256": "8b424ca002645923b0368c78a01f0464a5987704406d80b53e4d854f43f61cdb"
+      "sha256": "fcef0b43df768deb0ac57edcd51451f786bd29d708b0c627ae92f1d065fc2c6d"
     },
     {
-      "file": "data/author_clarifications.json",
-      "sha256": "4766ae6e8d05ce9a142b542090af1c78b8a7e2b067c2b02cc909719e7d00603f"
+      "file": "data/experiment_schema.json",
+      "sha256": "863ec20dfd04f671a309e65e83f3031195eb62758ee33074634bc8cd02789b3f"
     }
   ],
-  "pooled_threshold_rates": {
-    "c4": 0.09977735963526309,
-    "c2": 0.14075829311965266,
-    "middle": 0.04098093348438956,
-    "above_v2": 0.8592417068803473
+  "counter_totals": {
+    "c4": 145766992885,
+    "c2": 205636961999,
+    "full": 1460922532104
+  },
+  "within_c2_composition": {
+    "c4": 0.7088559929498903,
+    "outside_c4": 0.2911440070501097
   }
 }

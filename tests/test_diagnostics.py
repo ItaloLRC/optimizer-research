@@ -5,6 +5,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'src'))
 from optimizer_research.diagnostics import (
     counter_diagnostics, pooled_window, threshold_bounds, first_sustained, curve_summary,
+    boost_diagnostics,
 )
 
 
@@ -57,10 +58,15 @@ class DiagnosticTests(unittest.TestCase):
     def test_historical_counters_are_nested_and_complete(self):
         root = Path(__file__).resolve().parents[1]/'data/original'
         arrays = [np.load(root/f'AdaSym_fminist_{s}.npy', allow_pickle=False) for s in ('c4','c2','full')]
-        d = counter_diagnostics(*arrays)
-        self.assertEqual(d['rates'].shape, (3, 150))
-        np.testing.assert_allclose(d['rates'].sum(axis=0), 1)
-        np.testing.assert_allclose(d['pooled_rates'], [.09977735963526309, .04098093348438957, .8592417068803473])
+        d = boost_diagnostics(*arrays)
+        self.assertEqual(d['increments'].shape, (3, 150))
+        np.testing.assert_allclose(d['within_c2'].sum(axis=0), 1)
+        self.assertEqual(sum(d['increments'][2]), int(arrays[2][-1]))
+
+    def test_full_boost_counter_is_not_a_population_denominator(self):
+        d = boost_diagnostics([1, 3], [2, 5], [0, 1])
+        np.testing.assert_array_equal(d['increments'], [[1,2],[2,3],[0,1]])
+        np.testing.assert_allclose(d['within_c2'][0], [.5, 2/3])
 
 
 if __name__ == '__main__':

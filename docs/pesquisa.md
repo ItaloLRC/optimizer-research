@@ -218,7 +218,7 @@ O relatório `results/original_tests/report.md` incorpora os resultados de `Data
 | LRs comparativas, 27 pontos | Grade reconstruída do metadata de 1e-4 a 9e-2 | Mínimos 109,020409 e 105,941498; LRs inferidas 0,02 e 0,04 |
 | Ponto de transição da sigmoide | LeNet, 20% Fashion-MNIST, 150 épocas, LR 1e-3, WD 1e-2, faixa 0–50 | Menor AUC 121,601784, índice 17 |
 | beta3 / beta4 de m2 | Duas grades de 10 × 70 | Mínimos em (0,584341; 0,740568) e (0,674355; 0,406159), como nos slides |
-| Ativação do piso v/4 | LeNet, Fashion-MNIST, 150 registros | Razão final c4/full = 9,9777%; c2/full = 14,0758% |
+| Diagnóstico do boost | LeNet, Fashion-MNIST, 150 épocas, piso v/4 | Contadores acumulados c4/c2/full; análise por intervalo e composição de c2 |
 | Divisor do piso, 2–20 | LeNet, 20% Fashion-MNIST, 150 épocas, LR 1e-3, WD 1e-2, sem decaimento | Teste descrito no metadata; arquivo `div_aucloss` não incluído |
 
 Esses experimentos integram a evidência original da pesquisa. As losses menores em várias comparações apoiam investigar a dinâmica do AdaSym. A falta de identificação do split e das sementes limita o alcance das conclusões, sem transformar os testes existentes em experimentos apenas planejados. As notas da auditoria complementam essa apresentação dos resultados.

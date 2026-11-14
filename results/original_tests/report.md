@@ -88,18 +88,19 @@ O metadata identifica duas grades para procurar os melhores valores de beta3 e b
 
 As faixas exatas estão no mapa dos experimentos. Esses mínimos descrevem a varredura do autor. Sem a recorrência de m2 e a definição completa do fitness, os coeficientes não são convertidos em uma nova EMA nem recomendados como configuração universal.
 
-## 8. Frequência de ativação do piso
+## 8. Diagnóstico do boost direcional
 
-**Condições:** LeNet, Fashion-MNIST, piso v/4. Arquivos `AdaSym_fminist_c2.npy`, `AdaSym_fminist_c4.npy` e `AdaSym_fminist_full.npy`. O autor confirmou 150 épocas e contagens de avaliações repetidas de gradientes/parâmetros; “1550” no metadata era um erro de digitação. Ver `data/author_clarifications.json` e o diagnóstico detalhado em `results/research/report.md`.
+LeNet/Fashion-MNIST, 150 épocas, piso v/4. c4 e c2 acompanham faixas de boost parcial; full está associado ao boost integral limitado pelo threshold. c4 está incluído em c2.
 
-| Contador | Interpretação pelo slide e metadata | Razão acumulada final |
-|---|---|---:|
-| c4 / full | Condição associada ao piso v/4 | 9.9777% |
-| c2 / full | Condição associada a ≤v/2 | 14.0758% |
+| Contador | Quantidade acumulada |
+|---|---:|
+| c4 | 145,766,992,885 |
+| c2 | 205,636,961,999 |
+| full | 1,460,922,532,104 |
 
-O gráfico do slide 16 identifica as séries como acumuladas. A frequência em uma época isolada deve usar o incremento do contador dividido pelo incremento de full. A razão acumulada final mostra quanto o mecanismo de piso participou do treinamento, e não uma fração de runs ou de épocas.
+A análise utiliza incrementos e a composição interna de c2. O relatório em `results/research/report.md` apresenta gráficos e tabelas.
 
-![Frequência acumulada e por posição do registro](author_floor.png)
+![Contadores do boost](author_floor.png)
 
 ## 9. Varredura do divisor do piso
 

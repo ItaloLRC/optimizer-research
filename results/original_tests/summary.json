@@ -191,12 +191,10 @@
   },
   "counts": {
     "c2": {
-      "final": 205636961999,
-      "fraction": 0.14075829311965266
+      "final": 205636961999
     },
     "c4": {
-      "final": 145766992885,
-      "fraction": 0.09977735963526309
+      "final": 145766992885
     }
   },
   "lr_axis_status": "27-point axis inferred from metadata; 80-point axis unavailable",

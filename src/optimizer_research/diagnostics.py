@@ -2,6 +2,35 @@
 import numpy as np
 
 
+def boost_diagnostics(c4, c2, full):
+    """Describe cumulative boost counters; c4 is a subset of c2.
+
+    full is a separate recorded boost counter, not a population denominator.
+    Only composition within c2 is normalized.
+    """
+    arrays = [np.asarray(x) for x in (c4, c2, full)]
+    if any(x.ndim != 1 or not x.size or x.dtype.kind not in 'iu' for x in arrays):
+        raise ValueError('Expected nonempty integer counter vectors')
+    if len({x.shape for x in arrays}) != 1:
+        raise ValueError('Counter shapes must match')
+    increments = []
+    for a in arrays:
+        values = [int(x) for x in a]
+        delta = [values[0]]+[b-a for a,b in zip(values,values[1:])]
+        if any(x < 0 for x in values+delta):
+            raise ValueError('Expected nonnegative cumulative counters')
+        increments.append(np.asarray(delta,dtype=object))
+    d4,d2,df = increments
+    if any(a > b for a,b in zip(d4,d2)):
+        raise ValueError('c4 must be included in c2 in each interval')
+    partial = np.stack([d4,d2-d4]).astype(float)
+    composition = np.full(partial.shape,np.nan)
+    denominator = np.asarray(d2,dtype=float)
+    np.divide(partial,denominator,out=composition,where=denominator>0)
+    return dict(increments=np.stack(increments),partial_counts=partial,
+                within_c2=composition)
+
+
 def counter_diagnostics(c4, c2, full):
     """Convert nested cumulative coordinate counts into interval exposures.
 

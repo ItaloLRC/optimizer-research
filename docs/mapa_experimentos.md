@@ -1,28 +1,15 @@
-# Mapa dos testes recebidos
+# Mapa dos experimentos
 
-Transcrição organizada de `data/original/metadata.txt`, cruzada com shapes e slides. Campos não informados permanecem desconhecidos. Os nomes preservam a grafia original, incluindo `fminist`.
+| Experimento | Registros | Configuração e análise |
+|---|---|---|
+| Fashion-MNIST | losses_FashionMNIST.npy | 100 épocas; AdaSym, AdaSymSigmoid e AdamW |
+| Dinâmica em LeNet | AdamW_losses.npy, AdaSym_losses.npy, AdaSym_loss_fmnist_nored.npy | Três trajetórias de 150 épocas por arquivo |
+| CIFAR-10 | AdamW_losses_cifar10.npy, AdaSymSig_losses_cifar10.npy | ResNet-20, 150 épocas |
+| Controle de LR | Adam_losses2x.npy | LR 2×, 150 épocas |
+| Memória | loss_matrix.npy, loss_matrix (1).npy | Duas grades de 10 × 70 pontos |
+| Learning rate | lrs_aucloss.npy, lrs_aucloss_adamW.npy | Varreduras de 27 pontos |
+| Learning rate de AdaSym | lrs_AdaSym_aucloss.npy | 80 registros do objetivo |
+| Sigmoide | lim_aucloss.npy | 50 registros do objetivo |
+| Boost por coordenada | AdaSym_fminist_c4.npy, AdaSym_fminist_c2.npy, AdaSym_fminist_full.npy | LeNet/Fashion-MNIST, 150 épocas, piso v/4; c4 incluído em c2 |
 
-| Arquivos | Descrição do metadata / slides | O que os dados confirmam | Pontos a resolver |
-|---|---|---|---|
-| `losses_FashionMNIST.npy` | Fashion-MNIST, 100 épocas, AdaSym / AdaSymSig / AdamW. Slides 8 e 9 | 3 × 100; ordem inferida AdaSym, AdaSymSigmoid, AdamW pelos valores iniciais e finais | Split da loss, seeds, configuração e ordem pelo código original |
-| `AdamW_losses.npy`, `AdaSym_losses.npy` | LeNet, Fashion-MNIST, 150 épocas, LR 1e-3, sem redução por sigmoide ou exponencial em um trecho; outro trecho cita v/4, (0,75; 0,35), sigmoide por época | Cada arquivo tem 3 × 150. Slides mostram média e DP | Qual variante pertence exatamente a cada arquivo; recorrência e significado dos betas |
-| `AdaSym_loss_fmnist_nored.npy` | Nome sugere ausência de redução temporal, compatível com parte da descrição acima | 3 × 150 | Ligação exata com os trechos de metadata e o baseline correspondente |
-| `AdamW_losses_cifar10.npy`, `AdaSymSig_losses_cifar10.npy` | CIFAR-10, ResNet-20, 150 épocas, LR 1e-3, WD 1e-2, sigmoide em torno da época 15, piso v/8. Slides 12 e 13 | Cada arquivo tem 3 × 150 e curvas coerentes com o gráfico de média | Acurácia, split, scheduler, seeds, arquitetura exata e código |
-| `Adam_losses2x.npy` | Metadata chama AdamW com LR 2×, LeNet, MNIST, 150 épocas. Slides 14 e 15 dizem Fashion-MNIST | 3 × 150 e curva coerente com o controle AdamW 2× dos slides | Conflito MNIST/Fashion-MNIST e nome Adam/AdamW |
-| `loss_matrix.npy` | Varredura para m2. beta3 = 10^linspace(−0,3; 0; 10), beta4 = 10^linspace(−3; 0; 70). Slide 18 | 10 × 70, 70 NaNs na última linha. Mínimo finito coincide com o destaque do slide | Definição da recorrência, fitness e origem dos NaNs |
-| `loss_matrix (1).npy` | Segunda varredura. beta3 = 10^linspace(−0,3; −0,01; 10), beta4 = 10^linspace(−1,5; 0; 70). Slide 19 | 10 × 70, sem NaN. Mínimo coincide com o destaque do slide | Mesmas lacunas da recorrência e do fitness |
-| `lrs_AdaSym_aucloss.npy` | 300 épocas, 10% de Fashion-MNIST, AUC de loss, WD 1e-2, valores (0,75; 0,35) | Vetor com 80 posições e valores muito altos em parte da faixa | A grade de 80 LRs e quais valores representam divergência |
-| `lrs_aucloss.npy`, `lrs_aucloss_adamW.npy` | Uma grade concatenada 1e-4…9e-4, 1e-3…9e-3, 1e-2…9e-2; trecho próximo cita sigmoide(15−época), piso v/8 | Cada vetor tem 27 posições, compatível com o tamanho da grade | Associação exata entre configuração, fitness e cada vetor; o slide 17 usa outra descrição de métrica |
-| `lim_aucloss.npy` | Ponto médio da sigmoide entre 0 e 50, LeNet, 20% Fashion-MNIST, LR 1e-3, WD 1e-2, 150 épocas | Vetor com 50 posições | Valores exatos do eixo, repetições e definição de AUC |
-| `AdaSym_fminist_c2.npy`, `AdaSym_fminist_c4.npy`, `AdaSym_fminist_full.npy` | LeNet, Fashion-MNIST, piso v/4; contagens para ≤v/2, ≤v/4 e total. Autor confirmou 150 épocas; “1550” no metadata era um erro de digitação | Três vetores inteiros monotônicos de tamanho 150; razões acumuladas coincidem com o slide | Avaliações repetidas de coordenadas e 150 épocas confirmadas pelo autor; recuperar instrumentação e origem da exposição inicial reduzida |
-
-O metadata também menciona `div_aucloss`, uma varredura de divisor de 2 a 20 com 150 épocas, LeNet e 20% de Fashion-MNIST. Esse arquivo não acompanha a pasta recebida, portanto não há como recalcular esse teste.
-
-Os exemplos de código preservados em metadata esclarecem a intenção do denominador:
-
-```python
-alpha = torch.sigmoid(torch.tensor(15 - cur_epoch))
-val = torch.clamp(v_hat - s_hat.square() * alpha, min=v_hat/8)
-```
-
-Eles não definem como `v_hat` e `s_hat` são calculados, nem epsilon, bias correction e atualização dos parâmetros. Por isso, a implementação nova explicita essas decisões em vez de atribuí-las ao histórico.
+O [relatório](../results/research/report.md) reúne o diagnóstico dos contadores, a dinâmica da loss e as varreduras. O [esquema](../data/experiment_schema.json) descreve os registros de boost.

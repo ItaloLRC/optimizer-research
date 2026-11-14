@@ -1,0 +1,15 @@
+{
+  "experiment": "AdaSym directional boost diagnostics",
+  "dataset": "Fashion-MNIST",
+  "architecture": "LeNet",
+  "epochs": 150,
+  "floor": "v/4",
+  "counting_unit": "Repeated gradient/parameter coordinate updates",
+  "counters": {
+    "full": "Counter associated with the full element-wise directional boost limited by the threshold",
+    "c2": "Recorded partial-boost counter associated with v/2",
+    "c4": "Recorded partial-boost counter associated with v/4; included in c2"
+  },
+  "storage": "cumulative",
+  "normalization": "Only c4/c2 is interpreted as a within-counter composition. full is not used as a total-population denominator."
+}
