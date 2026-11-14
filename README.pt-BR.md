@@ -8,6 +8,71 @@ A análise de curvas de loss, varreduras de hiperparâmetros e estatísticas int
 
 [Análise dos experimentos](results/research/report.md) · [Notebook de diagnóstico](notebooks/threshold-diagnostics.ipynb) · [Formulação](docs/pesquisa.md) · [Busca simbólica no Kaggle](https://www.kaggle.com/code/italocapuzzo/symbolic-optimizer-discovery-on-mnist-via-gp)
 
+## Ciência de dados: diagnóstico do boost e sensibilidade do threshold
+
+O diagnóstico interno do AdaSym é um estudo central do projeto. A pergunta é **como o boost direcional se distribui entre as faixas monitoradas e como esse comportamento muda durante o treinamento**. A investigação utiliza os contadores `AdaSym_fminist_c4`, `c2` e `full`, registrados em **LeNet/Fashion-MNIST durante 150 épocas**, com piso `v/4`.
+
+### Dados e tratamento
+
+O mecanismo de consistência dos gradientes produz um boost por coordenada. `full` está associado ao boost integral limitado pelo threshold; `c4` e `c2` acompanham faixas de boost parcial relacionadas a `v/4` e `v/2`, com **`c4` incluído em `c2`**.
+
+| Etapa da análise | Aplicação no diagnóstico |
+|---|---|
+| Organização e validação | Conferência dos formatos, contagens acumuladas e inclusão de `c4` em `c2` |
+| Transformação temporal | Diferenças sucessivas para obter os incrementos de cada intervalo |
+| Construção de medidas | Contagens por faixa, composição interna de `c2` e agregação por fase |
+| Análise exploratória | Comparação de séries acumuladas, incrementos e janelas móveis |
+| Interpretação | Identificação de padrões temporais e relação com o mecanismo da fórmula |
+
+Essa organização separa o crescimento natural das séries acumuladas das mudanças no comportamento do boost por intervalo.
+
+![Diagnóstico temporal do boost](results/research/threshold_dynamics.png)
+
+### Resultados e padrões identificados
+
+Os registros acumulados de `c2` são decompostos em duas partes: `c4` e `c2` fora de `c4`. Essa partição evita dupla contagem e permite estudar a composição das faixas de boost parcial.
+
+| Composição dos registros de `c2` | Contagem acumulada | Participação dentro de `c2` |
+|---|---:|---:|
+| `c4` | 145.766.992.885 | 70,89% |
+| `c2` fora de `c4` | 59.869.969.114 | 29,11% |
+
+A composição também muda ao longo do treinamento:
+
+| Janela de épocas | Participação de `c4` dentro de `c2` |
+|---|---:|
+| 1–10 | 73,67% |
+| 11–40 | 69,54% |
+| 41–70 | 69,63% |
+| 71–100 | 70,75% |
+| 101–130 | 71,85% |
+| 131–150 | 72,52% |
+
+**O padrão apresenta uma redução inicial da participação de `c4`, seguida de recuperação nas fases posteriores.** Portanto, o comportamento das faixas de boost parcial varia com a fase do treino. Um único percentual acumulado resume o experimento, mas a análise temporal revela a estrutura dessa mudança.
+
+![Composição do boost por fase e janela móvel](results/research/threshold_phases.png)
+
+As proporções das janelas são calculadas pela razão entre as contagens somadas. A janela móvel examina até dez intervalos consecutivos, permitindo acompanhar a mudança de composição em uma escala temporal mais curta.
+
+### Diagnóstico interno e resultado do treinamento
+
+A investigação combina as estatísticas internas com métricas das curvas de loss. A AUC normalizada descreve a curva inteira; a média das últimas 20 épocas descreve o comportamento tardio.
+
+| Experimento | Método | AUC normalizada | Loss média nas últimas 20 épocas |
+|---|---|---:|---:|
+| LeNet / Fashion-MNIST | AdamW | 0,133193 | 0,043519 |
+| LeNet / Fashion-MNIST | AdaSym | 0,118643 | 0,039634 |
+| ResNet-20 / CIFAR-10 | AdamW | 0,077817 | 0,018017 |
+| ResNet-20 / CIFAR-10 | AdaSymSigmoid | 0,065551 | 0,015440 |
+
+Nas configurações apresentadas, as variantes AdaSym registram valores menores nos dois resumos. A leitura conjunta examina **o funcionamento do mecanismo e o comportamento experimental do treinamento**: os contadores descrevem as faixas de boost, enquanto as losses descrevem a trajetória de otimização.
+
+### Relação com a evolução da fórmula
+
+A análise do boost integra o processo de investigação desenvolvido por Ítalo Capuzzo. O diagnóstico das faixas, sua evolução temporal e a comparação das curvas participam da identificação de padrões e da revisão das hipóteses sobre amplificação, memória direcional e ponderação temporal. A ciência de dados aparece, assim, como parte da metodologia usada para desenvolver e investigar a regra de atualização.
+
+[Notebook executado](notebooks/threshold-diagnostics.ipynb) · [Contadores por época](results/research/threshold_by_epoch.csv) · [Composição por fase](results/research/threshold_windows.csv) · [Relatório completo](results/research/report.md)
+
 ## Regra de atualização
 
 O AdaSym adapta o tamanho do passo à consistência recente dos gradientes em cada coordenada. Uma memória direcional persistente reduz o denominador da atualização, produzindo um **boost element-wise**. O piso relativo `v/c` limita essa amplificação.
@@ -38,18 +103,6 @@ Os experimentos investigam tanto o resultado do treinamento quanto o funcionamen
 | Peso temporal por sigmoide | Evolução da correção durante o treinamento |
 
 Essa sequência representa um processo de investigação orientado por dados: observação de padrões, comparação de variantes e revisão da regra de atualização.
-
-## Diagnóstico do boost e sensibilidade do threshold
-
-Uma análise central utiliza os registros `AdaSym_fminist_c4`, `c2` e `full`, obtidos em **LeNet/Fashion-MNIST durante 150 épocas**, com piso `v/4`.
-
-Os contadores acompanham o boost direcional produzido pela janela de consistência. `full` está associado ao boost integral limitado pelo threshold; `c4` e `c2` acompanham faixas de boost parcial relacionadas aos limites `v/4` e `v/2`, com **`c4` incluído em `c2`**.
-
-O diagnóstico examina a evolução dos contadores acumulados, seus incrementos por época e a composição interna de `c2`. Esses dados permitem investigar como o comportamento do boost muda durante o treinamento e como as faixas monitoradas se relacionam.
-
-![Dinâmica dos contadores de boost](results/research/threshold_dynamics.png)
-
-[Relatório visual](results/research/report.html) · [Contadores por época](results/research/threshold_by_epoch.csv) · [Metodologia](docs/investigacao_dados.md)
 
 ## Experimentos e comparações
 
