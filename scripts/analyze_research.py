@@ -163,7 +163,7 @@ def main():
     save_figure(fig,out,'threshold_sensitivity',plt)
 
     metrics, targets = [], []
-    fig, ax = plt.subplots(2,2,figsize=(13,8),layout='constrained')
+    fig, ax = plt.subplots(1,2,figsize=(13,4.5),layout='constrained')
     for col,(group,methods) in enumerate(CURVES.items()):
         for j,(label,filename) in enumerate(methods):
             a = arrays[filename]
@@ -179,19 +179,11 @@ def main():
                             target=target,width=width,epoch=reached,reached=reached is not None,horizon=150))
             mean, sd = a.mean(0), a.std(0,ddof=1)
             color=COLORS[j]
-            ax[0,col].plot(epochs,mean,label=label,color=color)
-            ax[0,col].fill_between(epochs,np.maximum(mean-sd,np.finfo(float).tiny),mean+sd,color=color,alpha=.12)
-            # Difference of group means; row identities are not paired.
-            if j:
-                base = arrays[methods[0][1]].mean(0)
-                ax[1,col].plot(epochs,(base-mean)/base,label=label,color=color)
-        ax[0,col].set(title=group,yscale='log',ylabel='Loss registrada · média ± DP entre trajetórias')
-        ax[0,col].legend(fontsize=8)
-        ax[1,col].axhline(0,color=COLORS[2],lw=.7)
-        ax[1,col].set(xlabel='Época registrada',ylabel='(AdamW − variante) / AdamW')
-        ax[1,col].yaxis.set_major_formatter(PercentFormatter(1))
-        ax[1,col].legend(fontsize=8)
-    fig.suptitle('Loss e contraste com AdamW · descrição dos experimentos do autor\nFaixas = dispersão entre 3 trajetórias; não são ICs',fontsize=14)
+            ax[col].plot(epochs,mean,label=label,color=color)
+            ax[col].fill_between(epochs,np.maximum(mean-sd,np.finfo(float).tiny),mean+sd,color=color,alpha=.12)
+        ax[col].set(title=group,yscale='log',xlabel='Época registrada',ylabel='Loss registrada · média ± DP entre trajetórias')
+        ax[col].legend(fontsize=8)
+    fig.suptitle('Curvas de loss dos experimentos\nFaixas = dispersão entre 3 trajetórias',fontsize=14)
     save_figure(fig,out,'loss_diagnostics',plt)
     save_csv(out/'loss_by_trajectory.csv',metrics)
     save_csv(out/'convergence_targets.csv',targets)
